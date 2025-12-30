@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import get_object_or_404
 from .models import Profile
 from .models import Course, Module,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
 from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer
@@ -272,6 +273,31 @@ def module_view(request, course_id=None, module_id=None):
         return Response({"message": "Module deleted successfully"}, status=200)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def module_detail(request, module_id):
+    try:
+        module = Module.objects.get(id=module_id)
+    except Module.DoesNotExist:
+        return Response({"error": "Module not found"}, status=404)
+
+    # 🔐 Enrollment check for students
+    if request.user.profile.role == 'STUDENT':
+        is_enrolled = Enrollment.objects.filter(
+            user=request.user,
+            course=module.course,
+            is_active=True
+        ).exists()
+
+        if not is_enrolled:
+            return Response(
+                {"error": "You are not enrolled in this course"},
+                status=403
+            )
+
+    serializer = ModuleSerializer(module)
+    return Response(serializer.data)
+
 
 
 @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
@@ -408,6 +434,15 @@ def video_progress_view(request, video_id):
         serializer = VideoProgressSerializer(progress)
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def module_videos(request, module_id):
+    videos = Video.objects.filter(module_id=module_id).order_by('order')
+    serializer = VideoSerializer(videos, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def enrollment_view(request, course_id):
@@ -468,7 +503,37 @@ def add_question(request, quiz_id):
     serializer.save(quiz_id=quiz_id)
     return Response(serializer.data, status=201)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def quiz_detail(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
 
+    return Response({
+        "id": quiz.id,
+        "title": quiz.title,
+        "total_marks": quiz.total_marks,
+        "pass_marks": quiz.pass_marks,
+        "module": quiz.module.id
+    })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def quiz_questions(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = quiz.questions.all()
+
+    data = []
+    for q in questions:
+        data.append({
+            "id": q.id,
+            "question_text": q.question_text,
+            "option_a": q.option_a,
+            "option_b": q.option_b,
+            "option_c": q.option_c,
+            "option_d": q.option_d,
+        })
+
+    return Response(data)
 
 
 @api_view(['GET'])

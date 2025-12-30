@@ -26,7 +26,7 @@ class ProfileAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "is_premium", "created_by", "created_at")
+    list_display = ("title", "category", "is_premium", "id", "created_at")
     search_fields = ("title",)
     list_filter = ("category", "is_premium")
 
@@ -36,9 +36,8 @@ class CourseAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ("title", "course", "order", "created_at")
+    list_display = ("title", "course", "order", "id", "created_at")
     ordering = ("course", "order")
-
 
 # --------------------
 # Video
