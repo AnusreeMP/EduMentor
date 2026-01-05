@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 export default function Landing() {
-  const { dark } = useContext(ThemeContext);
+  const { dark, toggleTheme } = useContext(ThemeContext);
 
   const theme = {
     pageBg: dark ? "#111827" : "#ffffff",
@@ -23,6 +23,26 @@ export default function Landing() {
       }}
     >
       {/* ================= HERO ================= */}
+
+
+      <button
+        onClick={toggleTheme}
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          padding: "8px 14px",
+          borderRadius: "8px",
+          border: "1px solid",
+          background: "transparent",
+          color: theme.textPrimary,
+          cursor: "pointer"
+        }}
+      >
+        {dark ? "☀ Light" : "🌙 Dark"}
+      </button>
+
+
       <section
         style={{
           ...styles.hero,

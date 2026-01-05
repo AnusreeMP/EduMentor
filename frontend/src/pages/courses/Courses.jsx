@@ -12,39 +12,56 @@ export default function Courses() {
       .finally(() => setLoading(false));
   }, []);
 
-  const enroll = async (courseId) => {
-    await api.post(`/courses/${courseId}/enroll/`);
-    alert("Enrolled successfully");
-  };
-
   if (loading) return <p>Loading courses...</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Courses</h2>
+    <div className="container py-4">
+      <h2 className="mb-4 fw-bold">📚 Explore Courses</h2>
 
-      {courses.map(course => (
-        <div
-          key={course.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            marginBottom: "15px",
-            borderRadius: "8px"
-          }}
-        >
-          <h3>{course.title}</h3>
-          <p>{course.description}</p>
+      <div className="row">
+        {courses.map(course => (
+          <div
+            key={course.id}
+            className="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4"
+          >
+            <div className="card h-100 shadow-sm border-0">
 
-          <button onClick={() => enroll(course.id)}>Enroll</button>
+              {/* Course Header */}
+              <div
+                style={{
+                  height: "150px",
+                  background: "linear-gradient(135deg, #0d6efd, #6610f2)",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "22px",
+                  fontWeight: "bold"
+                }}
+              >
+                {course.title}
+              </div>
 
-          <Link to={`/courses/${course.id}`}>
-            <button style={{ marginLeft: "10px" }}>
-              View Course
-            </button>
-          </Link>
-        </div>
-      ))}
+              {/* Card Body */}
+              <div className="card-body d-flex flex-column">
+                <p className="text-muted small">
+                  {course.description.length > 100
+                    ? course.description.slice(0, 100) + "..."
+                    : course.description}
+                </p>
+
+                <Link
+                  to={`/courses/${course.id}`}
+                  className="btn btn-primary btn-sm mt-auto"
+                >
+                  View Course
+                </Link>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

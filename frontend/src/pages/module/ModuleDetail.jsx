@@ -54,35 +54,54 @@ export default function ModuleDetail() {
       <hr />
 
       {/* 🎥 VIDEOS */}
-      <h3>Videos</h3>
+      <h3 className="mb-4">📘 Module Videos</h3>
 
-      {videos.length === 0 && <p>No videos added yet.</p>}
-
-      {videos.map(video => (
-        <div
-          key={video.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            marginBottom: "10px",
-            borderRadius: "6px"
-          }}
-        >
-          <h4>
-            {video.order}. {video.title}
-          </h4>
-
-          <iframe
-            width="100%"
-            height="400"
-            src={video.video_url}
-            title={video.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+      {videos.length === 0 && (
+        <div className="alert alert-info">
+          No videos added yet.
         </div>
-      ))}
+      )}
+
+      <div className="row">
+        {videos.map((video, index) => (
+          <div
+            key={video.id}
+            className="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4"
+          >
+            <div className="card h-100 shadow-sm border-0">
+
+              {/* 🎬 Video */}
+              <div className="ratio ratio-16x9">
+                <iframe
+                  src={video.video_url}
+                  title={video.title}
+                  allowFullScreen
+                />
+              </div>
+
+              {/* 📄 Card Body */}
+              <div className="card-body d-flex flex-column">
+                <h6 className="card-title fw-bold">
+                  {index + 1}. {video.title}
+                </h6>
+
+                <p className="card-text text-muted small mb-2">
+                  Duration: {video.duration} seconds
+                </p>
+
+                {/* 🔖 Status Badge */}
+                <div className="mt-auto">
+                  <span className="badge bg-secondary">
+                    Not Completed
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
 
       <hr />
 

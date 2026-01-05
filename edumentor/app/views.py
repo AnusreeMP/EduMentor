@@ -95,24 +95,47 @@ def create_course(request):
 @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def course_view(request, course_id=None):
-
-    # 🔹 GET → List all courses OR get single course
+    # 🔹 GET → list courses / single course
     if request.method == 'GET':
         if course_id:
             try:
                 course = Course.objects.get(id=course_id)
             except Course.DoesNotExist:
-                return Response(
-                    {"error": "Course not found"},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-            serializer = CourseSerializer(course)
+                return Response({"error": "Course not found"}, status=404)
+
+            serializer = CourseSerializer(
+                course,
+                context={'request': request}
+            )
             return Response(serializer.data)
 
         courses = Course.objects.all().order_by('-created_at')
-        serializer = CourseSerializer(courses, many=True)
+        serializer = CourseSerializer(
+            courses,
+            many=True,
+            context={'request': request}
+        )
         return Response(serializer.data)
+def course_list(request):
+    courses = Course.objects.all().order_by('-created_at')
+    serializer = CourseSerializer(
+        courses,
+        many=True,
+        context={'request': request}
+    )
+    return Response(serializer.data)
 
+
+# 🔹 SINGLE COURSE DETAIL
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def course_detail(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    serializer = CourseSerializer(
+        course,
+        context={'request': request}
+    )
+    return Response(serializer.data)
     # 🔹 POST → Create course (ADMIN only)
     if request.method == 'POST':
         if request.user.profile.role != 'ADMIN':
@@ -534,6 +557,17 @@ def quiz_questions(request, quiz_id):
         })
 
     return Response(data)
+
+@api_view(['GET'])
+def module_quiz(request, module_id):
+    quiz = get_object_or_404(Quiz, module_id=module_id)
+
+    return Response({
+        "id": quiz.id,
+        "title": quiz.title,
+        "total_marks": quiz.total_marks,
+        "pass_marks": quiz.pass_marks,
+    })
 
 
 @api_view(['GET'])

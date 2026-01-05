@@ -1,15 +1,5 @@
 from django.contrib import admin
-from .models import (
-    Profile,
-    Course,
-    Module,
-    Video,
-    VideoProgress,
-    Enrollment,
-    Quiz,
-    Question,
-    QuizAttempt,
-    Certificate,
+from .models import (Profile,Course,Module,Video,VideoProgress,Enrollment,Quiz,Question,QuizAttempt,Certificate,
 )
 
 # --------------------
@@ -26,8 +16,8 @@ class ProfileAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "is_premium", "id", "created_at")
-    search_fields = ("title",)
+    list_display = ("id", "title", "category", "is_premium", "created_at")
+    search_fields = ("title", "category")
     list_filter = ("category", "is_premium")
 
 
@@ -36,7 +26,9 @@ class CourseAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ("title", "course", "order", "id", "created_at")
+    list_display = ("id", "title", "course", "order")
+    list_filter = ("course",)
+    search_fields = ("title",)
     ordering = ("course", "order")
 
 # --------------------
@@ -44,7 +36,9 @@ class ModuleAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ("title", "module", "order", "duration")
+    list_display = ("id", "title", "module", "order", "duration")
+    list_filter = ("module",)
+    search_fields = ("title",)
     ordering = ("module", "order")
 
 
@@ -72,7 +66,7 @@ class EnrollmentAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    list_display = ("title", "module", "total_marks", "pass_marks")
+    list_display = ("id", "title", "module", "total_marks", "pass_marks")
 
 
 # --------------------
@@ -80,7 +74,8 @@ class QuizAdmin(admin.ModelAdmin):
 # --------------------
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "quiz", "correct_option")
+    list_display = ("id", "quiz", "question_text", "correct_option")
+    list_filter = ("quiz",)
     search_fields = ("question_text",)
 
 

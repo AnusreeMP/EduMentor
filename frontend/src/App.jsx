@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Landing from "./pages/Landing";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
@@ -29,6 +30,8 @@ export default function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
+          <Route path="/" element={<Landing />} />
+
 
           {/* 🔓 Public routes */}
           <Route path="/login" element={<Login />} />

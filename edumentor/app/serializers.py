@@ -37,12 +37,26 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-
 class CourseSerializer(serializers.ModelSerializer):
+    is_enrolled = serializers.SerializerMethodField()
+
     class Meta:
         model = Course
-        fields = '__all__'
-        read_only_fields = ['created_by', 'created_at']
+        fields = ['id', 'title', 'description', 'is_enrolled']
+
+    def get_is_enrolled(self, obj):
+        request = self.context.get('request')
+
+        # ✅ If no request or user not logged in
+        if not request or request.user.is_anonymous:
+            return False
+
+        # ✅ Check enrollment for THIS USER ONLY
+        return Enrollment.objects.filter(
+            user=request.user,
+            course=obj
+        ).exists()
+
 
 
 class ModuleSerializer(serializers.ModelSerializer):
