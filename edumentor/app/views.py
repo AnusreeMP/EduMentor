@@ -8,6 +8,9 @@ from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser
+from django.contrib.auth.models import User
 from .models import Profile
 from .models import Course, Module,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
 from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer
@@ -40,7 +43,6 @@ def register(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['POST'])
 def login(request):
     username = request.data.get('username')
@@ -50,15 +52,24 @@ def login(request):
 
     if user is not None:
         refresh = RefreshToken.for_user(user)
+
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+
+            # 👇 VERY IMPORTANT
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'is_admin': user.is_staff or user.is_superuser,
+            }
         }, status=status.HTTP_200_OK)
 
     return Response(
         {'error': 'Invalid username or password'},
         status=status.HTTP_401_UNAUTHORIZED
     )
+
 
 @api_view(['GET'])
 def protected_view(request):
@@ -833,3 +844,49 @@ def top_students(request, course_id):
     return Response(top)
 
 
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def admin_dashboard_stats(request):
+    return Response({
+        "total_courses": Course.objects.count(),
+        "total_users": User.objects.count(),
+        "total_enrollments": Enrollment.objects.count(),
+        "recent_courses": list(
+            Course.objects.order_by("-id")[:5].values("id", "title", "description")
+        )
+    })
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def admin_courses(request):
+    if request.method == 'GET':
+        courses = Course.objects.all().order_by('-id')
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = CourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+@api_view(['PUT', 'DELETE'])
+@permission_classes([IsAdminUser])
+def admin_course_detail(request, pk):
+    try:
+        course = Course.objects.get(pk=pk)
+    except Course.DoesNotExist:
+        return Response(status=404)
+
+    if request.method == 'PUT':
+        serializer = CourseSerializer(course, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    if request.method == 'DELETE':
+        course.delete()
+        return Response(status=204)

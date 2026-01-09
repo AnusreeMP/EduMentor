@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     api.get("/courses/")

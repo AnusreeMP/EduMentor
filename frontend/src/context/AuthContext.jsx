@@ -6,38 +6,34 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     access: localStorage.getItem("access"),
+    isAdmin: localStorage.getItem("isAdmin") === "true",
     isAuthenticated: !!localStorage.getItem("access"),
-    loading: true,
+
   });
 
-  // Run once on app load
-  useEffect(() => {
-    if (auth.access) {
-      setAuth(prev => ({ ...prev, isAuthenticated: true, loading: false }));
-    } else {
-      setAuth(prev => ({ ...prev, isAuthenticated: false, loading: false }));
-    }
-  }, []);
-
-  // 🔑 LOGIN
+  
   const login = async (username, password) => {
     const res = await api.post("/login/", { username, password });
+
     localStorage.setItem("access", res.data.access);
+    localStorage.setItem("isAdmin", res.data.user.is_admin);
 
     setAuth({
       access: res.data.access,
+      isAdmin: res.data.user.is_admin,
       isAuthenticated: true,
-      loading: false,
     });
+
+    return res.data.user; // 👈 IMPORTANT
   };
 
-  // 🔓 LOGOUT
+
   const logout = () => {
-    localStorage.removeItem("access");
+    localStorage.clear();
     setAuth({
       access: null,
+      isAdmin: false,
       isAuthenticated: false,
-      loading: false,
     });
   };
 
@@ -48,5 +44,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook (professional pattern)
 export const useAuth = () => useContext(AuthContext);

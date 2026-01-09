@@ -6,7 +6,7 @@ from app.views import module_view
 from app.views import video_view
 from app.views import video_progress_view
 from app.views import enrollment_view
-from app.views import create_quiz, get_quiz, submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats
+from app.views import create_quiz, get_quiz, submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail  
 
 
 
@@ -41,6 +41,11 @@ urlpatterns = [
     path("admin/courses/<int:course_id>/analytics/", course_analytics),
     path("admin/courses/<int:course_id>/top-students/", top_students),
     path("admin/courses/<int:course_id>/pass-fail-stats/", course_pass_fail_stats),
+    path("admin/dashboard/", admin_dashboard_stats),
+    path("admin/courses/", admin_courses),
+    path("admin/courses/<int:pk>/", admin_course_detail),
+
+
 
 
 

@@ -11,8 +11,13 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      await login(username, password);
-      navigate("/courses");
+      const user = await login(username, password); // 👈 data now exists
+
+      if (user.is_admin) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/courses");
+      }
     } catch {
       alert("Invalid credentials");
     }
@@ -21,15 +26,18 @@ export default function Login() {
   return (
     <div>
       <h2>Login</h2>
+
       <input
         placeholder="Username"
         onChange={e => setUsername(e.target.value)}
       />
+
       <input
         type="password"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
+
       <button onClick={handleLogin}>Login</button>
     </div>
   );

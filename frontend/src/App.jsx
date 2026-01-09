@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "./context/ThemeContext";
+
 import Landing from "./pages/Landing";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -6,22 +9,40 @@ import Register from "./pages/auth/Register";
 import Courses from "./pages/courses/Courses";
 import CourseDetail from "./pages/courses/CourseDetail";
 import Progress from "./pages/courses/Progress";
-
 import ModuleDetail from "./pages/module/ModuleDetail";
 import QuizPage from "./pages/quiz/QuizPage";
+
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminCourses from "./pages/admin/Courses/AdminCourses";
+import AddCourse from "./pages/admin/Courses/AddCourse";
+import EditCourse from "./pages/admin/Courses/EditCourse";
+import AdminModules from "./pages/admin/Modules/AdminModules";
+import AddModule from "./pages/admin/Modules/AddModule";
+import EditModule from "./pages/admin/Modules/EditModules";
+import ManageUsers from "./pages/admin/Users/ManageUsers";
 
 function Layout({ children }) {
   const location = useLocation();
+  const { dark } = useContext(ThemeContext);
+
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
 
   return (
-    <>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: dark ? "#111827" : "#ffffff",
+        color: dark ? "#e5e7eb" : "#111827",
+      }}
+    >
       {!hideNavbar && <Navbar />}
       {children}
-    </>
+    </div>
   );
 }
 
@@ -30,14 +51,12 @@ export default function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
+          {/* 🌐 PUBLIC */}
           <Route path="/" element={<Landing />} />
-
-
-          {/* 🔓 Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* 🔐 Protected routes */}
+          {/* 👩‍🎓 STUDENT */}
           <Route
             path="/courses"
             element={
@@ -57,7 +76,7 @@ export default function App() {
           />
 
           <Route
-            path="/modules/:moduleId"
+            path="/courses/:courseId/modules/:moduleId"
             element={
               <ProtectedRoute>
                 <ModuleDetail />
@@ -66,23 +85,7 @@ export default function App() {
           />
 
           <Route
-            path="/courses/:courseId/modules/:moduleId"
-            element={<ModuleDetail />}
-          />
-
-          <Route
             path="/courses/:courseId/modules/:moduleId/quiz"
-            element={<QuizPage />}
-          />
-
-
-
-
-
-
-
-          <Route
-            path="/quiz/:quizId"
             element={
               <ProtectedRoute>
                 <QuizPage />
@@ -98,6 +101,32 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 🛠 ADMIN (ROLE BASED) */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="courses" element={<AdminCourses />} />
+            <Route path="courses/add" element={<AddCourse />} />
+            <Route path="courses/:id/edit" element={<EditCourse />} />
+
+            {/* ✅ MODULE MANAGEMENT */}
+            <Route path="courses/:courseId/modules" element={<AdminModules />} />
+            <Route path="courses/:courseId/modules/add" element={<AddModule />} />
+            <Route path="modules/:moduleId/edit" element={<EditModule />} />
+
+            <Route path="users" element={<ManageUsers />} />
+          </Route>
+          <Route path="/admin/courses" element={<AdminRoute><AdminCourses /></AdminRoute>} />
+          <Route path="/admin/courses/add" element={<AdminRoute><AddCourse /></AdminRoute>} />
+
+
 
         </Routes>
       </Layout>
