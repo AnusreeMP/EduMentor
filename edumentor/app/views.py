@@ -13,7 +13,8 @@ from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from .models import Profile
 from .models import Course, Module,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
-from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer
+from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer
+from django.contrib.auth import get_user_model
 
 
 
@@ -216,36 +217,40 @@ def course_detail(request, course_id):
 
 @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def module_view(request, course_id=None, module_id=None):
+def module_view(request, course_id):
+    user = request.user
 
-    # 🔐 ENROLLMENT CHECK (students only)
-    if request.user.profile.role == 'STUDENT':
-        is_enrolled = Enrollment.objects.filter(
-            user=request.user,
-            course_id=course_id,
-            is_active=True
-        ).exists()
+    # 🔐 SAFETY: profile may not exist
+    if not hasattr(user, "profile"):
+        return Response(
+            {"detail": "User profile not found"},
+            status=status.HTTP_403_FORBIDDEN
+        )
 
-        if not is_enrolled:
-            return Response(
-                {"error": "You are not enrolled in this course"},
-                status=status.HTTP_403_FORBIDDEN
-            )
+    try:
+        course = Course.objects.get(id=course_id)
+    except Course.DoesNotExist:
+        return Response(
+            {"detail": "Course not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
-    # 🔹 GET → list modules / single module
-    if request.method == 'GET':
-        if module_id:
-            try:
-                module = Module.objects.get(id=module_id, course_id=course_id)
-            except Module.DoesNotExist:
-                return Response({"error": "Module not found"}, status=404)
+    # ✅ STUDENT → only if enrolled (optional rule)
+    if user.profile.role == "STUDENT":
+        modules = Module.objects.filter(course=course).order_by("order")
 
-            serializer = ModuleSerializer(module)
-            return Response(serializer.data)
+    # ✅ ADMIN → see all modules
+    elif user.profile.role == "ADMIN":
+        modules = Module.objects.filter(course=course).order_by("order")
 
-        modules = Module.objects.filter(course_id=course_id)
-        serializer = ModuleSerializer(modules, many=True)
-        return Response(serializer.data)
+    else:
+        return Response(
+            {"detail": "Invalid role"},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = ModuleSerializer(modules, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 🔹 POST → create module (ADMIN only)
     if request.method == 'POST':
@@ -890,3 +895,105 @@ def admin_course_detail(request, pk):
     if request.method == 'DELETE':
         course.delete()
         return Response(status=204)
+
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def admin_users(request):
+    users = User.objects.all().order_by('-id')
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+
+User = get_user_model()
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def toggle_user_active(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+
+        if user.is_superuser:
+            return Response(
+                {"error": "Cannot block superuser"},
+                status=400
+            )
+
+        user.is_active = not user.is_active
+        user.save()
+
+        return Response({
+            "id": user.id,
+            "is_active": user.is_active
+        })
+    except User.DoesNotExist:
+        return Response(
+            {"error": "User not found"},
+            status=404
+        )
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def admin_modules(request, course_id):
+    modules = Module.objects.filter(course_id=course_id).order_by("order")
+    serializer = ModuleSerializer(modules, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def admin_module_detail(request, module_id):
+    module = Module.objects.get(id=module_id)
+    serializer = ModuleSerializer(module)
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def admin_lessons(request, module_id):
+    lessons = Lesson.objects.filter(
+        module_id=module_id
+    ).order_by("order")
+    serializer = LessonSerializer(lessons, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def admin_add_lesson(request, module_id):
+    serializer = LessonSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(module_id=module_id)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def admin_edit_lesson(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+    serializer = LessonSerializer(
+        lesson, data=request.data, partial=True
+    )
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAdminUser])
+def admin_delete_lesson(request, lesson_id):
+    Lesson.objects.filter(id=lesson_id).delete()
+    return Response(status=204)
+
+@api_view(["GET", "POST"])
+def module_list(request, course_id):
+    modules = Module.objects.filter(course_id=course_id).order_by("order")
+    
+
+@api_view(["GET", "PUT", "DELETE"])
+def module_detail(request, course_id, module_id):
+    module = Module.objects.get(id=module_id, course_id=course_id)
+
+

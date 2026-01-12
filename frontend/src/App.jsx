@@ -23,8 +23,13 @@ import AddCourse from "./pages/admin/Courses/AddCourse";
 import EditCourse from "./pages/admin/Courses/EditCourse";
 import AdminModules from "./pages/admin/Modules/AdminModules";
 import AddModule from "./pages/admin/Modules/AddModule";
-import EditModule from "./pages/admin/Modules/EditModules";
+import EditModule from "./pages/admin/Modules/EditModule";
 import ManageUsers from "./pages/admin/Users/ManageUsers";
+import AdminLessons from "./pages/admin/Lessons/AdminLessons";
+import AddLesson from "./pages/admin/Lessons/AddLesson";
+import EditLesson from "./pages/admin/Lessons/EditLesson";
+
+
 
 function Layout({ children }) {
   const location = useLocation();
@@ -125,6 +130,16 @@ export default function App() {
           </Route>
           <Route path="/admin/courses" element={<AdminRoute><AdminCourses /></AdminRoute>} />
           <Route path="/admin/courses/add" element={<AdminRoute><AddCourse /></AdminRoute>} />
+          <Route path="/admin/users" element={<AdminRoute><ManageUsers /></AdminRoute>} />
+          <Route path="/admin/courses/:courseId/modules" element={<AdminRoute><AdminModules /></AdminRoute>} />
+          <Route path="/admin/courses/:courseId/modules/add" element={<AddModule />} />
+          <Route path="/admin/courses/:courseId/modules/edit/:moduleId" element={<EditModule />} />
+          <Route path="/admin/modules/:moduleId/lessons" element={<AdminLessons />} />
+          <Route path="/admin/modules/:moduleId/lessons/add" element={<AddLesson />} />
+          <Route path="/admin/modules/:moduleId/lessons/edit/:lessonId" element={<EditLesson />} />
+
+
+
 
 
 

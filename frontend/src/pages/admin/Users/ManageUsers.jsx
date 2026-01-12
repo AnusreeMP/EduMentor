@@ -13,30 +13,28 @@ export default function ManageUsers() {
     try {
       const res = await api.get("/admin/users/");
       setUsers(res.data);
-    } catch (err) {
+    } catch {
       alert("Failed to load users");
     } finally {
       setLoading(false);
     }
   };
 
-  const updateRole = async (userId, role) => {
+  // ✅ SINGLE Block / Unblock action
+  const toggleBlock = async (user) => {
+    if (user.is_superuser) {
+      alert("Superuser cannot be blocked");
+      return;
+    }
+
     try {
-      await api.patch(`/admin/users/${userId}/`, { role });
+      await api.patch(
+        `/admin/users/${user.id}/toggle-active/`
+      );
+
       fetchUsers();
     } catch {
-      alert("Failed to update role");
-    }
-  };
-
-  const deleteUser = async (userId) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
-
-    try {
-      await api.delete(`/admin/users/${userId}/`);
-      setUsers(prev => prev.filter(u => u.id !== userId));
-    } catch {
-      alert("Failed to delete user");
+      alert("Failed to update user status");
     }
   };
 
@@ -51,39 +49,37 @@ export default function ManageUsers() {
           <tr>
             <th>Username</th>
             <th>Email</th>
-            <th>Role</th>
-            <th style={{ width: "220px" }}>Actions</th>
+            <th>Status</th>
+            <th style={{ width: "160px" }}>Action</th>
           </tr>
         </thead>
         <tbody>
           {users.map(user => (
             <tr key={user.id}>
               <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>{user.email || "—"}</td>
+
               <td>
-                {user.role === "student" ? (
-                  <button
-                    onClick={() => updateRole(user.id, "admin")}
-                    style={styles.promoteBtn}
-                  >
-                    Make Admin
-                  </button>
+                {user.is_active ? (
+                  <span style={styles.active}>Active</span>
                 ) : (
+                  <span style={styles.blocked}>Blocked</span>
+                )}
+              </td>
+
+              <td>
+                {!user.is_superuser && (
                   <button
-                    onClick={() => updateRole(user.id, "student")}
-                    style={styles.demoteBtn}
+                    onClick={() => toggleBlock(user)}
+                    style={
+                      user.is_active
+                        ? styles.blockBtn
+                        : styles.unblockBtn
+                    }
                   >
-                    Make Student
+                    {user.is_active ? "Block" : "Unblock"}
                   </button>
                 )}
-
-                <button
-                  onClick={() => deleteUser(user.id)}
-                  style={styles.deleteBtn}
-                >
-                  Delete
-                </button>
               </td>
             </tr>
           ))}
@@ -101,30 +97,30 @@ const styles = {
     marginTop: "20px",
     background: "#fff",
   },
-  promoteBtn: {
-    background: "#16a34a",
-    color: "#fff",
-    border: "none",
-    padding: "6px 10px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginRight: "8px",
+  active: {
+    color: "#16a34a",
+    fontWeight: "500",
   },
-  demoteBtn: {
-    background: "#f59e0b",
-    color: "#fff",
-    border: "none",
-    padding: "6px 10px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginRight: "8px",
+  blocked: {
+    color: "#dc2626",
+    fontWeight: "500",
   },
-  deleteBtn: {
+  blockBtn: {
     background: "#dc2626",
     color: "#fff",
     border: "none",
-    padding: "6px 10px",
+    padding: "6px 12px",
     borderRadius: "6px",
     cursor: "pointer",
+    fontWeight: "500",
+  },
+  unblockBtn: {
+    background: "#16a34a",
+    color: "#fff",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "500",
   },
 };

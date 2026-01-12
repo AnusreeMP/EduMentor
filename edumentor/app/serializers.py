@@ -9,6 +9,7 @@ from .models import Enrollment
 from .models import Quiz
 from .models import Question
 from .models import QuizAttempt
+from .models import Lesson
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -115,3 +116,18 @@ class StudentQuestionSerializer(serializers.ModelSerializer):
         model = Question
         exclude = ['correct_option']
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "is_staff",
+            "is_active",
+        ]
+
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = "__all__"

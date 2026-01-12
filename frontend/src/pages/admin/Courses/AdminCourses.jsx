@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {getAdminCourses,deleteCourse as deleteAdminCourse,} from "../../../api/courses";
+import {
+  getAdminCourses,
+  deleteCourse as deleteAdminCourse,
+} from "../../../api/courses";
 
 export default function AdminCourses() {
   const [courses, setCourses] = useState([]);
@@ -26,7 +29,7 @@ export default function AdminCourses() {
 
     try {
       await deleteAdminCourse(id); // ✅ admin API
-      setCourses(prev => prev.filter(course => course.id !== id));
+      setCourses((prev) => prev.filter((course) => course.id !== id));
     } catch (err) {
       alert("Failed to delete course");
     }
@@ -53,20 +56,29 @@ export default function AdminCourses() {
             <tr>
               <th>Title</th>
               <th>Description</th>
-              <th style={{ width: "180px" }}>Actions</th>
+              <th style={{ width: "220px" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {courses.map(course => (
+            {courses.map((course) => (
               <tr key={course.id}>
                 <td>{course.title}</td>
                 <td>{course.description || "—"}</td>
-                <td>
+
+                {/* ✅ FIXED ACTIONS CELL */}
+                <td style={styles.actions}>
                   <Link
                     to={`/admin/courses/${course.id}/edit`}
                     style={styles.editBtn}
                   >
                     Edit
+                  </Link>
+
+                  <Link
+                    to={`/admin/courses/${course.id}/modules`}
+                    style={styles.modulesBtn}
+                  >
+                    Modules
                   </Link>
 
                   <button
@@ -85,7 +97,7 @@ export default function AdminCourses() {
   );
 }
 
-/* ===== STYLES (UNCHANGED) ===== */
+/* ===== STYLES ===== */
 const styles = {
   header: {
     display: "flex",
@@ -93,6 +105,7 @@ const styles = {
     alignItems: "center",
     marginBottom: "20px",
   },
+
   addBtn: {
     background: "#4f46e5",
     color: "#fff",
@@ -101,17 +114,36 @@ const styles = {
     textDecoration: "none",
     fontWeight: "500",
   },
+
   table: {
     width: "100%",
     borderCollapse: "collapse",
     background: "#fff",
   },
+
+  /* ✅ ADDED (YOU WERE USING IT) */
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+  },
+
   editBtn: {
-    marginRight: "10px",
     color: "#2563eb",
     textDecoration: "none",
     fontWeight: "500",
   },
+
+  modulesBtn: {
+    background: "#0ea5e9",
+    color: "#fff",
+    padding: "4px 10px",
+    borderRadius: "6px",
+    textDecoration: "none",
+    fontWeight: "500",
+    fontSize: "14px",
+  },
+
   deleteBtn: {
     background: "none",
     border: "none",
