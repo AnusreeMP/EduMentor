@@ -58,12 +58,23 @@ class CourseSerializer(serializers.ModelSerializer):
             course=obj
         ).exists()
 
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = "__all__"
+        extra_kwargs = {
+            "module": {"required": False}
+        }
+
 
 
 class ModuleSerializer(serializers.ModelSerializer):
+    lessons = LessonSerializer(many=True, read_only=True)
+
     class Meta:
         model = Module
-        fields = '__all__'
+        fields = "__all__"
+
 
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -127,7 +138,4 @@ class UserSerializer(serializers.ModelSerializer):
             "is_active",
         ]
 
-class LessonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lesson
-        fields = "__all__"
+

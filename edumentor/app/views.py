@@ -12,8 +12,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from .models import Profile
-from .models import Course, Module,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
-from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer
+from .models import Course, Module,Lesson,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
+from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer,LessonSerializer
 from django.contrib.auth import get_user_model
 
 
@@ -128,14 +128,14 @@ def course_view(request, course_id=None):
             context={'request': request}
         )
         return Response(serializer.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def course_list(request):
-    courses = Course.objects.all().order_by('-created_at')
-    serializer = CourseSerializer(
-        courses,
-        many=True,
-        context={'request': request}
-    )
-    return Response(serializer.data)
+    courses = Course.objects.all().order_by("-id")
+    serializer = CourseSerializer(courses, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # 🔹 SINGLE COURSE DETAIL
@@ -212,6 +212,25 @@ def course_detail(request, course_id):
             {"message": "Course deleted successfully"},
             status=status.HTTP_200_OK
         )
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def course_modules(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    modules = Module.objects.filter(course=course).order_by("order")
+    serializer = ModuleSerializer(modules, many=True)
+    print("✅ course_modules view called")
+
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def course_module_detail(request, course_id, module_id):
+    module = get_object_or_404(Module, id=module_id, course_id=course_id)
+    serializer = ModuleSerializer(module)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
     
 
@@ -314,11 +333,15 @@ def module_view(request, course_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def module_detail(request, module_id):
-    try:
-        module = Module.objects.get(id=module_id)
-    except Module.DoesNotExist:
-        return Response({"error": "Module not found"}, status=404)
+def module_detail(request, course_id, module_id):
+    module = get_object_or_404(
+        Module,
+        id=module_id,
+        course_id=course_id
+    )
+
+    serializer = ModuleSerializer(module)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 🔐 Enrollment check for students
     if request.user.profile.role == 'STUDENT':
@@ -521,14 +544,14 @@ def enrollment_view(request, course_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated, IsAdmin])
 def create_quiz(request, module_id):
-    data = request.data.copy()
-    data['module'] = module_id
-
-    serializer = QuizSerializer(data=data)
+    serializer = QuizSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    serializer.save()
+
+    # ✅ force module_id during save
+    serializer.save(module_id=module_id)
 
     return Response(serializer.data, status=201)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated, IsAdmin])
@@ -932,20 +955,56 @@ def toggle_user_active(request, pk):
         )
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAdminUser])
 def admin_modules(request, course_id):
-    modules = Module.objects.filter(course_id=course_id).order_by("order")
-    serializer = ModuleSerializer(modules, many=True)
-    return Response(serializer.data)
+
+    # ✅ GET modules list
+    if request.method == "GET":
+        modules = Module.objects.filter(course_id=course_id).order_by("order")
+        serializer = ModuleSerializer(modules, many=True)
+        return Response(serializer.data, status=200)
+
+    # ✅ POST create module
+    if request.method == "POST":
+        data = request.data.copy()
+        data["course"] = course_id   # ✅ important
+
+        serializer = ModuleSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=400)
 
 
-@api_view(["GET"])
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
 @permission_classes([IsAdminUser])
 def admin_module_detail(request, module_id):
-    module = Module.objects.get(id=module_id)
-    serializer = ModuleSerializer(module)
-    return Response(serializer.data)
+    module = get_object_or_404(Module, id=module_id)
+
+    # ✅ GET module
+    if request.method == "GET":
+        serializer = ModuleSerializer(module)
+        return Response(serializer.data)
+
+    # ✅ PATCH / PUT update module
+    if request.method in ["PUT", "PATCH"]:
+        serializer = ModuleSerializer(
+            module,
+            data=request.data,
+            partial=(request.method == "PATCH")
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # ✅ DELETE module
+    if request.method == "DELETE":
+        module.delete()
+        return Response({"message": "Module deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
 
 
 @api_view(["GET"])
@@ -957,14 +1016,16 @@ def admin_lessons(request, module_id):
     serializer = LessonSerializer(lessons, many=True)
     return Response(serializer.data)
 
-
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
 def admin_add_lesson(request, module_id):
     serializer = LessonSerializer(data=request.data)
+
     if serializer.is_valid():
         serializer.save(module_id=module_id)
         return Response(serializer.data, status=201)
+
+    print("❌ Lesson create errors:", serializer.errors)   # ✅ ADD THIS
     return Response(serializer.errors, status=400)
 
 
@@ -991,9 +1052,3 @@ def admin_delete_lesson(request, lesson_id):
 def module_list(request, course_id):
     modules = Module.objects.filter(course_id=course_id).order_by("order")
     
-
-@api_view(["GET", "PUT", "DELETE"])
-def module_detail(request, course_id, module_id):
-    module = Module.objects.get(id=module_id, course_id=course_id)
-
-
