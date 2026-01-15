@@ -28,6 +28,7 @@ import ManageUsers from "./pages/admin/Users/ManageUsers";
 import AdminLessons from "./pages/admin/Lessons/AdminLessons";
 import AddLesson from "./pages/admin/Lessons/AddLesson";
 import EditLesson from "./pages/admin/Lessons/EditLesson";
+import AdminStats from "./pages/admin/AdminStats";
 
 
 
@@ -46,10 +47,11 @@ function Layout({ children }) {
       }}
     >
       {!hideNavbar && <Navbar />}
-      {children}
+      <div className="pt-16">{children}</div>
     </div>
   );
 }
+
 
 export default function App() {
   return (
@@ -137,6 +139,8 @@ export default function App() {
           <Route path="/admin/modules/:moduleId/lessons" element={<AdminLessons />} />
           <Route path="/admin/modules/:moduleId/lessons/add" element={<AddLesson />} />
           <Route path="/admin/modules/:moduleId/lessons/edit/:lessonId" element={<EditLesson />} />
+          <Route path="/admin/dashboard" element={<AdminStats />} />
+
 
 
 

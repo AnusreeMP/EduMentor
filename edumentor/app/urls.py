@@ -6,7 +6,7 @@ from app.views import module_view
 from app.views import video_view
 from app.views import video_progress_view
 from app.views import enrollment_view
-from app.views import create_quiz, get_quiz, submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules
+from app.views import create_quiz, get_quiz,submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules,admin_update_quiz
 
 
 
@@ -32,13 +32,14 @@ urlpatterns = [
     path('modules/<int:module_id>/quiz/', get_quiz),
     path('quizzes/<int:quiz_id>/', views.quiz_detail),
     path('quizzes/<int:quiz_id>/questions/', views.quiz_questions),
-    path('quizzes/<int:quiz_id>/submit/', views.submit_quiz),
+    path("modules/<int:module_id>/quiz/submit/", submit_quiz),
     path('quizzes/<int:quiz_id>/questions/add/', add_question),
     path('courses/<int:course_id>/certificate/', generate_certificate),
     path("courses/<int:course_id>/progress/", course_progress),
     path("admin/courses/<int:course_id>/analytics/", course_analytics),
     path("admin/courses/<int:course_id>/top-students/", top_students),
-    path("admin/courses/<int:course_id>/pass-fail-stats/", course_pass_fail_stats),
+    path("courses/<int:course_id>/stats/", course_pass_fail_stats),
+
     path("admin/dashboard/", admin_dashboard_stats),
     path("admin/courses/", admin_courses),
     path("admin/courses/<int:pk>/", admin_course_detail),
@@ -50,10 +51,10 @@ urlpatterns = [
     path("admin/modules/<int:module_id>/lessons/add/",admin_add_lesson),
     path("admin/lessons/<int:lesson_id>/edit/",admin_edit_lesson),
     path("admin/lessons/<int:lesson_id>/delete/",admin_delete_lesson),
+    path("admin/quizzes/<int:quiz_id>/edit/", admin_update_quiz),
+
     path("courses/<int:course_id>/modules/", course_modules),
     path("courses/<int:course_id>/modules/<int:module_id>/", views.course_module_detail),
-
-
 
 
 

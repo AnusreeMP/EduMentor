@@ -209,6 +209,10 @@ function FooterColumn({ title, items }) {
     </div>
   );
 }
+<div className="pt-20">
+  ...
+</div>
+
 
 /* ================= STYLES ================= */
 

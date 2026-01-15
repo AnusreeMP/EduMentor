@@ -17,16 +17,13 @@ export default function QuizPage() {
     const fetchQuiz = async () => {
       try {
         // ✅ quiz info (module-based)
-        const quizRes = await api.get(
-          `/modules/${moduleId}/quiz/`
-        );
+        const quizRes = await api.get(`/modules/${moduleId}/quiz/`);
         setQuiz(quizRes.data);
 
-        // ✅ questions
-        const questionRes = await api.get(
-          `/modules/${moduleId}/quiz/questions/`
-        );
+        // ✅ questions (quiz-based)
+        const questionRes = await api.get(`/quizzes/${quizRes.data.id}/questions/`);
         setQuestions(questionRes.data);
+
       } catch (err) {
         console.error(err);
         setError("Quiz not available for this module");
@@ -37,6 +34,7 @@ export default function QuizPage() {
 
     fetchQuiz();
   }, [moduleId]);
+
 
   const selectAnswer = (questionId, option) => {
     setAnswers(prev => ({

@@ -12,7 +12,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from .models import Profile
-from .models import Course, Module,Lesson,Video,VideoProgress,Enrollment,Quiz, Question, QuizAttempt
+from .models import Course, Module, Video, VideoProgress, Enrollment
+from .models import Quiz, Question, QuizAttempt
 from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer,LessonSerializer
 from django.contrib.auth import get_user_model
 
@@ -44,12 +45,22 @@ def register(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login(request):
     username = request.data.get('username')
     password = request.data.get('password')
 
-    user = authenticate(username=username, password=password)
+    print("✅ LOGIN HIT")
+    print("USERNAME:", username)
+    print("PASSWORD LENGTH:", len(password) if password else None)
+    
+    User = get_user_model()
+    user = authenticate(request, username=username, password=password)
+
+
+    print("AUTH RESULT:", user)
 
     if user is not None:
         refresh = RefreshToken.for_user(user)
@@ -57,8 +68,6 @@ def login(request):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-
-            # 👇 VERY IMPORTANT
             'user': {
                 'id': user.id,
                 'username': user.username,
@@ -70,7 +79,6 @@ def login(request):
         {'error': 'Invalid username or password'},
         status=status.HTTP_401_UNAUTHORIZED
     )
-
 
 @api_view(['GET'])
 def protected_view(request):
@@ -622,33 +630,50 @@ def get_quiz(request, module_id):
     })
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated, IsEnrolledViaModule])
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def submit_quiz(request, module_id):
-    quiz = Quiz.objects.get(module_id=module_id)
-    answers = request.data.get('answers')
+    """
+    POST /api/modules/<module_id>/quiz/submit/
+    body: { "answers": { "<question_id>": "A", "<question_id>": "B" } }
+    """
+
+    module = get_object_or_404(Module, id=module_id)
+    quiz = get_object_or_404(Quiz, module=module)
+
+    answers = request.data.get("answers", {})
+    if not isinstance(answers, dict):
+        return Response({"error": "Answers must be an object/dictionary"}, status=400)
+
+    questions = Question.objects.filter(quiz=quiz)
+
 
     score = 0
-    for q in quiz.questions.all():
-        if answers.get(str(q.id)) == q.correct_option:
+    total = questions.count()
+
+    for q in questions:
+        selected = answers.get(str(q.id)) or answers.get(q.id)
+        if selected and selected.upper() == q.correct_option.upper():
             score += 1
 
     passed = score >= quiz.pass_marks
 
-    QuizAttempt.objects.update_or_create(
+    # ✅ Save attempt
+    QuizAttempt.objects.create(
         user=request.user,
         quiz=quiz,
-        defaults={
-            'score': score,
-            'passed': passed
-        }
+        score=score,
+        passed=passed
     )
 
     return Response({
+        "quiz_id": quiz.id,
+        "module_id": module_id,
         "score": score,
+        "total_questions": total,
         "passed": passed
-    })
-
+    }, status=status.HTTP_200_OK)
 
 
 
@@ -1051,4 +1076,20 @@ def admin_delete_lesson(request, lesson_id):
 @api_view(["GET", "POST"])
 def module_list(request, course_id):
     modules = Module.objects.filter(course_id=course_id).order_by("order")
+
+    
+@api_view(["PUT", "PATCH"])
+@permission_classes([IsAuthenticated])  # if you have IsAdmin, put it here also
+def admin_update_quiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+
+    serializer = QuizSerializer(
+        quiz,
+        data=request.data,
+        partial=(request.method == "PATCH")
+    )
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response(serializer.data)
     

@@ -11,31 +11,40 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const user = await login(username, password); // 👈 data now exists
+      if (!username || !password) {
+        alert("Enter username and password");
+        return;
+      }
 
-      if (user.is_admin) {
+      // ✅ trim username (important)
+      const user = await login(username.trim(), password);
+
+      if (user?.is_admin) {
         navigate("/admin/dashboard");
       } else {
         navigate("/courses");
       }
-    } catch {
+    } catch (err) {
+      console.log("Login error:", err);
       alert("Invalid credentials");
     }
   };
 
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2>Login</h2>
 
       <input
         placeholder="Username"
-        onChange={e => setUsername(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
 
       <input
         type="password"
         placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
 
       <button onClick={handleLogin}>Login</button>

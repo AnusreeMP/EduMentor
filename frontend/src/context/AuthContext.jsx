@@ -3,45 +3,59 @@ import api from "../api/axios";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [auth, setAuth] = useState({
-    access: localStorage.getItem("access"),
-    isAdmin: localStorage.getItem("isAdmin") === "true",
-    isAuthenticated: !!localStorage.getItem("access"),
-
+    isAuthenticated: false,
+    user: null,
   });
 
-  
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    const access = localStorage.getItem("access");
+    const user = localStorage.getItem("user");
+
+    if (access && user) {
+      setAuth({
+        isAuthenticated: true,
+        user: JSON.parse(user),
+      });
+    }
+
+    setLoadingAuth(false);
+  }, []);
+
   const login = async (username, password) => {
-    const res = await api.post("/login/", { username, password });
+    const res = await api.post("/login/", {
+      username: username.trim(),
+      password,
+    });
 
     localStorage.setItem("access", res.data.access);
-    localStorage.setItem("isAdmin", res.data.user.is_admin);
+    localStorage.setItem("refresh", res.data.refresh);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
 
     setAuth({
-      access: res.data.access,
-      isAdmin: res.data.user.is_admin,
       isAuthenticated: true,
+      user: res.data.user,
     });
 
-    return res.data.user; // 👈 IMPORTANT
+    return res.data.user;
   };
 
-
   const logout = () => {
-    localStorage.clear();
-    setAuth({
-      access: null,
-      isAdmin: false,
-      isAuthenticated: false,
-    });
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("user");
+
+    setAuth({ isAuthenticated: false, user: null });
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, loadingAuth }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);

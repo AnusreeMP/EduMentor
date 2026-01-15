@@ -10,31 +10,23 @@ from .models import Quiz
 from .models import Question
 from .models import QuizAttempt
 from .models import Lesson
-
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    role = serializers.ChoiceField(
-        choices=[('STUDENT', 'Student'), ('ADMIN', 'Admin')],
-        default='STUDENT',
-        write_only=True
-    )
+    role = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'role']
+        fields = ["username", "password", "email", "role"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        role = validated_data.pop('role')
+        role = validated_data.pop("role", "STUDENT")
+        password = validated_data.pop("password")
 
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        user = User(**validated_data)
+        user.set_password(password)   # ✅ IMPORTANT
+        user.save()
 
-        # ✅ Create profile ONLY HERE
         Profile.objects.create(user=user, role=role)
-
         return user
 
 

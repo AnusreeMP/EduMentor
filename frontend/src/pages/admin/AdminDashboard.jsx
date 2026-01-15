@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import { getAdminDashboard } from "../../api/admin";
+import api from "../../api/axios"; // ✅ added
 
 export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
+
   const [stats, setStats] = useState({
     total_courses: 0,
     total_users: 0,
     total_enrollments: 0,
   });
+
   const [recentCourses, setRecentCourses] = useState([]);
+
+  // ✅ NEW: course quiz stats
+  const [courseStats, setCourseStats] = useState({
+    django: null,
+    python: null,
+  });
 
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
+        // ✅ existing dashboard stats
         const res = await getAdminDashboard();
 
         setStats({
@@ -22,6 +32,15 @@ export default function AdminDashboard() {
         });
 
         setRecentCourses(res.data.recent_courses || []);
+
+        // ✅ NEW: quiz stats (Django=8, Python=7)
+        const djangoRes = await api.get("/courses/8/stats/");
+        const pythonRes = await api.get("/courses/7/stats/");
+
+        setCourseStats({
+          django: djangoRes.data,
+          python: pythonRes.data,
+        });
       } catch (err) {
         console.error("Failed to load admin dashboard", err);
       } finally {
@@ -47,6 +66,39 @@ export default function AdminDashboard() {
         <StatCard title="Enrollments" value={stats.total_enrollments} />
       </div>
 
+      {/* ===== QUIZ STATS (NEW) ===== */}
+      <div style={styles.section}>
+        <h3 style={styles.sectionTitle}>Quiz Performance Stats</h3>
+
+        <div style={styles.statsGrid}>
+          <StatCard
+            title="Django Attempts"
+            value={courseStats.django?.total_attempts || 0}
+          />
+          <StatCard
+            title="Django Pass %"
+            value={(courseStats.django?.pass_percentage ?? 0) + "%"}
+          />
+
+          <StatCard
+            title="Python Attempts"
+            value={courseStats.python?.total_attempts || 0}
+          />
+          <StatCard
+            title="Python Pass %"
+            value={(courseStats.python?.pass_percentage ?? 0) + "%"}
+          />
+        </div>
+
+        {/* Optional detailed line */}
+        <p style={{ marginTop: "12px", fontSize: "14px", color: "#6b7280" }}>
+          Django: Passed {courseStats.django?.passed || 0}, Failed{" "}
+          {courseStats.django?.failed || 0} | Python: Passed{" "}
+          {courseStats.python?.passed || 0}, Failed{" "}
+          {courseStats.python?.failed || 0}
+        </p>
+      </div>
+
       {/* ===== RECENT COURSES ===== */}
       <div style={styles.section}>
         <h3 style={styles.sectionTitle}>Recently Added Courses</h3>
@@ -62,12 +114,10 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {recentCourses.map(course => (
+              {recentCourses.map((course) => (
                 <tr key={course.id}>
                   <td style={styles.td}>{course.title}</td>
-                  <td style={styles.td}>
-                    {course.description || "—"}
-                  </td>
+                  <td style={styles.td}>{course.description || "—"}</td>
                 </tr>
               ))}
             </tbody>
@@ -128,6 +178,7 @@ const styles = {
     padding: "26px",
     borderRadius: "14px",
     boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+    marginBottom: "30px",
   },
   sectionTitle: {
     fontSize: "18px",
