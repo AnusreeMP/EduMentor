@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 
 export default function ModuleDetail() {
   const { courseId, moduleId } = useParams();
+  const navigate = useNavigate();
 
   const [module, setModule] = useState(null);
   const [selectedLesson, setSelectedLesson] = useState(null);
 
   const [quiz, setQuiz] = useState(null);
+  const [completedLessonIds, setCompletedLessonIds] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // ✅ Load module + lessons + quiz
   useEffect(() => {
     const fetchModuleData = async () => {
       try {
         const moduleRes = await api.get(`/courses/${courseId}/modules/${moduleId}/`);
         setModule(moduleRes.data);
 
-        // select first lesson by default
         if (moduleRes.data.lessons && moduleRes.data.lessons.length > 0) {
           setSelectedLesson(moduleRes.data.lessons[0]);
         }
@@ -40,17 +43,74 @@ export default function ModuleDetail() {
     fetchModuleData();
   }, [courseId, moduleId]);
 
+  // ✅ Load completed lessons for this module (Coursera feature)
+  useEffect(() => {
+    const fetchCompleted = async () => {
+      try {
+        const res = await api.get(`/modules/${moduleId}/completed-lessons/`);
+        setCompletedLessonIds(res.data.completed_lesson_ids || []);
+      } catch (err) {
+        console.log("Completed lessons error:", err);
+      }
+    };
+
+    fetchCompleted();
+  }, [moduleId]);
+
+  const totalLessons = module?.lessons?.length || 0;
+  const completedCount = useMemo(() => {
+    return module?.lessons?.filter((l) => completedLessonIds.includes(l.id)).length || 0;
+  }, [module, completedLessonIds]);
+
+  const progressPercent = totalLessons === 0 ? 0 : Math.round((completedCount / totalLessons) * 100);
+
   if (loading) return <p>Loading module...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ fontWeight: "700" }}>{module.title}</h2>
+      <h2 style={{ fontWeight: "800" }}>{module.title}</h2>
       <p style={{ color: "#555" }}>{module.description || "—"}</p>
+
+      {/* ✅ Progress Bar */}
+      <div
+        style={{
+          marginTop: "14px",
+          padding: "12px",
+          borderRadius: "12px",
+          border: "1px solid #e5e7eb",
+          background: "#fff",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700 }}>
+          <span>Progress</span>
+          <span>
+            {completedCount}/{totalLessons} ({progressPercent}%)
+          </span>
+        </div>
+
+        <div
+          style={{
+            marginTop: "8px",
+            height: "10px",
+            background: "#e5e7eb",
+            borderRadius: "999px",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              width: `${progressPercent}%`,
+              height: "100%",
+              background: "#22c55e",
+            }}
+          />
+        </div>
+      </div>
 
       <hr />
 
-      {/* ✅ LESSONS UI like Screenshot */}
+      {/* ✅ LESSONS */}
       <h3 style={{ marginBottom: "15px" }}>📚 Lessons</h3>
 
       {(!module.lessons || module.lessons.length === 0) && (
@@ -68,52 +128,66 @@ export default function ModuleDetail() {
               overflow: "hidden",
             }}
           >
-            {module.lessons?.map((lesson, index) => (
-              <div
-                key={lesson.id}
-                onClick={() => setSelectedLesson(lesson)}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "14px 16px",
-                  cursor: "pointer",
-                  borderBottom: "1px solid #eee",
-                  background:
-                    selectedLesson?.id === lesson.id ? "#f0f7ff" : "#fff",
-                }}
-              >
-                <div style={{ display: "flex", gap: "12px" }}>
-                  <div
-                    style={{
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "8px",
-                      background: "#2563eb",
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {index + 1}
-                  </div>
+            {module.lessons?.map((lesson, index) => {
+              const isDone = completedLessonIds.includes(lesson.id);
 
-                  <div>
-                    <div style={{ fontWeight: "600" }}>{lesson.title}</div>
-                    <div style={{ fontSize: "12px", color: "#666" }}>
-                      Lesson #{lesson.order}
+              return (
+                <div
+                  key={lesson.id}
+                  onClick={() => setSelectedLesson(lesson)}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "14px 16px",
+                    cursor: "pointer",
+                    borderBottom: "1px solid #eee",
+                    background: selectedLesson?.id === lesson.id ? "#f0f7ff" : "#fff",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ display: "flex", gap: "12px" }}>
+                    <div
+                      style={{
+                        width: "34px",
+                        height: "34px",
+                        borderRadius: "10px",
+                        background: isDone ? "#22c55e" : "#2563eb",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: "800",
+                      }}
+                    >
+                      {isDone ? "✓" : index + 1}
+                    </div>
+
+                    <div>
+                      <div style={{ fontWeight: "700" }}>{lesson.title}</div>
+                      <div style={{ fontSize: "12px", color: "#666" }}>Lesson #{lesson.order}</div>
                     </div>
                   </div>
-                </div>
 
-                <span style={{ color: "#999" }}>▶</span>
-              </div>
-            ))}
+                  {/* ✅ Badge */}
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "800",
+                      padding: "6px 10px",
+                      borderRadius: "999px",
+                      background: isDone ? "#dcfce7" : "#fef9c3",
+                      color: isDone ? "#166534" : "#854d0e",
+                    }}
+                  >
+                    {isDone ? "Completed" : "Pending"}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* RIGHT: lesson content + video */}
+        {/* RIGHT: lesson preview */}
         <div style={{ flex: 1 }}>
           {!selectedLesson ? (
             <p>Select a lesson to view details</p>
@@ -126,16 +200,33 @@ export default function ModuleDetail() {
                 background: "#fff",
               }}
             >
-              <h4 style={{ fontWeight: "700" }}>{selectedLesson.title}</h4>
+              {/* ✅ Title + Start Button */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <h4 style={{ fontWeight: "800", margin: 0 }}>{selectedLesson.title}</h4>
+
+                <button
+                  className="btn btn-success"
+                  onClick={() => navigate(`/lessons/${selectedLesson.id}`)}
+                >
+                  Start Lesson →
+                </button>
+              </div>
 
               <p style={{ color: "#444", marginTop: "10px" }}>
                 {selectedLesson.content || "No lesson content available."}
               </p>
 
-              {/* ✅ Lesson Video */}
+              {/* ✅ Video Preview */}
               {selectedLesson.video_url ? (
                 <div style={{ marginTop: "15px" }}>
-                  <h6 style={{ fontWeight: "600" }}>🎥 Lesson Video</h6>
+                  <h6 style={{ fontWeight: "700" }}>🎥 Lesson Video</h6>
                   <div className="ratio ratio-16x9">
                     <iframe
                       src={selectedLesson.video_url}

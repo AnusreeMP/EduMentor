@@ -81,6 +81,10 @@ export default function Navbar() {
           Home
         </NavLink>
 
+        <NavLink to="/dashboard" style={activeLinkStyle}>
+          Dashboard
+        </NavLink>
+
         <NavLink to="/courses" style={activeLinkStyle}>
           Courses
         </NavLink>

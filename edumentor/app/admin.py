@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (Profile,Course,Module,Video,VideoProgress,Enrollment,Quiz,Question,QuizAttempt,Certificate,
+from .models import (Profile,Course,Module,Video,VideoProgress,Enrollment,Quiz,Question,QuizAttempt,Certificate,Lesson
 )
 
 # --------------------
@@ -37,7 +37,7 @@ class ModuleAdmin(admin.ModelAdmin):
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "module", "order", "duration")
-    list_filter = ("module",)
+    list_filter = ("module", "module__course")   # ✅ add this
     search_fields = ("title",)
     ordering = ("module", "order")
 
@@ -94,3 +94,10 @@ class QuizAttemptAdmin(admin.ModelAdmin):
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     list_display = ("user", "course", "certificate_id", "issued_at")
+
+
+# --------------------
+# Lesson
+@admin.register(Lesson)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ("id", "module", "title", "order")

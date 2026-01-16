@@ -51,12 +51,12 @@ class CourseSerializer(serializers.ModelSerializer):
         ).exists()
 
 class LessonSerializer(serializers.ModelSerializer):
+    module_id = serializers.IntegerField(source="module.id", read_only=True)
+    course_id = serializers.IntegerField(source="module.course.id", read_only=True)
+
     class Meta:
         model = Lesson
-        fields = "__all__"
-        extra_kwargs = {
-            "module": {"required": False}
-        }
+        fields = ["id", "title", "content", "video_url", "order", "module_id", "course_id"]
 
 
 
@@ -129,5 +129,75 @@ class UserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_active",
         ]
+
+class MiniCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ["id", "title", "description"]
+
+
+class MyEnrollmentSerializer(serializers.ModelSerializer):
+    course = MiniCourseSerializer(read_only=True)
+
+    progress = serializers.SerializerMethodField()
+    total_lessons = serializers.SerializerMethodField()
+    completed_lessons = serializers.SerializerMethodField()
+    last_lesson_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Enrollment
+        fields = [
+            "id",
+            "course",
+            "is_active",
+            "progress",
+            "completed_lessons",
+            "total_lessons",
+            "last_lesson_id",
+        ]
+
+    def get_total_lessons(self, obj):
+        return Lesson.objects.filter(module__course=obj.course).count()
+
+    def get_completed_lessons(self, obj):
+        user = obj.user
+        lessons = Lesson.objects.filter(module__course=obj.course).values_list("id", flat=True)
+
+        # ✅ Completed = watched progress exists and marked completed
+        return VideoProgress.objects.filter(
+            user=user,
+            video_id__in=lessons,
+            is_completed=True
+        ).count()
+
+    def get_progress(self, obj):
+        total = self.get_total_lessons(obj)
+        if total == 0:
+            return 0
+        completed = self.get_completed_lessons(obj)
+        return int((completed / total) * 100)
+
+    def get_last_lesson_id(self, obj):
+        user = obj.user
+        last = VideoProgress.objects.filter(
+            user=user,
+            video__module__course=obj.course
+        ).order_by("-id").first()
+
+        return last.video_id if last else None
+
+
+    def get_progress(self, obj):
+        """
+        ✅ Return progress percentage for dashboard.
+        If you already have course_progress API, you can compute here later.
+        For now, return 0 or stored progress field if exists.
+        """
+        # if your Enrollment model has progress field:
+        if hasattr(obj, "progress") and obj.progress is not None:
+            return obj.progress
+
+        # else default 0
+        return 0
 
 

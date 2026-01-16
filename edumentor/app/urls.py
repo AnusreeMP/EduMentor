@@ -23,7 +23,8 @@ urlpatterns = [
    
     path('courses/<int:course_id>/modules/<int:module_id>/videos/',video_view), 
     path('courses/<int:course_id>/modules/<int:module_id>/videos/<int:video_id>/',video_view),
-    path('videos/<int:video_id>/progress/',video_progress_view), 
+    path("video-progress/<int:video_id>/", views.video_progress_view),
+
     path('modules/<int:module_id>/videos/',views.module_videos, name='module-videos'),
     path('modules/<int:module_id>/detail/',views.module_detail, name='module-detail'),
     path('courses/<int:course_id>/enroll/',enrollment_view),
@@ -55,6 +56,14 @@ urlpatterns = [
 
     path("courses/<int:course_id>/modules/", course_modules),
     path("courses/<int:course_id>/modules/<int:module_id>/", views.course_module_detail),
+    path("my-enrollments/", views.my_enrollments, name="my_enrollments"),
+    path("enroll/<int:course_id>/", views.enroll_course, name="enroll_course"),
+    path("lessons/<int:lesson_id>/", views.lesson_detail),
+    path("modules/<int:module_id>/lessons/", views.module_lessons),
+    path("modules/<int:module_id>/completed-lessons/", views.module_completed_lessons),
+
+
+
 
 
 

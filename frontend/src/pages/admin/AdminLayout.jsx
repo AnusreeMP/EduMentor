@@ -20,32 +20,39 @@ export default function AdminLayout() {
           <nav style={styles.nav}>
             <NavLink
               to="/admin/dashboard"
-              style={({ isActive }) =>
-                isActive ? styles.activeLink : styles.link
-              }
+              style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
             >
               Dashboard
             </NavLink>
 
             <NavLink
               to="/admin/courses"
-              style={({ isActive }) =>
-                isActive ? styles.activeLink : styles.link
-              }
+              style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
             >
               Courses
             </NavLink>
 
             <NavLink
               to="/admin/users"
-              style={({ isActive }) =>
-                isActive ? styles.activeLink : styles.link
-              }
+              style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
             >
               Users
             </NavLink>
+
+            {/* ✅ FIXED LESSONS LINK */}
+            <NavLink
+              to="/admin/lessons"
+              style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
+            >
+              Lessons
+            </NavLink>
           </nav>
         </div>
+
+        {/* ✅ LOGOUT BUTTON ADDED (you already have styles) */}
+        <button style={styles.logoutBtn} onClick={handleLogout}>
+          Logout
+        </button>
       </aside>
 
       {/* ===== MAIN CONTENT ===== */}
@@ -117,7 +124,7 @@ const styles = {
     padding: "10px",
     borderRadius: "10px",
     cursor: "pointer",
-    fontWeight: "500",
+    fontWeight: "600",
   },
 
   /* MAIN AREA */

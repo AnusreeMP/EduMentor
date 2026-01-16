@@ -12,9 +12,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from .models import Profile
-from .models import Course, Module, Video, VideoProgress, Enrollment
+from .models import Course, Module, Video, Enrollment,Lesson, VideoProgress
 from .models import Quiz, Question, QuizAttempt
-from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer,LessonSerializer
+from .serializers import RegisterSerializer,CourseSerializer, ModuleSerializer, VideoSerializer,VideoProgressSerializer,EnrollmentSerializer,QuizSerializer,QuestionSerializer,QuizAttemptSerializer,StudentQuestionSerializer,AdminQuestionSerializer,UserSerializer,LessonSerializer,MyEnrollmentSerializer
 from django.contrib.auth import get_user_model
 
 
@@ -677,7 +677,7 @@ def submit_quiz(request, module_id):
 
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def generate_certificate(request, course_id):
     user = request.user
@@ -700,22 +700,34 @@ def generate_certificate(request, course_id):
     if not quiz_attempt:
         return HttpResponse("Quiz not passed", status=403)
 
-    # 3️⃣ Create or get certificate
+    # 3️⃣ Check lessons completed ✅ (MUST BE BEFORE CERTIFICATE)
+    total_lessons = Lesson.objects.filter(module__course_id=course_id).count()
+
+    completed_lessons = VideoProgress.objects.filter(
+        user=user,
+        lesson__module__course_id=course_id,
+        is_completed=True
+    ).count()
+
+    if total_lessons == 0:
+        return HttpResponse("No lessons found", status=400)
+
+    if completed_lessons != total_lessons:
+        return HttpResponse("Lessons not completed", status=403)
+
+    # 4️⃣ Create or get certificate ✅ (ONLY AFTER ALL CHECKS PASS)
     certificate, created = Certificate.objects.get_or_create(
         user=user,
         course_id=course_id,
-        defaults={
-            "certificate_id": str(uuid.uuid4())
-        }
+        defaults={"certificate_id": str(uuid.uuid4())[:12].upper()}
     )
 
     course = Course.objects.get(id=course_id)
 
-    # 4️⃣ Create PDF response
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="certificate.pdf"'
+    # 5️⃣ Create PDF response
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="certificate.pdf"'
 
-    # ✅ THIS LINE WAS MISSING BEFORE
     p = canvas.Canvas(response, pagesize=A4)
     width, height = A4
 
@@ -765,62 +777,51 @@ def generate_certificate(request, course_id):
     p.line(width - 250, 140, width - 80, 140)
     p.drawString(width - 230, 120, "Authorized Signature")
 
-    # Finish PDF
     p.showPage()
     p.save()
 
     return response
 
-
-
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def course_progress(request, course_id):
     user = request.user
 
-    # 1️⃣ Check enrollment
-    if not Enrollment.objects.filter(
+    # ✅ total lessons from Lesson model
+    total_lessons = Lesson.objects.filter(module__course_id=course_id).count()
+
+    # ✅ completed lessons from VideoProgress (video is linked)
+    completed_lessons = VideoProgress.objects.filter(
         user=user,
-        course_id=course_id,
-        is_active=True
-    ).exists():
-        return Response(
-            {"error": "Not enrolled in this course"},
-            status=403
-        )
+        video__module__course_id=course_id,
+        is_completed=True
+    ).count()
 
-    # 2️⃣ Total modules in course
-    total_modules = Module.objects.filter(course_id=course_id).count()
+    progress_percent = 0
+    if total_lessons > 0:
+        progress_percent = int((completed_lessons / total_lessons) * 100)
 
-    if total_modules == 0:
-        return Response({
-            "course_id": course_id,
-            "progress": 0,
-            "completed_modules": 0,
-            "total_modules": 0,
-            "completed": False
-        })
-
-    # 3️⃣ Passed quizzes (completed modules)
-    completed_modules = QuizAttempt.objects.filter(
+    # ✅ quiz passed
+    quiz_passed = QuizAttempt.objects.filter(
         user=user,
         quiz__module__course_id=course_id,
         passed=True
-    ).count()
+    ).exists()
 
-    # 4️⃣ Progress calculation
-    progress_percentage = int((completed_modules / total_modules) * 100)
+    completed = total_lessons > 0 and completed_lessons == total_lessons
 
-    # 5️⃣ Completion status
-    completed = completed_modules == total_modules
+    certificate_available = completed and quiz_passed
 
     return Response({
-        "course_id": course_id,
-        "completed_modules": completed_modules,
-        "total_modules": total_modules,
-        "progress": progress_percentage,
-        "completed": completed
+        "progress": progress_percent,
+        "videos_completed": completed_lessons,   # ✅ keep frontend same keys
+        "total_videos": total_lessons,
+        "quiz_passed": quiz_passed,
+        "completed": completed,
+        "certificate_available": certificate_available
     })
+
+
 
 
 @api_view(['GET'])
@@ -1093,3 +1094,62 @@ def admin_update_quiz(request, quiz_id):
 
     return Response(serializer.data)
     
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def my_enrollments(request):
+    enrollments = Enrollment.objects.filter(
+        user=request.user,
+        is_active=True
+    ).select_related("course")
+
+    serializer = MyEnrollmentSerializer(enrollments, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def enroll_course(request, course_id):
+    user = request.user
+
+    # ✅ Only students can enroll (optional)
+    if hasattr(user, "profile") and user.profile.role != "STUDENT":
+        return Response({"error": "Only students can enroll"}, status=403)
+
+    enrollment, created = Enrollment.objects.get_or_create(
+        user=user,
+        course_id=course_id
+    )
+
+    if not created:
+        return Response({"message": "Already enrolled"}, status=200)
+
+    return Response({"message": "Enrolled successfully"}, status=201)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def lesson_detail(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    serializer = LessonSerializer(lesson)
+    return Response(serializer.data, status=200)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def module_lessons(request, module_id):
+    lessons = Lesson.objects.filter(module_id=module_id).order_by("order")
+    serializer = LessonSerializer(lessons, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def module_completed_lessons(request, module_id):
+    """
+    ✅ Returns list of lesson IDs completed by logged user for this module
+    """
+    completed_ids = VideoProgress.objects.filter(
+        user=request.user,
+        video__module_id=module_id,
+        is_completed=True
+    ).values_list("video_id", flat=True)
+
+    return Response({"completed_lesson_ids": list(completed_ids)})

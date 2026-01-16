@@ -29,6 +29,12 @@ import AdminLessons from "./pages/admin/Lessons/AdminLessons";
 import AddLesson from "./pages/admin/Lessons/AddLesson";
 import EditLesson from "./pages/admin/Lessons/EditLesson";
 import AdminStats from "./pages/admin/AdminStats";
+import StudentDashboard from "./pages/student/Dashboard";
+import LessonPlayer from "./pages/lesson/LessonPlayer";
+import Lessons from "./pages/admin/Lessons/Lessons";
+
+
+
 
 
 
@@ -140,6 +146,13 @@ export default function App() {
           <Route path="/admin/modules/:moduleId/lessons/add" element={<AddLesson />} />
           <Route path="/admin/modules/:moduleId/lessons/edit/:lessonId" element={<EditLesson />} />
           <Route path="/admin/dashboard" element={<AdminStats />} />
+          <Route path="/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+          <Route path="/lessons/:lessonId" element={<ProtectedRoute><LessonPlayer /></ProtectedRoute>} />
+          <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+          <Route path="/admin/lessons" element={<AdminRoute><Lessons /> </AdminRoute>} />
+
+
+
 
 
 

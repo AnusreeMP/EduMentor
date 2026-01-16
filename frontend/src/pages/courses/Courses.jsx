@@ -29,11 +29,10 @@ export default function CoursePage() {
     fetchCourses();
   }, []);
 
-  // ✅ FILTER + SEARCH (Smart)
+  // ✅ FILTER + SEARCH
   const filteredCourses = useMemo(() => {
     let list = [...courses];
 
-    // ✅ Category filter (works even without backend category)
     if (category !== "All") {
       const cat = category.toLowerCase();
 
@@ -42,10 +41,10 @@ export default function CoursePage() {
         const desc = (c.description || "").toLowerCase();
         const text = `${title} ${desc}`.trim();
 
-        // 1) If backend has category field
+        // backend category
         if ((c.category || "").toLowerCase() === cat) return true;
 
-        // 2) Keyword based category filter
+        // keyword filters
         if (cat === "programming")
           return (
             text.includes("python") ||
@@ -83,7 +82,6 @@ export default function CoursePage() {
       });
     }
 
-    // ✅ Search filter
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter((c) => {
@@ -100,51 +98,63 @@ export default function CoursePage() {
 
   return (
     <div style={styles.page}>
+      {/* ✅ HERO HEADER */}
+      <div style={styles.hero}>
+        <div>
+          <h2 style={styles.heroTitle}>Explore Courses 📚</h2>
+          <p style={styles.heroSub}>
+            Learn job-ready skills with structured modules and lessons.
+          </p>
 
-      {/* Header */}
-      <div style={styles.header}>
-        <h2 style={styles.title}>Explore Courses</h2>
-        <p style={styles.subTitle}>
-          Find the perfect course to advance your skills
-        </p>
-      </div>
+          {/* Search */}
+          <div style={styles.searchWrap}>
+            <div style={styles.searchBox}>
+              <span style={styles.searchIcon}>🔍</span>
+              <input
+                style={styles.searchInput}
+                placeholder="Search for courses, skills..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
 
-      {/* Search */}
-      <div style={styles.searchWrap}>
-        <div style={styles.searchBox}>
-          <span style={styles.searchIcon}>🔍</span>
-          <input
-            style={styles.searchInput}
-            placeholder="Search for courses, skills..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+            <div style={styles.countPill}>
+              Showing <b>{filteredCourses.length}</b> courses
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* ✅ Layout */}
       <div style={styles.layout}>
         {/* Left Filters */}
         <div style={styles.filtersCard}>
           <div style={styles.filterHeader}>
-            <span style={{ fontSize: "18px" }}>⚙️</span>
-            <h3 style={{ margin: 0 }}>Filters</h3>
+            <div style={styles.filterIcon}>⚙️</div>
+            <div>
+              <h3 style={styles.filterTitle}>Filters</h3>
+              <p style={styles.filterSub}>Choose category & search</p>
+            </div>
           </div>
 
           <div style={styles.filterSection}>
             <p style={styles.filterLabel}>Category</p>
 
             {categories.map((cat) => (
-              <label key={cat} style={styles.radioRow}>
-                <input
-                  type="radio"
-                  checked={category === cat}
-                  onChange={() => setCategory(cat)}
-                />
-                <span style={{ marginLeft: "10px" }}>{cat}</span>
-              </label>
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                style={{
+                  ...styles.catBtn,
+                  background: category === cat ? "#4f46e5" : "white",
+                  color: category === cat ? "white" : "#0f172a",
+                  border: category === cat ? "1px solid #4f46e5" : "1px solid #e2e8f0",
+                }}
+              >
+                {cat}
+              </button>
             ))}
 
-            {/* ✅ Clear */}
             <button
               onClick={() => {
                 setCategory("All");
@@ -152,26 +162,31 @@ export default function CoursePage() {
               }}
               style={styles.clearBtn}
             >
-              Clear Filters
+              Clear Filters ✨
             </button>
           </div>
         </div>
 
-        {/* Right Cards */}
+        {/* Right Content */}
         <div style={styles.content}>
-          <p style={styles.countText}>
-            Showing <b>{filteredCourses.length}</b> courses
-          </p>
-
-          <div style={styles.grid}>
-            {filteredCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onClick={() => navigate(`/courses/${course.id}`)}
-              />
-            ))}
-          </div>
+          {filteredCourses.length === 0 ? (
+            <div style={styles.emptyCard}>
+              <h3 style={{ margin: 0 }}>No courses found 😢</h3>
+              <p style={{ marginTop: 8, color: "#64748b", fontWeight: 700 }}>
+                Try changing your search or category.
+              </p>
+            </div>
+          ) : (
+            <div style={styles.grid}>
+              {filteredCourses.map((course) => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  onClick={() => navigate(`/courses/${course.id}`)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -198,7 +213,7 @@ function generateTagsFromCourse(course) {
   return tags.slice(0, 3);
 }
 
-/* ✅ Course Card (Django/Python separate image) */
+/* ✅ Course Card */
 function CourseCard({ course, onClick }) {
   const title = (course.title || "").toLowerCase();
 
@@ -228,7 +243,18 @@ function CourseCard({ course, onClick }) {
     <div style={styles.card} onClick={onClick}>
       <div style={styles.cardImgWrap}>
         <img src={img} alt={course.title} style={styles.cardImg} />
+
         <span style={styles.badge}>{badge}</span>
+
+        <span
+          style={{
+            ...styles.typePill,
+            background: course.is_premium ? "#fee2e2" : "#dcfce7",
+            color: course.is_premium ? "#991b1b" : "#166534",
+          }}
+        >
+          {course.is_premium ? "⭐ Premium" : "✅ Free"}
+        </span>
       </div>
 
       <div style={styles.cardBody}>
@@ -252,87 +278,157 @@ function CourseCard({ course, onClick }) {
             ))
           )}
         </div>
+
+        <button style={styles.openBtn}>View Course →</button>
       </div>
     </div>
   );
 }
-<div className="pt-20">
-  ...
-</div>
 
-
-/* ===== Styles ===== */
+/* ✅ Styles */
 const styles = {
-  page: { padding: "30px", background: "#f5f9ff", minHeight: "100vh" },
+  page: {
+    padding: "26px",
+    minHeight: "100vh",
+    background:
+      "radial-gradient(circle at top, rgba(79,70,229,0.14), transparent 45%), linear-gradient(180deg, #f8fafc, #eef2ff)",
+  },
 
-  header: { marginBottom: "18px" },
-  title: { fontSize: "30px", fontWeight: "800", margin: 0, color: "#0f172a" },
-  subTitle: { marginTop: "6px", color: "#64748b", fontSize: "15px" },
+  hero: {
+    padding: "22px",
+    borderRadius: "22px",
+    background:
+      "linear-gradient(135deg, rgba(79,70,229,0.92), rgba(124,58,237,0.92))",
+    boxShadow: "0 18px 45px rgba(2,6,23,0.18)",
+    color: "white",
+    marginBottom: "18px",
+  },
 
-  searchWrap: { marginTop: "18px", marginBottom: "22px" },
+  heroTitle: { margin: 0, fontSize: "28px", fontWeight: "900" },
+  heroSub: { marginTop: "8px", marginBottom: "14px", opacity: 0.9, fontWeight: "600" },
+
+  searchWrap: {
+    display: "flex",
+    gap: "12px",
+    flexWrap: "wrap",
+    alignItems: "center",
+  },
+
   searchBox: {
-    background: "#fff",
+    background: "rgba(255,255,255,0.18)",
+    border: "1px solid rgba(255,255,255,0.22)",
     borderRadius: "16px",
-    padding: "14px 16px",
+    padding: "12px 14px",
     display: "flex",
     alignItems: "center",
     gap: "10px",
-    boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
-    maxWidth: "780px",
+    width: "100%",
+    maxWidth: "620px",
+    backdropFilter: "blur(12px)",
   },
-  searchIcon: { fontSize: "18px", color: "#64748b" },
+
+  searchIcon: { fontSize: "18px" },
   searchInput: {
     width: "100%",
     border: "none",
     outline: "none",
     fontSize: "15px",
-    color: "#0f172a",
+    color: "white",
+    background: "transparent",
+    fontWeight: "600",
+  },
+
+  countPill: {
+    padding: "10px 14px",
+    borderRadius: "999px",
+    background: "rgba(255,255,255,0.20)",
+    border: "1px solid rgba(255,255,255,0.25)",
+    fontWeight: "800",
   },
 
   layout: {
     display: "grid",
     gridTemplateColumns: "320px 1fr",
-    gap: "24px",
+    gap: "18px",
     alignItems: "start",
   },
 
   filtersCard: {
-    background: "#fff",
+    background: "rgba(255,255,255,0.92)",
     borderRadius: "18px",
     padding: "18px",
-    boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+    boxShadow: "0 18px 40px rgba(2,6,23,0.10)",
+    border: "1px solid rgba(148,163,184,0.25)",
   },
-  filterHeader: { display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" },
-  filterSection: { marginTop: "14px" },
-  filterLabel: { fontSize: "14px", fontWeight: "700", color: "#0f172a", marginBottom: "10px" },
-  radioRow: { display: "flex", alignItems: "center", padding: "6px 0", color: "#334155", fontSize: "14px" },
+
+  filterHeader: { display: "flex", gap: "12px", alignItems: "center" },
+  filterIcon: {
+    width: "46px",
+    height: "46px",
+    borderRadius: "16px",
+    background: "#A7F3D0",
+    display: "grid",
+    placeItems: "center",
+    fontSize: "18px",
+    boxShadow: "0 14px 26px rgba(0,0,0,0.10)",
+  },
+  filterTitle: { margin: 0, fontWeight: "900", color: "#0f172a" },
+  filterSub: { margin: "4px 0 0", color: "#64748b", fontWeight: "700", fontSize: "13px" },
+
+  filterSection: { marginTop: "16px" },
+  filterLabel: { fontSize: "13px", fontWeight: "900", color: "#0f172a", marginBottom: "10px" },
+
+  catBtn: {
+    width: "100%",
+    textAlign: "left",
+    padding: "10px 12px",
+    borderRadius: "14px",
+    marginBottom: "10px",
+    fontWeight: "800",
+    cursor: "pointer",
+  },
 
   clearBtn: {
-    marginTop: "15px",
+    marginTop: "6px",
     width: "100%",
-    padding: "10px",
-    borderRadius: "10px",
+    padding: "11px",
+    borderRadius: "14px",
     border: "none",
-    background: "#2563eb",
+    background: "#0f172a",
     color: "white",
-    fontWeight: "700",
+    fontWeight: "900",
     cursor: "pointer",
   },
 
   content: { width: "100%" },
-  countText: { color: "#334155", marginBottom: "16px" },
 
-  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "20px" },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: "16px",
+  },
+
+  emptyCard: {
+    padding: "18px",
+    borderRadius: "18px",
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid rgba(148,163,184,0.25)",
+    boxShadow: "0 18px 40px rgba(2,6,23,0.08)",
+  },
 
   card: {
-    background: "#fff",
+    background: "rgba(255,255,255,0.92)",
     borderRadius: "18px",
     overflow: "hidden",
     cursor: "pointer",
-    boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+    boxShadow: "0 16px 40px rgba(2,6,23,0.10)",
+    border: "1px solid rgba(148,163,184,0.25)",
+    transition: "0.2s ease",
   },
+
   cardImgWrap: { position: "relative" },
   cardImg: { width: "100%", height: "190px", objectFit: "cover", display: "block" },
+
   badge: {
     position: "absolute",
     top: "14px",
@@ -341,18 +437,59 @@ const styles = {
     padding: "6px 12px",
     borderRadius: "999px",
     fontSize: "13px",
-    fontWeight: "700",
+    fontWeight: "800",
+    boxShadow: "0 8px 18px rgba(0,0,0,0.15)",
+  },
+
+  typePill: {
+    position: "absolute",
+    left: "14px",
+    top: "14px",
+    padding: "6px 12px",
+    borderRadius: "999px",
+    fontSize: "13px",
+    fontWeight: "900",
     boxShadow: "0 8px 18px rgba(0,0,0,0.15)",
   },
 
   cardBody: { padding: "16px 18px 18px" },
-  cardTitle: { fontSize: "18px", fontWeight: "800", color: "#0f172a", margin: "0 0 10px 0" },
 
-  metaRow: { display: "flex", gap: "16px", alignItems: "center", fontSize: "14px", color: "#334155", marginBottom: "14px" },
+  cardTitle: { fontSize: "18px", fontWeight: "900", color: "#0f172a", margin: "0 0 10px 0" },
+
+  metaRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "12px",
+    alignItems: "center",
+    fontSize: "14px",
+    color: "#334155",
+    marginBottom: "12px",
+    fontWeight: "700",
+  },
+
   metaItem: { display: "flex", gap: "6px", alignItems: "center" },
   metaSub: { color: "#64748b" },
 
-  tagRow: { display: "flex", gap: "10px", flexWrap: "wrap" },
-  tag: { background: "#eaf2ff", color: "#2563eb", fontSize: "13px", padding: "6px 12px", borderRadius: "999px", fontWeight: "700" },
-  noTag: { color: "#64748b", fontSize: "13px" },
+  tagRow: { display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "14px" },
+  tag: {
+    background: "#eef2ff",
+    color: "#4f46e5",
+    fontSize: "13px",
+    padding: "6px 12px",
+    borderRadius: "999px",
+    fontWeight: "800",
+  },
+  noTag: { color: "#64748b", fontSize: "13px", fontWeight: "800" },
+
+  openBtn: {
+    width: "100%",
+    border: "none",
+    background: "#4f46e5",
+    color: "white",
+    padding: "12px",
+    borderRadius: "14px",
+    fontWeight: "900",
+    cursor: "pointer",
+    boxShadow: "0 16px 30px rgba(79,70,229,0.22)",
+  },
 };
