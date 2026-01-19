@@ -53,10 +53,11 @@ class CourseSerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.ModelSerializer):
     module_id = serializers.IntegerField(source="module.id", read_only=True)
     course_id = serializers.IntegerField(source="module.course.id", read_only=True)
+    video_id = serializers.IntegerField(source="video.id", read_only=True)
 
     class Meta:
         model = Lesson
-        fields = ["id", "title", "content", "video_url", "order", "module_id", "course_id"]
+        fields = ["id", "title", "content", "video_url", "order", "module_id", "course_id","video_id"]
 
 
 

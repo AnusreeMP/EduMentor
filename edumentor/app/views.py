@@ -461,6 +461,39 @@ def video_view(request, course_id=None, module_id=None, video_id=None):
         video.delete()
         return Response({"message": "Video deleted successfully"})
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def video_list(request):
+    videos = Video.objects.all().order_by("module_id", "order")
+    data = [
+        {
+            "id": v.id,
+            "title": v.title,
+            "module": v.module.title,
+            "video_url": v.video_url,
+            "order": v.order,
+        }
+        for v in videos
+    ]
+    return Response(data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def lesson_video_urls(request):
+    lessons = Lesson.objects.all().order_by("module_id", "order")
+    data = [
+        {
+            "lesson_id": l.id,
+            "title": l.title,
+            "lesson_video_url": l.video_url,
+            "video_id": l.video.id if l.video else None,
+        }
+        for l in lessons
+    ]
+    return Response(data)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def video_progress_view(request, video_id):

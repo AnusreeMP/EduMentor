@@ -6,7 +6,7 @@ from app.views import module_view
 from app.views import video_view
 from app.views import video_progress_view
 from app.views import enrollment_view
-from app.views import create_quiz, get_quiz,submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules,admin_update_quiz
+from app.views import create_quiz, get_quiz,submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules,admin_update_quiz,video_list,lesson_video_urls
 
 
 
@@ -22,6 +22,8 @@ urlpatterns = [
 
    
     path('courses/<int:course_id>/modules/<int:module_id>/videos/',video_view), 
+    path("videos/", video_list),
+    path("lesson-video-urls/", lesson_video_urls), 
     path('courses/<int:course_id>/modules/<int:module_id>/videos/<int:video_id>/',video_view),
     path("video-progress/<int:video_id>/", views.video_progress_view),
 
