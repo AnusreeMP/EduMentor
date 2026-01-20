@@ -10,6 +10,7 @@ export default function Progress() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // ✅ Fetch progress
   useEffect(() => {
     const fetchProgress = async () => {
       try {
@@ -25,6 +26,11 @@ export default function Progress() {
 
     fetchProgress();
   }, [courseId]);
+
+  // ✅ OPEN FRONTEND CERTIFICATE PAGE (NO BACKEND PDF)
+  const openCertificate = () => {
+    navigate(`/courses/${courseId}/certificate`);
+  };
 
   if (loading) return <p style={{ padding: 30 }}>Loading progress...</p>;
   if (error) return <p style={{ padding: 30, color: "red" }}>{error}</p>;
@@ -43,10 +49,7 @@ export default function Progress() {
           </p>
         </div>
 
-        <button
-          style={styles.backBtn}
-          onClick={() => navigate(`/courses/${courseId}`)}
-        >
+        <button style={styles.backBtn} onClick={() => navigate(`/courses/${courseId}`)}>
           ← Back to Course
         </button>
       </div>
@@ -76,9 +79,7 @@ export default function Progress() {
               <div
                 style={{
                   ...styles.ringFill,
-                  background: `conic-gradient(#4f46e5 ${
-                    percent * 3.6
-                  }deg, #e2e8f0 0deg)`,
+                  background: `conic-gradient(#4f46e5 ${percent * 3.6}deg, #e2e8f0 0deg)`,
                 }}
               />
             </div>
@@ -90,11 +91,9 @@ export default function Progress() {
                 <div style={{ ...styles.barFill, width: `${percent}%` }} />
               </div>
 
-              {/* ✅ Handles both old backend fields + new backend fields */}
               <p style={styles.smallText}>
                 {(progress.videos_completed ?? progress.lessons_completed ?? 0)} /{" "}
-                {(progress.total_videos ?? progress.total_lessons ?? 0)} lessons
-                completed
+                {(progress.total_videos ?? progress.total_lessons ?? 0)} lessons completed
               </p>
 
               <button
@@ -104,19 +103,10 @@ export default function Progress() {
                 Continue Learning →
               </button>
 
-              {/* ✅ CERTIFICATE DOWNLOAD BUTTON */}
+              {/* ✅ VIEW CERTIFICATE BUTTON (Frontend Certificate Page) */}
               {progress.certificate_available && (
-                <button
-                  style={styles.certificateBtn}
-                  onClick={() => {
-                    // ✅ Your certificate API is GET and returns PDF
-                    window.open(
-                      `http://127.0.0.1:8000/api/courses/${courseId}/certificate/`,
-                      "_blank"
-                    );
-                  }}
-                >
-                  🎓 Download Certificate
+                <button style={styles.certificateBtn} onClick={openCertificate}>
+                  🎓 View Certificate
                 </button>
               )}
             </div>

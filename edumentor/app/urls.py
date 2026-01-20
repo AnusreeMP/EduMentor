@@ -6,7 +6,7 @@ from app.views import module_view
 from app.views import video_view
 from app.views import video_progress_view
 from app.views import enrollment_view
-from app.views import create_quiz, get_quiz,submit_quiz, add_question, generate_certificate, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules,admin_update_quiz,video_list,lesson_video_urls
+from app.views import create_quiz, get_quiz,submit_quiz, add_question, course_progress,course_analytics,top_students,course_pass_fail_stats,admin_dashboard_stats,admin_courses,admin_course_detail,admin_users,toggle_user_active,admin_modules,admin_module_detail,admin_lessons,admin_add_lesson,admin_edit_lesson,admin_delete_lesson,module_list,course_list,admin_module_detail,course_modules,admin_update_quiz,video_list,lesson_video_urls
 
 
 
@@ -37,7 +37,6 @@ urlpatterns = [
     path('quizzes/<int:quiz_id>/questions/', views.quiz_questions),
     path("modules/<int:module_id>/quiz/submit/", submit_quiz),
     path('quizzes/<int:quiz_id>/questions/add/', add_question),
-    path('courses/<int:course_id>/certificate/', generate_certificate),
     path("courses/<int:course_id>/progress/", course_progress),
     path("admin/courses/<int:course_id>/analytics/", course_analytics),
     path("admin/courses/<int:course_id>/top-students/", top_students),

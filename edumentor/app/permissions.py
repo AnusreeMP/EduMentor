@@ -54,3 +54,16 @@ class IsEnrolledViaModule(BasePermission):
             course=module.course,
             is_active=True
         ).exists()
+
+class IsAdminUser(BasePermission):
+    def has_permission(self, request, view):
+        # ✅ must be logged in
+        if not request.user or not request.user.is_authenticated:
+            return False
+
+        # ✅ profile may not exist → avoid crashing
+        profile = getattr(request.user, "profile", None)
+        if not profile:
+            return False
+
+        return profile.role == "ADMIN"

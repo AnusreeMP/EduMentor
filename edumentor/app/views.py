@@ -662,16 +662,9 @@ def get_quiz(request, module_id):
         "questions": serializer.data
     })
 
-
-
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def submit_quiz(request, module_id):
-    """
-    POST /api/modules/<module_id>/quiz/submit/
-    body: { "answers": { "<question_id>": "A", "<question_id>": "B" } }
-    """
-
     module = get_object_or_404(Module, id=module_id)
     quiz = get_object_or_404(Quiz, module=module)
 
@@ -680,7 +673,6 @@ def submit_quiz(request, module_id):
         return Response({"error": "Answers must be an object/dictionary"}, status=400)
 
     questions = Question.objects.filter(quiz=quiz)
-
 
     score = 0
     total = questions.count()
@@ -692,12 +684,14 @@ def submit_quiz(request, module_id):
 
     passed = score >= quiz.pass_marks
 
-    # ✅ Save attempt
-    QuizAttempt.objects.create(
+    # ✅ Update or Create attempt
+    attempt, created = QuizAttempt.objects.update_or_create(
         user=request.user,
         quiz=quiz,
-        score=score,
-        passed=passed
+        defaults={
+            "score": score,
+            "passed": passed
+        }
     )
 
     return Response({
@@ -705,125 +699,22 @@ def submit_quiz(request, module_id):
         "module_id": module_id,
         "score": score,
         "total_questions": total,
-        "passed": passed
-    }, status=status.HTTP_200_OK)
+        "passed": passed,
+        "attempt_updated": True
+    }, status=200)
 
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def generate_certificate(request, course_id):
-    user = request.user
-
-    # 1️⃣ Check enrollment
-    if not Enrollment.objects.filter(
-        user=user,
-        course_id=course_id,
-        is_active=True
-    ).exists():
-        return HttpResponse("Not enrolled", status=403)
-
-    # 2️⃣ Check quiz passed
-    quiz_attempt = QuizAttempt.objects.filter(
-        user=user,
-        quiz__module__course_id=course_id,
-        passed=True
-    ).first()
-
-    if not quiz_attempt:
-        return HttpResponse("Quiz not passed", status=403)
-
-    # 3️⃣ Check lessons completed ✅ (MUST BE BEFORE CERTIFICATE)
-    total_lessons = Lesson.objects.filter(module__course_id=course_id).count()
-
-    completed_lessons = VideoProgress.objects.filter(
-        user=user,
-        lesson__module__course_id=course_id,
-        is_completed=True
-    ).count()
-
-    if total_lessons == 0:
-        return HttpResponse("No lessons found", status=400)
-
-    if completed_lessons != total_lessons:
-        return HttpResponse("Lessons not completed", status=403)
-
-    # 4️⃣ Create or get certificate ✅ (ONLY AFTER ALL CHECKS PASS)
-    certificate, created = Certificate.objects.get_or_create(
-        user=user,
-        course_id=course_id,
-        defaults={"certificate_id": str(uuid.uuid4())[:12].upper()}
-    )
-
-    course = Course.objects.get(id=course_id)
-
-    # 5️⃣ Create PDF response
-    response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = 'attachment; filename="certificate.pdf"'
-
-    p = canvas.Canvas(response, pagesize=A4)
-    width, height = A4
-
-    # ================= DESIGN =================
-
-    # Border
-    p.setStrokeColor(HexColor("#2E86C1"))
-    p.setLineWidth(4)
-    p.rect(30, 30, width - 60, height - 60)
-
-    # Title
-    p.setFont("Helvetica-Bold", 30)
-    p.setFillColor(HexColor("#2E86C1"))
-    p.drawCentredString(width / 2, height - 120, "CERTIFICATE OF COMPLETION")
-
-    # Subtitle
-    p.setFont("Helvetica", 16)
-    p.setFillColor(black)
-    p.drawCentredString(width / 2, height - 170, "This is proudly presented to")
-
-    # Student Name
-    p.setFont("Helvetica-Bold", 24)
-    p.drawCentredString(width / 2, height - 230, user.username)
-
-    # Course text
-    p.setFont("Helvetica", 16)
-    p.drawCentredString(
-        width / 2,
-        height - 280,
-        "For successfully completing the course"
-    )
-
-    # Course name
-    p.setFont("Helvetica-Bold", 20)
-    p.drawCentredString(width / 2, height - 330, course.title)
-
-    # Footer
-    p.setFont("Helvetica", 12)
-    p.drawString(80, 120, f"Certificate ID: {certificate.certificate_id}")
-    p.drawString(
-        80,
-        100,
-        f"Issued on: {certificate.issued_at.strftime('%d %B %Y')}"
-    )
-
-    # Signature
-    p.line(width - 250, 140, width - 80, 140)
-    p.drawString(width - 230, 120, "Authorized Signature")
-
-    p.showPage()
-    p.save()
-
-    return response
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def course_progress(request, course_id):
     user = request.user
 
-    # ✅ total lessons from Lesson model
-    total_lessons = Lesson.objects.filter(module__course_id=course_id).count()
+    # ✅ Only lessons which have a video assigned
+    total_lessons = Lesson.objects.filter(
+        module__course_id=course_id,
+        video__isnull=False
+    ).count()
 
-    # ✅ completed lessons from VideoProgress (video is linked)
     completed_lessons = VideoProgress.objects.filter(
         user=user,
         video__module__course_id=course_id,
@@ -834,7 +725,6 @@ def course_progress(request, course_id):
     if total_lessons > 0:
         progress_percent = int((completed_lessons / total_lessons) * 100)
 
-    # ✅ quiz passed
     quiz_passed = QuizAttempt.objects.filter(
         user=user,
         quiz__module__course_id=course_id,
@@ -842,18 +732,16 @@ def course_progress(request, course_id):
     ).exists()
 
     completed = total_lessons > 0 and completed_lessons == total_lessons
-
     certificate_available = completed and quiz_passed
 
     return Response({
         "progress": progress_percent,
-        "videos_completed": completed_lessons,   # ✅ keep frontend same keys
+        "videos_completed": completed_lessons,
         "total_videos": total_lessons,
         "quiz_passed": quiz_passed,
         "completed": completed,
         "certificate_available": certificate_available
     })
-
 
 
 

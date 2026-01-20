@@ -32,6 +32,7 @@ import AdminStats from "./pages/admin/AdminStats";
 import StudentDashboard from "./pages/student/Dashboard";
 import LessonPlayer from "./pages/lesson/LessonPlayer";
 import Lessons from "./pages/admin/Lessons/Lessons";
+import Certificate from "./pages/certificate/Certificate";
 
 
 
@@ -150,6 +151,7 @@ export default function App() {
           <Route path="/lessons/:lessonId" element={<ProtectedRoute><LessonPlayer /></ProtectedRoute>} />
           <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
           <Route path="/admin/lessons" element={<AdminRoute><Lessons /> </AdminRoute>} />
+          <Route path="/courses/:courseId/certificate" element={<Certificate />} />
 
 
 
