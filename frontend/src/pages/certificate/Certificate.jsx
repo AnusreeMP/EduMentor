@@ -95,7 +95,7 @@ export default function Certificate() {
                 <div style={{ textAlign: "right" }}>
                   <p style={styles.footerLabel}>Authorized Signature</p>
                   <div style={styles.signLine}></div>
-                  <p style={styles.footerValue}>EduMentor Team</p>
+                  <p style={styles.footerValue}>CEO Edumentor</p>
                 </div>
               </div>
             </div>

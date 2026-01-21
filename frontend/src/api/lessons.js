@@ -6,8 +6,11 @@ export const getAdminLessons = (moduleId) =>
 export const addLesson = (moduleId, data) =>
   api.post(`/admin/modules/${moduleId}/lessons/add/`, data);
 
-export const editLesson = (lessonId, data) =>
-  api.patch(`/admin/lessons/${lessonId}/edit/`, data);
+export const getLessonDetail = (lessonId) =>
+  api.get(`/lessons/${lessonId}/`);
+
+export const updateLesson = (lessonId, data) =>
+  api.put(`/admin/lessons/${lessonId}/edit/`, data);
 
 export const deleteLesson = (lessonId) =>
   api.delete(`/admin/lessons/${lessonId}/delete/`);

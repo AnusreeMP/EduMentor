@@ -1,140 +1,154 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addCourse } from "../../../api/courses";
-
+import api from "../../../api/axios";
 
 export default function AddCourse() {
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+  });
+
+  const [saving, setSaving] = useState(false);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!title.trim() || !description.trim()) {
-      alert("All fields are required");
-      return;
-    }
+    setSaving(true);
 
     try {
-      setLoading(true);
+      // ✅ Your backend create = POST /api/admin/courses/
+      await api.post("/admin/courses/", form);
 
-      // ✅ ADMIN API (clean layer)
-      await addCourse({
-        title,
-        description,
-      });
-
-      alert("Course added successfully");
+      alert("✅ Course created successfully!");
       navigate("/admin/courses");
     } catch (err) {
-      console.error("Add course error:", err);
-      alert("Failed to add course");
+      console.log("Add course error:", err);
+      alert("❌ Failed to create course");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Add New Course</h2>
+    <div style={styles.page}>
+      <div style={styles.card}>
+        <div style={styles.headerRow}>
+          <div>
+            <h2 style={styles.title}>➕ Add Course</h2>
+            <p style={styles.subtitle}>Create a new course</p>
+          </div>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <label style={styles.label}>Course Title</label>
-        <input
-          type="text"
-          placeholder="Enter course title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={styles.input}
-        />
-
-        <label style={styles.label}>Course Description</label>
-        <textarea
-          placeholder="Enter course description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows="5"
-          style={styles.textarea}
-        />
-
-        <div style={styles.actions}>
-          <button
-            type="submit"
-            disabled={loading}
-            style={styles.submitBtn}
-          >
-            {loading ? "Saving..." : "Add Course"}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => navigate("/admin/courses")}
-            style={styles.cancelBtn}
-          >
-            Cancel
+          <button style={styles.backBtn} onClick={() => navigate("/admin/courses")}>
+            ← Back
           </button>
         </div>
-      </form>
+
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.field}>
+            <label style={styles.label}>Title *</label>
+            <input
+              style={styles.input}
+              name="title"
+              value={form.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div style={styles.field}>
+            <label style={styles.label}>Description *</label>
+            <textarea
+              style={styles.textarea}
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div style={styles.btnRow}>
+            <button type="submit" style={styles.saveBtn} disabled={saving}>
+              {saving ? "Saving..." : "✅ Save Course"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
 
-/* ===== STYLES ===== */
 const styles = {
-  container: {
-    maxWidth: "600px",
-    background: "#ffffff",
-    padding: "30px",
-    borderRadius: "12px",
-    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+  page: {
+    minHeight: "100vh",
+    padding: "26px",
+    display: "grid",
+    placeItems: "center",
+    background:
+      "radial-gradient(circle at top, rgba(79,70,229,0.18), transparent 50%), linear-gradient(180deg, #f8fafc, #eef2ff)",
   },
-  heading: {
-    fontSize: "22px",
-    fontWeight: "700",
-    marginBottom: "20px",
+  card: {
+    width: "100%",
+    maxWidth: "700px",
+    background: "rgba(255,255,255,0.92)",
+    borderRadius: "20px",
+    padding: "18px",
+    border: "1px solid rgba(148,163,184,0.25)",
+    boxShadow: "0 18px 40px rgba(2,6,23,0.10)",
+    backdropFilter: "blur(10px)",
   },
-  form: {
+  headerRow: {
     display: "flex",
-    flexDirection: "column",
-    gap: "12px",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "14px",
+    marginBottom: "14px",
+    flexWrap: "wrap",
   },
-  label: {
-    fontWeight: "500",
-    fontSize: "14px",
+  title: { margin: 0, fontSize: "24px", fontWeight: 900, color: "#0f172a" },
+  subtitle: { margin: 0, marginTop: "6px", fontSize: "13px", fontWeight: 700, color: "#64748b" },
+  backBtn: {
+    border: "none",
+    background: "#eef2ff",
+    color: "#4f46e5",
+    padding: "10px 14px",
+    borderRadius: "14px",
+    fontWeight: 900,
+    cursor: "pointer",
   },
+  form: { display: "grid", gap: "12px" },
+  field: { display: "grid", gap: "6px" },
+  label: { fontSize: "13px", fontWeight: 900, color: "#334155" },
   input: {
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid #d1d5db",
+    padding: "12px 14px",
+    borderRadius: "14px",
+    border: "1px solid #e2e8f0",
+    fontWeight: 700,
+    outline: "none",
+    background: "white",
   },
   textarea: {
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid #d1d5db",
+    padding: "12px 14px",
+    borderRadius: "14px",
+    border: "1px solid #e2e8f0",
+    fontWeight: 700,
+    outline: "none",
+    background: "white",
+    minHeight: "120px",
+    resize: "vertical",
   },
-  actions: {
-    display: "flex",
-    gap: "12px",
-    marginTop: "10px",
-  },
-  submitBtn: {
-    background: "#4f46e5",
-    color: "#fff",
+  btnRow: { display: "flex", justifyContent: "flex-end", marginTop: "6px" },
+  saveBtn: {
     border: "none",
-    padding: "10px 16px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: "500",
-  },
-  cancelBtn: {
-    background: "#e5e7eb",
-    color: "#111827",
-    border: "none",
-    padding: "10px 16px",
-    borderRadius: "8px",
+    background: "#16a34a",
+    color: "white",
+    padding: "12px 14px",
+    borderRadius: "14px",
+    fontWeight: 900,
     cursor: "pointer",
   },
 };

@@ -33,13 +33,19 @@ export default function AdminLayout() {
             </NavLink>
 
             <NavLink
+              to="/admin/courses"
+              style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
+            >
+              Modules
+            </NavLink>
+
+            <NavLink
               to="/admin/users"
               style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
             >
               Users
             </NavLink>
 
-            {/* ✅ FIXED LESSONS LINK */}
             <NavLink
               to="/admin/lessons"
               style={({ isActive }) => (isActive ? styles.activeLink : styles.link)}
@@ -49,7 +55,6 @@ export default function AdminLayout() {
           </nav>
         </div>
 
-        {/* ✅ LOGOUT BUTTON ADDED (you already have styles) */}
         <button style={styles.logoutBtn} onClick={handleLogout}>
           Logout
         </button>
@@ -57,12 +62,10 @@ export default function AdminLayout() {
 
       {/* ===== MAIN CONTENT ===== */}
       <div style={styles.main}>
-        {/* TOP BAR */}
         <div style={styles.topbar}>
           <p style={styles.topbarText}>Admin Panel</p>
         </div>
 
-        {/* PAGE CONTENT */}
         <main style={styles.content}>
           <Outlet />
         </main>
@@ -79,7 +82,6 @@ const styles = {
     background: "#f3f4f6",
   },
 
-  /* SIDEBAR */
   sidebar: {
     width: "250px",
     background: "#111827",
@@ -127,12 +129,13 @@ const styles = {
     fontWeight: "600",
   },
 
-  /* MAIN AREA */
+  /* ✅ FIXED KEY NAME */
   main: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
   },
+
   topbar: {
     height: "60px",
     background: "#ffffff",

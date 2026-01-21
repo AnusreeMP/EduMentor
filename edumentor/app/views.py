@@ -840,13 +840,11 @@ def admin_courses(request):
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = CourseSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
-
+      serializer = CourseSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(created_by=request.user)   # ✅ IMPORTANT FIX
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAdminUser])
 def admin_course_detail(request, pk):
@@ -1074,3 +1072,76 @@ def module_completed_lessons(request, module_id):
     ).values_list("video_id", flat=True)
 
     return Response({"completed_lesson_ids": list(completed_ids)})
+
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def course_stats(request, course_id):
+
+    total_lessons = Lesson.objects.filter(module__course_id=course_id).count()
+
+    completed_videos = VideoProgress.objects.filter(
+        video__module__course_id=course_id,
+        is_completed=True
+    ).count()
+
+    # quiz data
+    quiz = Quiz.objects.filter(module__course_id=course_id).first()
+    quiz_attempts = QuizAttempt.objects.filter(quiz=quiz).count() if quiz else 0
+    passed = QuizAttempt.objects.filter(quiz=quiz, passed=True).count() if quiz else 0
+
+    return Response({
+        "course_id": course_id,
+        "total_lessons": total_lessons,
+        "completed_videos": completed_videos,
+        "quiz_attempts": quiz_attempts,
+        "passed_attempts": passed,
+    })
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def lesson_list(request):
+    lessons = Lesson.objects.select_related("module").all().order_by("module_id", "order")
+    serializer = LessonSerializer(lessons, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def module_list(request):
+    modules = Module.objects.all().order_by("id")
+    serializer = ModuleSerializer(modules, many=True)
+    return Response(serializer.data)
+
+
+
+    
+@api_view(["DELETE"])
+@permission_classes([IsAdminUser])
+def delete_quiz_question(request, question_id):
+    try:
+        q = Question.objects.get(id=question_id)
+        q.delete()
+        return Response({"message": "Deleted successfully"}, status=status.HTTP_200_OK)
+    except Question.DoesNotExist:
+        return Response({"error": "Question not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["PUT"])
+@permission_classes([IsAdminUser])
+def edit_quiz_question(request, question_id):
+    try:
+        q = Question.objects.get(id=question_id)
+
+        q.question = request.data.get("question", q.question)
+        q.option_a = request.data.get("option_a", q.option_a)
+        q.option_b = request.data.get("option_b", q.option_b)
+        q.option_c = request.data.get("option_c", q.option_c)
+        q.option_d = request.data.get("option_d", q.option_d)
+        q.correct_answer = request.data.get("correct_answer", q.correct_answer)
+        q.save()
+
+        return Response({"message": "Updated successfully"}, status=status.HTTP_200_OK)
+    except QuizQuestion.DoesNotExist:
+        return Response({"error": "Question not found"}, status=status.HTTP_404_NOT_FOUND)

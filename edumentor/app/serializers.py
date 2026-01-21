@@ -51,13 +51,14 @@ class CourseSerializer(serializers.ModelSerializer):
         ).exists()
 
 class LessonSerializer(serializers.ModelSerializer):
+    module_title = serializers.CharField(source="module.title", read_only=True)
     module_id = serializers.IntegerField(source="module.id", read_only=True)
     course_id = serializers.IntegerField(source="module.course.id", read_only=True)
     video_id = serializers.IntegerField(source="video.id", read_only=True)
 
     class Meta:
         model = Lesson
-        fields = ["id", "title", "content", "video_url", "order", "module_id", "course_id","video_id"]
+        fields = ["id", "title", "content", "video_url", "order", "module_id","module_title", "course_id","video_id"]
 
 
 
@@ -200,5 +201,12 @@ class MyEnrollmentSerializer(serializers.ModelSerializer):
 
         # else default 0
         return 0
+
+
+class ModuleMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Module
+        fields = ["id", "title"]
+
 
 
