@@ -1118,30 +1118,66 @@ def module_list(request):
 
     
 @api_view(["DELETE"])
-@permission_classes([IsAdminUser])
 def delete_quiz_question(request, question_id):
     try:
         q = Question.objects.get(id=question_id)
         q.delete()
-        return Response({"message": "Deleted successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "Question Deleted"}, status=status.HTTP_200_OK)
     except Question.DoesNotExist:
         return Response({"error": "Question not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(["PUT"])
-@permission_classes([IsAdminUser])
 def edit_quiz_question(request, question_id):
     try:
         q = Question.objects.get(id=question_id)
 
-        q.question = request.data.get("question", q.question)
+        q.question_text = request.data.get("question_text", q.question_text)
         q.option_a = request.data.get("option_a", q.option_a)
         q.option_b = request.data.get("option_b", q.option_b)
         q.option_c = request.data.get("option_c", q.option_c)
         q.option_d = request.data.get("option_d", q.option_d)
-        q.correct_answer = request.data.get("correct_answer", q.correct_answer)
+        q.correct_option = request.data.get("correct_option", q.correct_option)
+
         q.save()
 
-        return Response({"message": "Updated successfully"}, status=status.HTTP_200_OK)
-    except QuizQuestion.DoesNotExist:
-        return Response({"error": "Question not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(
+            {
+                "message": "✅ Question updated successfully",
+                "id": q.id,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    except Question.DoesNotExist:
+        return Response({"detail": "Question not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+@api_view(["GET"])
+def admin_courses_quiz_stats(request):
+    courses = Course.objects.all()
+    data = []
+
+    for course in courses:
+        # ✅ attempts where quiz->module->course = this course
+        attempts = QuizAttempt.objects.filter(quiz__module__course=course)
+
+        total_attempts = attempts.count()
+        passed = attempts.filter(passed=True).count()
+        failed = total_attempts - passed
+
+        pass_percentage = 0
+        if total_attempts > 0:
+            pass_percentage = round((passed / total_attempts) * 100, 2)
+
+        data.append({
+            "course_id": course.id,
+            "course_title": course.title,
+            "total_attempts": total_attempts,
+            "passed": passed,
+            "failed": failed,
+            "pass_percentage": pass_percentage,
+        })
+
+    return Response(data)

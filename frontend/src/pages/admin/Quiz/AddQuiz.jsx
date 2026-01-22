@@ -7,12 +7,12 @@ export default function AddQuiz() {
   const { courseId, moduleId, quizId } = useParams();
 
   const [form, setForm] = useState({
-    question: "",
+    question_text: "",
     option_a: "",
     option_b: "",
     option_c: "",
     option_d: "",
-    correct_answer: "A",
+    correct_option: "A",
   });
 
   const [saving, setSaving] = useState(false);
@@ -30,24 +30,22 @@ export default function AddQuiz() {
 
     try {
       const payload = {
-        question: form.question,
+        question_text: form.question_text,
         option_a: form.option_a,
         option_b: form.option_b,
         option_c: form.option_c,
         option_d: form.option_d,
-        correct_answer: form.correct_answer,
+        correct_option: form.correct_option,
       };
 
-      // ✅ Backend: /api/quizzes/<quizId>/questions/add/
+      // ✅ backend: /api/quizzes/<quizId>/questions/add/
       await api.post(`/quizzes/${quizId}/questions/add/`, payload);
 
       alert("✅ Question Added Successfully!");
       goBack();
     } catch (err) {
       console.log("Add question error:", err?.response?.data || err);
-      alert(
-        JSON.stringify(err?.response?.data || "❌ Failed to add question", null, 2)
-      );
+      alert(JSON.stringify(err?.response?.data || "❌ Failed", null, 2));
     } finally {
       setSaving(false);
     }
@@ -56,7 +54,6 @@ export default function AddQuiz() {
   return (
     <div style={styles.page}>
       <div style={styles.card}>
-        {/* ✅ HEADER */}
         <div style={styles.headerRow}>
           <div>
             <h2 style={styles.title}>➕ Add Quiz Question</h2>
@@ -70,22 +67,21 @@ export default function AddQuiz() {
           </button>
         </div>
 
-        {/* ✅ FORM */}
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* Question */}
+          {/* ✅ Question */}
           <div style={styles.field}>
             <label style={styles.label}>Question *</label>
             <textarea
               style={styles.textarea}
-              name="question"
-              value={form.question}
+              name="question_text"
+              value={form.question_text}
               onChange={handleChange}
               placeholder="Eg: What is Django?"
               required
             />
           </div>
 
-          {/* Options */}
+          {/* ✅ Options */}
           <div style={styles.grid2}>
             <div style={styles.field}>
               <label style={styles.label}>Option A *</label>
@@ -132,13 +128,13 @@ export default function AddQuiz() {
             </div>
           </div>
 
-          {/* Correct Answer */}
+          {/* ✅ Correct Option */}
           <div style={styles.field}>
             <label style={styles.label}>Correct Answer *</label>
             <select
               style={styles.input}
-              name="correct_answer"
-              value={form.correct_answer}
+              name="correct_option"
+              value={form.correct_option}
               onChange={handleChange}
               required
             >
@@ -149,7 +145,6 @@ export default function AddQuiz() {
             </select>
           </div>
 
-          {/* Buttons */}
           <div style={styles.btnRow}>
             <button type="button" style={styles.cancelBtn} onClick={goBack}>
               Cancel
@@ -165,7 +160,7 @@ export default function AddQuiz() {
   );
 }
 
-/* ✅ Styles */
+/* ✅ styles (same) */
 const styles = {
   page: {
     minHeight: "100vh",
@@ -173,7 +168,6 @@ const styles = {
     background:
       "radial-gradient(circle at top, rgba(79,70,229,0.18), transparent 50%), linear-gradient(180deg, #f8fafc, #eef2ff)",
   },
-
   card: {
     width: "100%",
     maxWidth: "760px",
@@ -185,7 +179,6 @@ const styles = {
     boxShadow: "0 18px 40px rgba(2,6,23,0.12)",
     backdropFilter: "blur(10px)",
   },
-
   headerRow: {
     display: "flex",
     justifyContent: "space-between",
@@ -194,9 +187,7 @@ const styles = {
     flexWrap: "wrap",
     marginBottom: "16px",
   },
-
   title: { margin: 0, fontSize: "24px", fontWeight: 900, color: "#0f172a" },
-
   subtitle: {
     margin: 0,
     marginTop: "6px",
@@ -204,7 +195,6 @@ const styles = {
     fontWeight: 700,
     color: "#64748b",
   },
-
   backBtn: {
     border: "none",
     background: "#eef2ff",
@@ -214,11 +204,9 @@ const styles = {
     fontWeight: 900,
     cursor: "pointer",
   },
-
   form: { display: "grid", gap: "14px", marginTop: "10px" },
   field: { display: "grid", gap: "6px" },
   label: { fontSize: "13px", fontWeight: 900, color: "#334155" },
-
   input: {
     padding: "12px 14px",
     borderRadius: "14px",
@@ -227,7 +215,6 @@ const styles = {
     outline: "none",
     background: "white",
   },
-
   textarea: {
     padding: "12px 14px",
     borderRadius: "14px",
@@ -238,20 +225,17 @@ const styles = {
     minHeight: "90px",
     resize: "vertical",
   },
-
   grid2: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
     gap: "12px",
   },
-
   btnRow: {
     display: "flex",
     gap: "10px",
     justifyContent: "flex-end",
     marginTop: "8px",
   },
-
   cancelBtn: {
     border: "1px solid #e2e8f0",
     background: "white",
@@ -261,7 +245,6 @@ const styles = {
     fontWeight: 900,
     cursor: "pointer",
   },
-
   saveBtn: {
     border: "none",
     background: "#16a34a",

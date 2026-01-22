@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  getModuleQuiz,
-  createModuleQuiz,
-  getQuizQuestions,
-} from "../../../api/quiz";
+import api from "../../../api/axios";
 
 export default function AdminQuiz() {
   const navigate = useNavigate();
@@ -18,23 +14,21 @@ export default function AdminQuiz() {
     try {
       setLoading(true);
 
-      // ✅ Fetch quiz of this module
-      const quizRes = await getModuleQuiz(moduleId);
+      // ✅ Get quiz for module
+      const quizRes = await api.get(`/modules/${moduleId}/quiz/`);
       const quizData = quizRes.data;
-
       setQuiz(quizData);
 
-      // ✅ Fetch questions of quiz
+      // ✅ Get questions for quiz
       if (quizData?.id) {
-        const qRes = await getQuizQuestions(quizData.id);
+        const qRes = await api.get(`/quizzes/${quizData.id}/questions/`);
         setQuestions(qRes.data || []);
       } else {
         setQuestions([]);
       }
     } catch (err) {
       console.log("Module quiz fetch error:", err?.response?.data || err);
-      setQuiz(null);
-      setQuestions([]);
+      alert("❌ Failed to load quiz");
     } finally {
       setLoading(false);
     }
@@ -45,14 +39,17 @@ export default function AdminQuiz() {
     // eslint-disable-next-line
   }, [moduleId]);
 
-  const handleCreateQuiz = async () => {
+  // ✅ DELETE QUESTION (backend route you gave)
+  const handleDelete = async (questionId) => {
+    if (!window.confirm("Delete this question?")) return;
+
     try {
-      await createModuleQuiz(moduleId);
-      alert("✅ Quiz created!");
+      await api.delete(`/admin/quiz/${questionId}/delete/`);
+      alert("✅ Question deleted!");
       fetchQuizAndQuestions();
     } catch (err) {
-      console.log("Create quiz error:", err?.response?.data || err);
-      alert("❌ Failed to create quiz");
+      console.log("Delete error:", err?.response?.data || err);
+      alert("❌ Failed to delete question");
     }
   };
 
@@ -76,6 +73,7 @@ export default function AdminQuiz() {
               ← Back
             </button>
 
+            {/* ✅ Add Question */}
             {quiz?.id && (
               <Link to={`add/${quiz.id}`} style={styles.addBtn}>
                 ➕ Add Question
@@ -91,8 +89,26 @@ export default function AdminQuiz() {
         {/* ✅ If no quiz exists */}
         {!loading && !quiz?.id && (
           <div style={styles.infoBox}>
-            <p style={styles.infoText}>❌ No quiz found for this module.</p>
-            <button style={styles.createBtn} onClick={handleCreateQuiz}>
+            <p style={styles.infoText}>❌ No quiz created for this module yet.</p>
+
+            <button
+              style={styles.createBtn}
+              onClick={async () => {
+                try {
+                  await api.post(`/modules/${moduleId}/quiz/create/`, {
+                    title: `Module ${moduleId} Quiz`,
+                    module: Number(moduleId),
+                    total_marks: 5,
+                    pass_marks: 5,
+                  });
+                  alert("✅ Quiz created!");
+                  fetchQuizAndQuestions();
+                } catch (err) {
+                  console.log("Create quiz error:", err?.response?.data || err);
+                  alert("❌ Failed to create quiz");
+                }
+              }}
+            >
               ✅ Create Quiz Now
             </button>
           </div>
@@ -101,16 +117,16 @@ export default function AdminQuiz() {
         {/* ✅ Loading */}
         {loading ? (
           <p style={styles.loadingText}>Loading quiz...</p>
-        ) : quiz?.id && questions.length === 0 ? (
-          <p style={styles.emptyText}>No questions added yet.</p>
-        ) : questions.length > 0 ? (
+        ) : questions.length === 0 ? (
+          <p style={styles.emptyText}>No quiz questions added yet.</p>
+        ) : (
           <div style={styles.tableWrap}>
             <table style={styles.table}>
               <thead>
                 <tr>
                   <th style={styles.th}>#</th>
                   <th style={styles.th}>Question</th>
-                  <th style={{ ...styles.th, width: 200 }}>Actions</th>
+                  <th style={{ ...styles.th, width: 220 }}>Actions</th>
                 </tr>
               </thead>
 
@@ -118,16 +134,27 @@ export default function AdminQuiz() {
                 {questions.map((q, index) => (
                   <tr key={q.id} style={styles.tr}>
                     <td style={styles.td}>{index + 1}</td>
-                    <td style={styles.tdTitle}>{q.question}</td>
+
+                    {/* ✅ Django field is question_text */}
+                    <td style={styles.tdTitle}>{q.question_text}</td>
 
                     <td style={styles.td}>
                       <div style={styles.actionRow}>
+                        {/* ✅ Edit */}
                         <Link
                           to={`edit/${q.id}`}
                           style={styles.editBtn}
                         >
                           ✏️ Edit
                         </Link>
+
+                        {/* ✅ Delete */}
+                        <button
+                          style={styles.deleteBtn}
+                          onClick={() => handleDelete(q.id)}
+                        >
+                          🗑 Delete
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -135,7 +162,7 @@ export default function AdminQuiz() {
               </tbody>
             </table>
           </div>
-        ) : null}
+        )}
 
         <p style={styles.note}>
           ✅ Tip: Add at least <b>5 questions</b> for a good quiz.
@@ -173,6 +200,7 @@ const styles = {
   title: { margin: 0, fontSize: "24px", fontWeight: 900, color: "#0f172a" },
   subtitle: { marginTop: 6, marginBottom: 0, fontSize: 13, fontWeight: 700, color: "#64748b" },
   headerBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
+
   backBtn: {
     border: "none",
     background: "#eef2ff",
@@ -202,8 +230,10 @@ const styles = {
     cursor: "pointer",
     boxShadow: "0 16px 30px rgba(14,165,233,0.18)",
   },
+
   loadingText: { fontWeight: 900, color: "#475569" },
   emptyText: { fontWeight: 800, color: "#64748b" },
+
   tableWrap: {
     overflowX: "auto",
     borderRadius: "14px",
@@ -223,6 +253,7 @@ const styles = {
   tr: { borderBottom: "1px solid #f1f5f9" },
   td: { padding: 14, fontSize: 14, fontWeight: 700, color: "#334155" },
   tdTitle: { padding: 14, fontSize: 14, fontWeight: 900, color: "#0f172a" },
+
   actionRow: { display: "flex", gap: 10, alignItems: "center" },
   editBtn: {
     textDecoration: "none",
@@ -234,6 +265,18 @@ const styles = {
     fontSize: 13,
     boxShadow: "0 10px 20px rgba(79,70,229,0.20)",
   },
+  deleteBtn: {
+    border: "none",
+    background: "#dc2626",
+    color: "white",
+    padding: "8px 12px",
+    borderRadius: "12px",
+    fontWeight: 900,
+    fontSize: 13,
+    cursor: "pointer",
+    boxShadow: "0 10px 20px rgba(220,38,38,0.18)",
+  },
+
   note: { marginTop: 12, fontSize: 13, fontWeight: 700, color: "#64748b" },
 
   infoBox: {

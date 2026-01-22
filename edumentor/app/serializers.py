@@ -35,7 +35,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'is_enrolled']
+        fields = ['id', 'title', 'description', 'is_enrolled', 'thumbnail']
 
     def get_is_enrolled(self, obj):
         request = self.context.get('request')
@@ -81,14 +81,21 @@ class VideoProgressSerializer(serializers.ModelSerializer):
         model = VideoProgress
         fields = '__all__'
         read_only_fields = ['user', 'updated_at']
+
+        
+class CourseMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ["id", "title", "description", "thumbnail"]
        
 
-
 class EnrollmentSerializer(serializers.ModelSerializer):
+    course = CourseMiniSerializer(read_only=True)  # ✅ full course data
+
     class Meta:
         model = Enrollment
-        fields = '__all__'
-        read_only_fields = ['user', 'enrolled_at']
+        fields = ["id", "course", "is_active", "progress", "last_lesson_id", "enrolled_at"]
+        read_only_fields = ["enrolled_at"]
         
 class QuizSerializer(serializers.ModelSerializer):
     class Meta:
@@ -135,7 +142,7 @@ class UserSerializer(serializers.ModelSerializer):
 class MiniCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ["id", "title", "description"]
+        fields = ["id", "title", "description", "thumbnail"]
 
 
 class MyEnrollmentSerializer(serializers.ModelSerializer):
@@ -188,19 +195,6 @@ class MyEnrollmentSerializer(serializers.ModelSerializer):
 
         return last.video_id if last else None
 
-
-    def get_progress(self, obj):
-        """
-        ✅ Return progress percentage for dashboard.
-        If you already have course_progress API, you can compute here later.
-        For now, return 0 or stored progress field if exists.
-        """
-        # if your Enrollment model has progress field:
-        if hasattr(obj, "progress") and obj.progress is not None:
-            return obj.progress
-
-        # else default 0
-        return 0
 
 
 class ModuleMiniSerializer(serializers.ModelSerializer):

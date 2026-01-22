@@ -6,9 +6,13 @@ export default function EditCourse() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const DEFAULT_THUMB =
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=60";
+
   const [form, setForm] = useState({
     title: "",
     description: "",
+    thumbnail: "", // ✅ NEW
   });
 
   const [loading, setLoading] = useState(true);
@@ -22,9 +26,10 @@ export default function EditCourse() {
         setForm({
           title: res.data?.title || "",
           description: res.data?.description || "",
+          thumbnail: res.data?.thumbnail || "", // ✅ IMPORTANT
         });
       } catch (err) {
-        console.log(err);
+        console.log(err?.response?.data || err);
         alert("❌ Failed to load course details");
       } finally {
         setLoading(false);
@@ -44,12 +49,19 @@ export default function EditCourse() {
     setSaving(true);
 
     try {
-      await api.put(`/admin/courses/${id}/`, form);
+      const payload = {
+        title: form.title,
+        description: form.description,
+        thumbnail: form.thumbnail.trim() || "", // ✅ send thumbnail
+      };
+
+      await api.put(`/admin/courses/${id}/`, payload);
+
       alert("✅ Course Updated Successfully!");
       navigate("/admin/courses");
     } catch (err) {
-      console.log(err);
-      alert("❌ Failed to update course");
+      console.log(err?.response?.data || err);
+      alert(JSON.stringify(err?.response?.data || "❌ Failed to update course", null, 2));
     } finally {
       setSaving(false);
     }
@@ -65,12 +77,12 @@ export default function EditCourse() {
       alert("✅ Course deleted!");
       navigate("/admin/courses");
     } catch (err) {
-      console.log(err);
+      console.log(err?.response?.data || err);
       alert("❌ Failed to delete course");
     }
   };
 
-  if (loading) return <p style={{ padding: 30 }}>Loading course...</p>;
+  if (loading) return <p style={{ padding: 30, fontWeight: 900 }}>Loading course...</p>;
 
   return (
     <div style={styles.page}>
@@ -87,6 +99,7 @@ export default function EditCourse() {
         </div>
 
         <form onSubmit={handleSubmit} style={styles.form}>
+          {/* ✅ Title */}
           <div style={styles.field}>
             <label style={styles.label}>Course Title *</label>
             <input
@@ -99,6 +112,7 @@ export default function EditCourse() {
             />
           </div>
 
+          {/* ✅ Description */}
           <div style={styles.field}>
             <label style={styles.label}>Description *</label>
             <textarea
@@ -108,6 +122,34 @@ export default function EditCourse() {
               onChange={handleChange}
               required
               placeholder="Write course description..."
+            />
+          </div>
+
+          {/* ✅ Thumbnail */}
+          <div style={styles.field}>
+            <label style={styles.label}>Thumbnail Image URL (optional)</label>
+            <input
+              style={styles.input}
+              name="thumbnail"
+              value={form.thumbnail}
+              onChange={handleChange}
+              placeholder="Paste image link (https://...)"
+            />
+            <p style={styles.helperText}>
+              ✅ Leave empty → Default image will be shown.
+            </p>
+          </div>
+
+          {/* ✅ Preview */}
+          <div style={styles.previewBox}>
+            <p style={styles.previewTitle}>🖼 Thumbnail Preview</p>
+            <img
+              src={form.thumbnail.trim() ? form.thumbnail : DEFAULT_THUMB}
+              alt="Preview"
+              style={styles.previewImg}
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_THUMB;
+              }}
             />
           </div>
 
@@ -185,6 +227,35 @@ const styles = {
     minHeight: "120px",
     resize: "vertical",
   },
+  helperText: {
+    margin: 0,
+    fontSize: "12px",
+    fontWeight: 700,
+    color: "#64748b",
+  },
+
+  previewBox: {
+    marginTop: "4px",
+    border: "1px solid #e2e8f0",
+    borderRadius: "16px",
+    padding: "12px",
+    background: "#ffffff",
+  },
+  previewTitle: {
+    margin: 0,
+    marginBottom: "8px",
+    fontWeight: 900,
+    fontSize: "13px",
+    color: "#334155",
+  },
+  previewImg: {
+    width: "100%",
+    height: "220px",
+    objectFit: "cover",
+    borderRadius: "14px",
+    border: "1px solid #e2e8f0",
+  },
+
   btnRow: { display: "flex", justifyContent: "space-between", gap: "10px", marginTop: "8px" },
   deleteBtn: {
     border: "none",

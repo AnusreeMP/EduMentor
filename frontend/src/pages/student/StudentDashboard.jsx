@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
@@ -31,27 +31,43 @@ export default function StudentDashboard() {
   const [enrollments, setEnrollments] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // ✅ prevent duplicate API calls in React StrictMode
+  const fetchedOnce = useRef(false);
+
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
+        setLoading(true);
+
         const res = await api.get("/my-enrollments/");
         setEnrollments(res.data || []);
       } catch (err) {
-        console.log("Dashboard error:", err);
+        console.log("Dashboard error:", err?.response?.data || err);
+        setEnrollments([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDashboard();
+    if (!fetchedOnce.current) {
+      fetchedOnce.current = true;
+      fetchDashboard();
+    }
   }, []);
 
+  // ✅ FIX: progress may come as "100" (string) -> convert to number
   const stats = useMemo(() => {
     const total = enrollments.length;
-    const completed = enrollments.filter((e) => e.progress >= 100).length;
-    const inProgress = enrollments.filter(
-      (e) => e.progress > 0 && e.progress < 100
-    ).length;
+
+    const completed = enrollments.filter((e) => {
+      const p = Number(e?.progress ?? 0);
+      return p >= 100;
+    }).length;
+
+    const inProgress = enrollments.filter((e) => {
+      const p = Number(e?.progress ?? 0);
+      return p > 0 && p < 100;
+    }).length;
 
     return { total, completed, inProgress };
   }, [enrollments]);
@@ -96,7 +112,7 @@ export default function StudentDashboard() {
       ) : (
         <div style={styles.grid}>
           {enrollments.map((en) => (
-            <CourseProgressCard key={en.course.id} enrollment={en} />
+            <CourseProgressCard key={en.course?.id} enrollment={en} />
           ))}
         </div>
       )}
@@ -120,7 +136,9 @@ function StatCard({ label, value, icon }) {
 function CourseProgressCard({ enrollment }) {
   const navigate = useNavigate();
   const course = enrollment.course;
-  const progress = enrollment.progress ?? 0;
+
+  // ✅ FIX: progress may come string
+  const progress = Number(enrollment?.progress ?? 0);
 
   const handleContinue = () => {
     if (enrollment.last_lesson_id) {
@@ -137,11 +155,7 @@ function CourseProgressCard({ enrollment }) {
       onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
       onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0px)")}
     >
-      <img
-        src={getCourseImage(course)}
-        alt={course.title}
-        style={styles.cardImg}
-      />
+      <img src={getCourseImage(course)} alt={course.title} style={styles.cardImg} />
 
       <div style={styles.cardBody}>
         <h3 style={styles.cardTitle}>{course.title}</h3>
@@ -179,7 +193,7 @@ function CourseProgressCard({ enrollment }) {
   );
 }
 
-/* ✅ Styles (Fixed Card Size + Premium Minimal UI) */
+/* ✅ Styles */
 const styles = {
   page: {
     padding: "30px",
@@ -269,7 +283,6 @@ const styles = {
     marginBottom: "12px",
   },
 
-  /* ✅ FIX GRID SIZE */
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 320px))",
@@ -277,7 +290,6 @@ const styles = {
     justifyContent: "start",
   },
 
-  /* ✅ FIX CARD SIZE */
   card: {
     background: "white",
     borderRadius: "18px",
@@ -290,7 +302,6 @@ const styles = {
     maxWidth: "320px",
   },
 
-  /* ✅ SMALLER IMAGE */
   cardImg: {
     width: "100%",
     height: "140px",

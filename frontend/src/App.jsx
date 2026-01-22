@@ -13,7 +13,7 @@ import CourseDetail from "./pages/courses/CourseDetail";
 import Progress from "./pages/courses/Progress";
 import ModuleDetail from "./pages/module/ModuleDetail";
 import QuizPage from "./pages/quiz/QuizPage";
-import StudentDashboard from "./pages/student/Dashboard";
+import StudentDashboard from "./pages/student/StudentDashboard";
 import LessonPlayer from "./pages/lesson/LessonPlayer";
 import Certificate from "./pages/certificate/Certificate";
 
@@ -113,6 +113,16 @@ export default function App() {
           />
 
           <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+
+          <Route
             path="/courses/:courseId/modules/:moduleId/quiz"
             element={
               <ProtectedRoute>
@@ -130,14 +140,8 @@ export default function App() {
             }
           />
 
-          <Route
-            path="/student/dashboard"
-            element={
-              <ProtectedRoute>
-                <StudentDashboard />
-              </ProtectedRoute>
-            }
-          />
+
+
 
           <Route
             path="/lessons/:lessonId"

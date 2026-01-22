@@ -15,12 +15,43 @@ function getCourseImage(course) {
   const defaultImg =
     "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=60";
 
-  return course?.thumbnail ||
+  return (
+    course?.thumbnail ||
     (title.includes("django")
       ? djangoImg
       : title.includes("python")
       ? pythonImg
-      : defaultImg);
+      : defaultImg)
+  );
+}
+
+/* ✅ UPCOMING COURSES IMAGES (NO DUPLICATES ✅) */
+function getUpcomingImage(title) {
+  const t = (title || "").toLowerCase();
+
+  // ✅ Unique images only (no repeat)
+  const map = {
+    "digital marketing":
+      "https://images.unsplash.com/photo-1557838923-2985c318be48?w=1200&auto=format&fit=crop&q=60",
+    "generative ai":
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&auto=format&fit=crop&q=60",
+    cybersecurity:
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&auto=format&fit=crop&q=60",
+    "cloud computing":
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=60",
+    "ui ux design":
+      "https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1200&auto=format&fit=crop&q=60",
+    "data analytics":
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=60",
+  };
+
+  // ✅ direct match by key
+  for (const key of Object.keys(map)) {
+    if (t.includes(key)) return map[key];
+  }
+
+  // ✅ fallback unique image
+  return "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&auto=format&fit=crop&q=60";
 }
 
 export default function Landing() {
@@ -43,7 +74,6 @@ export default function Landing() {
     soft: dark ? "rgba(79,70,229,0.18)" : "rgba(79,70,229,0.10)",
   };
 
-  // ✅ FIXED testimonials (name + photo matching always)
   const testimonials = [
     {
       name: "Anjali S",
@@ -73,7 +103,6 @@ export default function Landing() {
       setLoadingMyCourses(true);
       try {
         const res = await api.get("/my-enrollments/");
-        // expected: [{course:{id,title,thumbnail,description}, progress:..}]
         const list = (res.data || []).map((x) => x.course);
         setMyCourses(list.slice(0, 4));
       } catch (err) {
@@ -85,6 +114,16 @@ export default function Landing() {
 
     fetchMyCourses();
   }, [auth?.isAuthenticated]);
+
+  /* ✅ UPCOMING COURSES LIST */
+  const upcomingCourses = [
+    { title: "Digital Marketing", icon: "📢" },
+    { title: "Generative AI", icon: "🧠" },
+    { title: "Cybersecurity", icon: "🔐" },
+    { title: "Cloud Computing", icon: "☁️" },
+    { title: "UI UX Design", icon: "🎨" },
+    { title: "Data Analytics", icon: "📈" },
+  ];
 
   return (
     <div
@@ -285,32 +324,31 @@ export default function Landing() {
         </section>
       )}
 
-      {/* ================= PROGRAMS ================= */}
+      {/* ================= UPCOMING COURSES ================= */}
       <section style={styles.section}>
         <div style={styles.sectionTop}>
           <h2 style={{ ...styles.sectionTitle, color: theme.textPrimary }}>
-            Learning Programs
+            Upcoming Courses
           </h2>
           <p style={{ ...styles.sectionSub, color: theme.textSecondary }}>
-            Choose your path and build real‑world skills.
+            These courses will be available soon 🚀
           </p>
         </div>
 
         <div style={styles.programs}>
-          {[
-            { title: "Python & Django Development", icon: "🐍" },
-            { title: "Full Stack Web Development", icon: "🌐" },
-            { title: "Data Science Fundamentals", icon: "📊" },
-            { title: "Machine Learning Essentials", icon: "🤖" },
-            { title: "Backend & Database Systems", icon: "🗄️" },
-            { title: "Cloud & Deployment Basics", icon: "☁️" },
-          ].map((p) => (
-            <Program key={p.title} title={p.title} icon={p.icon} theme={theme} />
+          {upcomingCourses.map((p) => (
+            <UpcomingCourseCard
+              key={p.title}
+              title={p.title}
+              icon={p.icon}
+              img={getUpcomingImage(p.title)}
+              theme={theme}
+            />
           ))}
         </div>
       </section>
 
-      {/* ================= SUCCESS (WITH FIXED PHOTOS) ================= */}
+      {/* ================= SUCCESS ================= */}
       <section style={{ ...styles.section, background: theme.sectionBg }}>
         <div style={styles.sectionTop}>
           <h2 style={{ ...styles.sectionTitle, color: theme.textPrimary }}>
@@ -408,17 +446,41 @@ function CourseMiniCard({ course, onClick, theme }) {
   );
 }
 
-function Program({ title, icon, theme }) {
+/* ✅ NEW UPCOMING CARD WITH IMAGE */
+function UpcomingCourseCard({ title, icon, img, theme }) {
   return (
     <div style={{ ...styles.programCard, background: theme.cardBg, borderColor: theme.border }}>
-      <div style={{ fontSize: 22 }}>{icon}</div>
-      <p style={{ marginTop: 10, fontWeight: 800, color: theme.textPrimary }}>{title}</p>
+      <img
+        src={img}
+        alt={title}
+        style={{
+          width: "100%",
+          height: "140px",
+          borderRadius: "14px",
+          objectFit: "cover",
+          border: `1px solid ${theme.border}`,
+        }}
+      />
+      <div style={{ marginTop: 12, fontSize: 22 }}>{icon}</div>
+      <p style={{ marginTop: 10, fontWeight: 900, color: theme.textPrimary }}>{title}</p>
       <p style={{ marginTop: 6, color: theme.textSecondary, fontWeight: 600, fontSize: 13 }}>
-        Learn step-by-step with modules + quizzes.
+        Coming soon with modules + quizzes.
       </p>
-      <Link to="/courses" style={{ ...styles.programLink, color: theme.textPrimary, borderColor: theme.border }}>
-        View →
-      </Link>
+      <span
+        style={{
+          display: "inline-block",
+          marginTop: 10,
+          padding: "8px 12px",
+          borderRadius: 12,
+          fontWeight: 900,
+          fontSize: 13,
+          background: theme.soft,
+          color: theme.textPrimary,
+          border: `1px solid ${theme.border}`,
+        }}
+      >
+        ⏳ Upcoming
+      </span>
     </div>
   );
 }
@@ -639,17 +701,6 @@ const styles = {
     borderRadius: "18px",
     border: "1px solid",
     boxShadow: "0 18px 40px rgba(2,6,23,0.06)",
-  },
-
-  programLink: {
-    display: "inline-block",
-    marginTop: 10,
-    padding: "8px 12px",
-    borderRadius: 12,
-    border: "1px solid",
-    textDecoration: "none",
-    fontWeight: 900,
-    fontSize: 13,
   },
 
   testimonials: {

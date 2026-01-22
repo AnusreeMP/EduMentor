@@ -26,6 +26,7 @@ class Course(models.Model):
         related_name='courses'
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    thumbnail = models.URLField(blank=True, null=True) 
 
     def __str__(self):
         return self.title
@@ -94,8 +95,8 @@ class Quiz(models.Model):
         related_name='quiz'
     )
     title = models.CharField(max_length=200)
-    total_marks = models.PositiveIntegerField()
-    pass_marks = models.PositiveIntegerField()
+    total_marks = models.PositiveIntegerField(default=5)
+    pass_marks = models.PositiveIntegerField(default=5)
 
     def __str__(self):
         return f"{self.module.title} - Quiz"

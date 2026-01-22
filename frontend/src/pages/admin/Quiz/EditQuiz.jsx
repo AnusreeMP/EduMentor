@@ -10,24 +10,26 @@ export default function EditQuiz() {
     navigate(`/admin/courses/${courseId}/modules/${moduleId}/quiz`);
 
   const [form, setForm] = useState({
-    question: "",
+    question_text: "",
     option_a: "",
     option_b: "",
     option_c: "",
     option_d: "",
-    correct_answer: "A",
+    correct_option: "A",
   });
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // ✅ Load question from module quiz questions list
+  // ✅ LOAD QUESTION DETAIL (BEST METHOD)
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
         setLoading(true);
 
-        // 1) Get module quiz
+        // ✅ Backend must have: GET /api/quizzes/<quizId>/questions/
+        // But easiest is: Fetch module quiz → fetch questions → find the question
+
         const quizRes = await api.get(`/modules/${moduleId}/quiz/`);
         const quiz = quizRes.data;
 
@@ -37,11 +39,9 @@ export default function EditQuiz() {
           return;
         }
 
-        // 2) Get all questions of that quiz
         const qRes = await api.get(`/quizzes/${quiz.id}/questions/`);
         const questions = qRes.data || [];
 
-        // 3) Find this question
         const found = questions.find((q) => String(q.id) === String(questionId));
 
         if (!found) {
@@ -50,18 +50,17 @@ export default function EditQuiz() {
           return;
         }
 
-        // ✅ Set form values
         setForm({
-          question: found.question || "",
+          question_text: found.question_text || "",
           option_a: found.option_a || "",
           option_b: found.option_b || "",
           option_c: found.option_c || "",
           option_d: found.option_d || "",
-          correct_answer: found.correct_answer || "A",
+          correct_option: found.correct_option || "A",
         });
       } catch (err) {
         console.log("Fetch question error:", err?.response?.data || err);
-        alert("❌ Failed to load question");
+        alert("❌ Failed to load quiz question");
       } finally {
         setLoading(false);
       }
@@ -75,29 +74,28 @@ export default function EditQuiz() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ Update question (YOU MUST HAVE BACKEND UPDATE ENDPOINT)
+  // ✅ UPDATE QUESTION
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
 
     try {
       const payload = {
-        question: form.question,
+        question_text: form.question_text,
         option_a: form.option_a,
         option_b: form.option_b,
         option_c: form.option_c,
         option_d: form.option_d,
-        correct_answer: form.correct_answer,
+        correct_option: form.correct_option,
       };
 
-      // ✅ Change this URL to your backend edit endpoint
-      // Example: /api/admin/quiz/<id>/edit/
+      // ✅ YOUR BACKEND URL ✅
       await api.put(`/admin/quiz/${questionId}/edit/`, payload);
 
-      alert("✅ Question Updated!");
+      alert("✅ Question Updated Successfully!");
       goBack();
     } catch (err) {
-      console.log("Update error:", err?.response?.data || err);
+      console.log("Update quiz error:", err?.response?.data || err);
       alert(JSON.stringify(err?.response?.data || "❌ Update failed", null, 2));
     } finally {
       setSaving(false);
@@ -111,6 +109,7 @@ export default function EditQuiz() {
   return (
     <div style={styles.page}>
       <div style={styles.card}>
+        {/* ✅ HEADER */}
         <div style={styles.headerRow}>
           <div>
             <h2 style={styles.title}>✏️ Edit Quiz Question</h2>
@@ -124,18 +123,21 @@ export default function EditQuiz() {
           </button>
         </div>
 
+        {/* ✅ FORM */}
         <form onSubmit={handleSubmit} style={styles.form}>
+          {/* Question */}
           <div style={styles.field}>
             <label style={styles.label}>Question *</label>
             <textarea
               style={styles.textarea}
-              name="question"
-              value={form.question}
+              name="question_text"
+              value={form.question_text}
               onChange={handleChange}
               required
             />
           </div>
 
+          {/* Options */}
           <div style={styles.grid2}>
             <div style={styles.field}>
               <label style={styles.label}>Option A *</label>
@@ -182,12 +184,13 @@ export default function EditQuiz() {
             </div>
           </div>
 
+          {/* Correct Option */}
           <div style={styles.field}>
             <label style={styles.label}>Correct Answer *</label>
             <select
               style={styles.input}
-              name="correct_answer"
-              value={form.correct_answer}
+              name="correct_option"
+              value={form.correct_option}
               onChange={handleChange}
               required
             >
@@ -198,6 +201,7 @@ export default function EditQuiz() {
             </select>
           </div>
 
+          {/* Buttons */}
           <div style={styles.btnRow}>
             <button type="button" style={styles.cancelBtn} onClick={goBack}>
               Cancel
@@ -213,7 +217,7 @@ export default function EditQuiz() {
   );
 }
 
-/* ✅ Styles */
+/* ✅ SAME PREMIUM STYLES */
 const styles = {
   page: {
     minHeight: "100vh",
@@ -241,7 +245,13 @@ const styles = {
     marginBottom: "16px",
   },
   title: { margin: 0, fontSize: "24px", fontWeight: 900, color: "#0f172a" },
-  subtitle: { margin: 0, marginTop: "6px", fontSize: "13px", fontWeight: 700, color: "#64748b" },
+  subtitle: {
+    margin: 0,
+    marginTop: "6px",
+    fontSize: "13px",
+    fontWeight: 700,
+    color: "#64748b",
+  },
   backBtn: {
     border: "none",
     background: "#eef2ff",

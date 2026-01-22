@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
 });
 
+/* ✅ Interceptor: add token */
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -21,9 +22,10 @@ api.interceptors.response.use(
 
       try {
         const refresh = localStorage.getItem("refresh");
-        const refreshRes = await axios.post("http://127.0.0.1:8000/api/token/refresh/", {
-          refresh,
-        });
+        const refreshRes = await axios.post(
+          "http://127.0.0.1:8000/api/token/refresh/",
+          { refresh }
+        );
 
         localStorage.setItem("access", refreshRes.data.access);
 
