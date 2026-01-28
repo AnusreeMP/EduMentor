@@ -42,7 +42,7 @@ export default function Navbar() {
         color: theme.text,
       }}
     >
-      {/* ✅ LEFT: LOGO + BRAND (attached properly) */}
+      {/* LOGO */}
       <Link to="/" style={styles.brandWrap}>
         <div style={{ ...styles.logo, background: "#A7F3D0" }}>
           <GraduationCap size={22} color="#064E3B" />
@@ -58,9 +58,9 @@ export default function Navbar() {
         </div>
       </Link>
 
-      {/* ✅ RIGHT SIDE */}
+      {/* RIGHT */}
       <div style={styles.right}>
-        {/* ✅ Theme Toggle */}
+        {/* Theme Toggle */}
         <button
           type="button"
           onClick={toggleTheme}
@@ -70,27 +70,28 @@ export default function Navbar() {
             color: theme.link,
             background: "transparent",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = theme.hoverBg)}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           {dark ? "☀ Light" : "🌙 Dark"}
         </button>
 
-        {/* ✅ Nav Links */}
+        {/* Links */}
         <NavLink to="/" style={activeLinkStyle}>
           Home
         </NavLink>
 
-        <NavLink to="/dashboard" style={activeLinkStyle}>
-          Dashboard
-        </NavLink>
+        {/* ✅ FIX: show Dashboard ONLY if logged in */}
+        {auth?.isAuthenticated && (
+          <NavLink to="/student/dashboard" style={activeLinkStyle}>
+            Dashboard
+          </NavLink>
+        )}
 
         <NavLink to="/courses" style={activeLinkStyle}>
           Courses
         </NavLink>
 
-        {/* ✅ Auth Buttons */}
-        {auth.isAuthenticated ? (
+        {/* Auth Buttons */}
+        {auth?.isAuthenticated ? (
           <button
             type="button"
             onClick={handleLogout}
@@ -98,12 +99,6 @@ export default function Navbar() {
               ...styles.logoutBtn,
               background: theme.danger,
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = theme.dangerHover)
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = theme.danger)
-            }
           >
             Logout
           </button>
@@ -115,10 +110,7 @@ export default function Navbar() {
                 ...styles.outlineBtn,
                 border: `1px solid ${theme.border}`,
                 color: theme.link,
-                background: "transparent",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = theme.hoverBg)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               Sign In
             </Link>
@@ -129,12 +121,6 @@ export default function Navbar() {
                 ...styles.primaryBtn,
                 background: theme.primary,
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = theme.primaryHover)
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background = theme.primary)
-              }
             >
               Get Started
             </Link>
@@ -145,7 +131,8 @@ export default function Navbar() {
   );
 }
 
-/* ✅ CLEAN PROFESSIONAL STYLES (NO DUPLICATES) */
+/* ================= STYLES (UNCHANGED) ================= */
+
 const styles = {
   nav: {
     position: "sticky",
@@ -155,17 +142,14 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "12px 30px",
-    transition: "all 0.3s ease",
     boxShadow: "0 6px 20px rgba(0,0,0,0.06)",
   },
-
   brandWrap: {
     display: "flex",
     alignItems: "center",
     gap: "12px",
     textDecoration: "none",
   },
-
   logo: {
     width: "42px",
     height: "42px",
@@ -173,61 +157,44 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: "0 10px 22px rgba(0,0,0,0.10)",
-    flexShrink: 0,
   },
-
   brandTextWrap: {
     display: "flex",
     flexDirection: "column",
-    lineHeight: "1.1",
   },
-
   brandName: {
     fontSize: "18px",
     fontWeight: "800",
-    letterSpacing: "0.3px",
   },
-
   brandTag: {
     fontSize: "12px",
-    fontWeight: "500",
-    marginTop: "3px",
   },
-
   right: {
     display: "flex",
     alignItems: "center",
     gap: "10px",
   },
-
   linkBtn: {
     textDecoration: "none",
     fontSize: "14px",
     fontWeight: "600",
     padding: "8px 14px",
     borderRadius: "12px",
-    transition: "0.2s",
   },
-
   themeBtn: {
     padding: "8px 14px",
     borderRadius: "12px",
     cursor: "pointer",
     fontWeight: "700",
     fontSize: "13px",
-    transition: "0.2s",
   },
-
   outlineBtn: {
     textDecoration: "none",
     padding: "8px 14px",
     borderRadius: "12px",
     fontWeight: "700",
     fontSize: "13px",
-    transition: "0.2s",
   },
-
   primaryBtn: {
     textDecoration: "none",
     padding: "8px 14px",
@@ -235,10 +202,7 @@ const styles = {
     fontWeight: "800",
     fontSize: "13px",
     color: "#fff",
-    transition: "0.2s",
-    boxShadow: "0 10px 18px rgba(79,70,229,0.25)",
   },
-
   logoutBtn: {
     border: "none",
     padding: "8px 14px",
@@ -247,7 +211,5 @@ const styles = {
     fontSize: "13px",
     color: "#fff",
     cursor: "pointer",
-    transition: "0.2s",
-    boxShadow: "0 10px 18px rgba(239,68,68,0.25)",
   },
 };

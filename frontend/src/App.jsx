@@ -113,7 +113,7 @@ export default function App() {
           />
 
           <Route
-            path="/dashboard"
+            path="/student/dashboard"
             element={
               <ProtectedRoute>
                 <StudentDashboard />
