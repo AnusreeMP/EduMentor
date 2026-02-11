@@ -12,7 +12,7 @@ import Courses from "./pages/courses/Courses";
 import CourseDetail from "./pages/courses/CourseDetail";
 import Progress from "./pages/courses/Progress";
 import ModuleDetail from "./pages/module/ModuleDetail";
-import QuizPage from "./pages/quiz/Quizpage";
+import QuizPage from "./pages/quiz/QuizPage";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import LessonPlayer from "./pages/lesson/LessonPlayer";
 import Certificate from "./pages/certificate/Certificate";
