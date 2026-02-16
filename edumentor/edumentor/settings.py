@@ -175,14 +175,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
  
 
-
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-if not User.objects.filter(username="admin_render").exists():
-    User.objects.create_superuser(
-        username="admin_render",
-        email="admin_render@gmail.com",
-        password="Admin@123"
-    )
