@@ -1,0 +1,3053 @@
+[
+    {
+        "model": "admin.logentry",
+        "pk": 1,
+        "fields": {
+            "action_time": "2025-12-22T09:45:49.443Z",
+            "user": 2,
+            "content_type": 9,
+            "object_id": "1",
+            "object_repr": "admin1 - ADMIN",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 2,
+        "fields": {
+            "action_time": "2025-12-22T09:46:10.364Z",
+            "user": 2,
+            "content_type": 9,
+            "object_id": "1",
+            "object_repr": "admin1 - ADMIN",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 3,
+        "fields": {
+            "action_time": "2025-12-23T06:47:28.443Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "6",
+            "object_repr": "Python for Beginners",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 4,
+        "fields": {
+            "action_time": "2025-12-23T06:47:28.443Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "5",
+            "object_repr": "Python for Beginners",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 5,
+        "fields": {
+            "action_time": "2025-12-23T06:47:28.443Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "4",
+            "object_repr": "Python for Beginners",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 6,
+        "fields": {
+            "action_time": "2025-12-23T06:47:28.443Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "3",
+            "object_repr": "Python for Beginners",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 7,
+        "fields": {
+            "action_time": "2025-12-23T06:47:48.571Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "8",
+            "object_repr": "Django Basics",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 8,
+        "fields": {
+            "action_time": "2025-12-23T09:03:44.458Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "5",
+            "object_repr": "student1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 9,
+        "fields": {
+            "action_time": "2025-12-23T09:03:54.099Z",
+            "user": 2,
+            "content_type": 9,
+            "object_id": "2",
+            "object_repr": "student1 - STUDENT",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 10,
+        "fields": {
+            "action_time": "2025-12-23T09:15:40.698Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "1",
+            "object_repr": "anusree",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 11,
+        "fields": {
+            "action_time": "2025-12-23T09:15:40.698Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "3",
+            "object_repr": "silpa",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 12,
+        "fields": {
+            "action_time": "2025-12-24T05:52:41.737Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 13,
+        "fields": {
+            "action_time": "2025-12-24T05:52:52.527Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "1",
+            "object_repr": "What is Django?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 14,
+        "fields": {
+            "action_time": "2025-12-24T06:05:16.435Z",
+            "user": 2,
+            "content_type": 9,
+            "object_id": "2",
+            "object_repr": "student1 - STUDENT",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 15,
+        "fields": {
+            "action_time": "2025-12-24T06:05:33.509Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "5",
+            "object_repr": "student1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 16,
+        "fields": {
+            "action_time": "2025-12-24T07:31:23.152Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 17,
+        "fields": {
+            "action_time": "2025-12-24T07:31:38.328Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 18,
+        "fields": {
+            "action_time": "2025-12-24T07:37:34.109Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 19,
+        "fields": {
+            "action_time": "2025-12-24T07:56:10.076Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Module\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 20,
+        "fields": {
+            "action_time": "2025-12-24T18:22:39.453Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 21,
+        "fields": {
+            "action_time": "2025-12-24T18:22:48.525Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "1",
+            "object_repr": "What is Django?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 22,
+        "fields": {
+            "action_time": "2025-12-24T18:25:33.179Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "1",
+            "object_repr": "What is Django?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 23,
+        "fields": {
+            "action_time": "2025-12-24T18:25:48.187Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "1",
+            "object_repr": "What is Django?",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 24,
+        "fields": {
+            "action_time": "2025-12-24T18:26:04.651Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "1",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 25,
+        "fields": {
+            "action_time": "2025-12-26T06:19:51.008Z",
+            "user": 2,
+            "content_type": 11,
+            "object_id": "2",
+            "object_repr": "Django Basics - Module 1",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 26,
+        "fields": {
+            "action_time": "2025-12-26T06:20:15.043Z",
+            "user": 2,
+            "content_type": 11,
+            "object_id": "3",
+            "object_repr": "Django Basics - Module 1",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 27,
+        "fields": {
+            "action_time": "2025-12-26T06:37:05.726Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 28,
+        "fields": {
+            "action_time": "2025-12-26T06:37:27.889Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 29,
+        "fields": {
+            "action_time": "2025-12-26T06:37:31.977Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "2",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 30,
+        "fields": {
+            "action_time": "2025-12-26T06:38:12.479Z",
+            "user": 2,
+            "content_type": 11,
+            "object_id": "3",
+            "object_repr": "Django Basics - Module 3",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 31,
+        "fields": {
+            "action_time": "2025-12-26T06:38:18.357Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 3 - Quiz",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 32,
+        "fields": {
+            "action_time": "2025-12-26T06:38:24.973Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "2",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 33,
+        "fields": {
+            "action_time": "2025-12-26T06:47:27.863Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "2",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 34,
+        "fields": {
+            "action_time": "2025-12-26T06:56:23.673Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 3 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 35,
+        "fields": {
+            "action_time": "2025-12-26T07:07:54.709Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "3",
+            "object_repr": "What is Django?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 36,
+        "fields": {
+            "action_time": "2025-12-26T07:08:07.144Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "2",
+            "object_repr": "What is Python?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 37,
+        "fields": {
+            "action_time": "2025-12-26T07:11:58.386Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "4",
+            "object_repr": "Which keyword is used to define a function in Python?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 38,
+        "fields": {
+            "action_time": "2025-12-26T07:13:25.188Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "5",
+            "object_repr": "Which data type is used to store multiple values in Python?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 39,
+        "fields": {
+            "action_time": "2025-12-26T07:14:53.293Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "6",
+            "object_repr": "What is the output of print(type(10))?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 40,
+        "fields": {
+            "action_time": "2025-12-26T07:20:04.756Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "7",
+            "object_repr": "Which symbol is used for comments in Python?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 41,
+        "fields": {
+            "action_time": "2025-12-26T07:21:30.551Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "8",
+            "object_repr": "Django is written in which language?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 42,
+        "fields": {
+            "action_time": "2025-12-26T07:23:08.761Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "9",
+            "object_repr": "Which command is used to create a Django project?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 43,
+        "fields": {
+            "action_time": "2025-12-26T07:24:36.349Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "10",
+            "object_repr": "Which file contains database configuration in Django?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 44,
+        "fields": {
+            "action_time": "2025-12-26T07:25:46.005Z",
+            "user": 2,
+            "content_type": 15,
+            "object_id": "11",
+            "object_repr": "What is the default database used by Django?",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 45,
+        "fields": {
+            "action_time": "2025-12-26T07:41:11.872Z",
+            "user": 2,
+            "content_type": 17,
+            "object_id": "1",
+            "object_repr": "QuizAttempt object (1)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 46,
+        "fields": {
+            "action_time": "2025-12-26T07:41:14.695Z",
+            "user": 2,
+            "content_type": 17,
+            "object_id": "2",
+            "object_repr": "QuizAttempt object (2)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 47,
+        "fields": {
+            "action_time": "2025-12-29T11:59:35.183Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "9",
+            "object_repr": "athul",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 48,
+        "fields": {
+            "action_time": "2025-12-30T03:53:01.338Z",
+            "user": 2,
+            "content_type": 11,
+            "object_id": "1",
+            "object_repr": "Python for Beginners - Module 1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 49,
+        "fields": {
+            "action_time": "2025-12-30T03:54:43.820Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "2",
+            "object_repr": "Module 3 - Django Introduction",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 50,
+        "fields": {
+            "action_time": "2025-12-30T04:07:23.873Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - Updated Intro Video",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Duration\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 51,
+        "fields": {
+            "action_time": "2025-12-30T05:14:53.257Z",
+            "user": 2,
+            "content_type": 10,
+            "object_id": "7",
+            "object_repr": "Python for Beginners",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 52,
+        "fields": {
+            "action_time": "2025-12-30T05:17:19.618Z",
+            "user": 2,
+            "content_type": 11,
+            "object_id": "3",
+            "object_repr": "Django Basics - Module 1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 53,
+        "fields": {
+            "action_time": "2025-12-30T05:50:42.086Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - Updated Intro Video",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 54,
+        "fields": {
+            "action_time": "2025-12-30T07:58:06.995Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - Updated Intro Video",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 55,
+        "fields": {
+            "action_time": "2025-12-30T08:28:17.737Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - What is Python? | Applications of Python",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 56,
+        "fields": {
+            "action_time": "2025-12-30T08:29:24.162Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - What is Python? | Applications of Python",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 57,
+        "fields": {
+            "action_time": "2025-12-30T08:31:06.351Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "2",
+            "object_repr": "Module 1 - Django Introduction",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 58,
+        "fields": {
+            "action_time": "2025-12-30T08:31:13.261Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - What is Python? | Applications of Python",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 59,
+        "fields": {
+            "action_time": "2025-12-30T08:36:09.738Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "1",
+            "object_repr": "Module 1 - What is Python? | Applications of Python",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 60,
+        "fields": {
+            "action_time": "2025-12-30T08:37:12.036Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "2",
+            "object_repr": "Module 1 - Django Introduction",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 61,
+        "fields": {
+            "action_time": "2025-12-30T08:45:37.090Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "2",
+            "object_repr": "Module 1 - Django Introduction",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video url\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 62,
+        "fields": {
+            "action_time": "2025-12-30T08:47:23.555Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "3",
+            "object_repr": "Module 1 - Installing Python & Setting Up VS Code",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 63,
+        "fields": {
+            "action_time": "2025-12-30T08:49:02.828Z",
+            "user": 2,
+            "content_type": 12,
+            "object_id": "3",
+            "object_repr": "Module 1 - Installing Python & Setting Up VS Code",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Order\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 64,
+        "fields": {
+            "action_time": "2025-12-31T06:24:45.989Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Pass marks\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 65,
+        "fields": {
+            "action_time": "2025-12-31T06:24:51.845Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "2",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Pass marks\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 66,
+        "fields": {
+            "action_time": "2025-12-31T06:26:03.094Z",
+            "user": 2,
+            "content_type": 16,
+            "object_id": "3",
+            "object_repr": "Module 1 - Quiz",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 67,
+        "fields": {
+            "action_time": "2025-12-31T08:31:31.365Z",
+            "user": 2,
+            "content_type": 4,
+            "object_id": "8",
+            "object_repr": "bb",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 68,
+        "fields": {
+            "action_time": "2026-01-13T06:27:27.330Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "4",
+            "object_repr": "admin1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Staff status\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 69,
+        "fields": {
+            "action_time": "2026-01-15T03:41:57.451Z",
+            "user": 14,
+            "content_type": 15,
+            "object_id": "17",
+            "object_repr": "CRUD stands for?",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 70,
+        "fields": {
+            "action_time": "2026-01-16T05:56:20.102Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "17",
+            "object_repr": "achu1",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 71,
+        "fields": {
+            "action_time": "2026-01-16T05:59:45.341Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "17",
+            "object_repr": "achu1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Staff status\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 72,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "7",
+            "object_repr": "aa",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 73,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "16",
+            "object_repr": "achu",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 74,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "11",
+            "object_repr": "aju",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 75,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "15",
+            "object_repr": "anusreeprakash",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 76,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "12",
+            "object_repr": "athul",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 77,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "10",
+            "object_repr": "rrr",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 78,
+        "fields": {
+            "action_time": "2026-01-16T07:02:18.942Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "6",
+            "object_repr": "silu123",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 79,
+        "fields": {
+            "action_time": "2026-01-16T11:21:30.708Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "13",
+            "object_repr": "AnusreePrakash",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 80,
+        "fields": {
+            "action_time": "2026-01-16T11:21:30.708Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "17",
+            "object_repr": "achu1",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 81,
+        "fields": {
+            "action_time": "2026-01-16T11:23:37.910Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "19",
+            "object_repr": "ath1",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 82,
+        "fields": {
+            "action_time": "2026-01-16T11:23:40.641Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "19",
+            "object_repr": "ath1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 83,
+        "fields": {
+            "action_time": "2026-01-16T11:23:53.513Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "19",
+            "object_repr": "ath1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Staff status\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 84,
+        "fields": {
+            "action_time": "2026-01-19T11:58:24.384Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "18",
+            "object_repr": "Mini Project: Simple Calculator",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Content\", \"Video\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 85,
+        "fields": {
+            "action_time": "2026-01-19T12:00:18.308Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "1",
+            "object_repr": "Introduction to Django",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Content\", \"Video\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 86,
+        "fields": {
+            "action_time": "2026-01-19T12:00:32.084Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "2",
+            "object_repr": "Django Project Setup",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Content\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 87,
+        "fields": {
+            "action_time": "2026-01-19T12:55:52.985Z",
+            "user": 14,
+            "content_type": 12,
+            "object_id": "12",
+            "object_repr": "Module 1 - Python Introduction",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 88,
+        "fields": {
+            "action_time": "2026-01-19T12:58:30.419Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "18",
+            "object_repr": "Mini Project: Simple Calculator",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 89,
+        "fields": {
+            "action_time": "2026-01-19T12:59:41.933Z",
+            "user": 14,
+            "content_type": 12,
+            "object_id": "18",
+            "object_repr": "Module 3 - Object Oriented Programming (OOP)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 90,
+        "fields": {
+            "action_time": "2026-01-19T13:01:48.245Z",
+            "user": 14,
+            "content_type": 12,
+            "object_id": "20",
+            "object_repr": "Module 3 - Mini Project: Simple Calculator",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 91,
+        "fields": {
+            "action_time": "2026-01-19T13:04:32.239Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "18",
+            "object_repr": "Mini Project: Simple Calculator",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Video\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 92,
+        "fields": {
+            "action_time": "2026-01-19T13:04:43.980Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "1",
+            "object_repr": "Introduction to Django",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 93,
+        "fields": {
+            "action_time": "2026-01-19T13:04:58.737Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "4",
+            "object_repr": "Models and Migrations",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Content\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 94,
+        "fields": {
+            "action_time": "2026-01-19T13:09:11.512Z",
+            "user": 14,
+            "content_type": 19,
+            "object_id": "2",
+            "object_repr": "Django Project Setup",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 95,
+        "fields": {
+            "action_time": "2026-01-21T04:10:59.001Z",
+            "user": 14,
+            "content_type": 4,
+            "object_id": "19",
+            "object_repr": "ath1",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 96,
+        "fields": {
+            "action_time": "2026-01-21T04:13:46.045Z",
+            "user": 14,
+            "content_type": 9,
+            "object_id": "14",
+            "object_repr": "admin123 - ADMIN",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Role\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 97,
+        "fields": {
+            "action_time": "2026-01-21T04:13:55.831Z",
+            "user": 14,
+            "content_type": 9,
+            "object_id": "13",
+            "object_repr": "admin - ADMIN",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Role\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 98,
+        "fields": {
+            "action_time": "2026-01-21T07:47:11.550Z",
+            "user": 14,
+            "content_type": 10,
+            "object_id": "8",
+            "object_repr": "Django Basics",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Category\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 99,
+        "fields": {
+            "action_time": "2026-01-21T07:47:19.479Z",
+            "user": 14,
+            "content_type": 10,
+            "object_id": "9",
+            "object_repr": "Java",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Category\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 100,
+        "fields": {
+            "action_time": "2026-01-21T07:47:29.293Z",
+            "user": 14,
+            "content_type": 10,
+            "object_id": "10",
+            "object_repr": "Flutter",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Category\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 101,
+        "fields": {
+            "action_time": "2026-01-21T07:48:00.212Z",
+            "user": 14,
+            "content_type": 11,
+            "object_id": "8",
+            "object_repr": "Flutter - Module 1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 102,
+        "fields": {
+            "action_time": "2026-01-22T05:15:08.181Z",
+            "user": 14,
+            "content_type": 10,
+            "object_id": "11",
+            "object_repr": "Flutter",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Category\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 103,
+        "fields": {
+            "action_time": "2026-01-22T05:17:17.353Z",
+            "user": 14,
+            "content_type": 12,
+            "object_id": "3",
+            "object_repr": "Module 1 - Installing Python & Setting Up VS Code",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 104,
+        "fields": {
+            "action_time": "2026-01-22T05:17:28.365Z",
+            "user": 14,
+            "content_type": 12,
+            "object_id": "13",
+            "object_repr": "Module 1 - Variables and Data Types",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 105,
+        "fields": {
+            "action_time": "2026-01-22T05:26:40.996Z",
+            "user": 14,
+            "content_type": 15,
+            "object_id": "33",
+            "object_repr": "What is Flutter?",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 106,
+        "fields": {
+            "action_time": "2026-01-22T05:43:12.623Z",
+            "user": 14,
+            "content_type": 16,
+            "object_id": "8",
+            "object_repr": "introduction to flutter - Quiz",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Total marks\", \"Pass marks\"]}}]"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$nYgh4JwEA94uEWu25XAdmx$sShM1WfsXpnOcmnAgsUaHqJvsQioN1HsgZqcpxuh09E=",
+            "last_login": "2025-12-19T05:48:09.282Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-12-19T05:47:09.496Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$Fk4FYRDXxFbhs1sLTUnmCp$59GTx+d7ORwdPq3ZvaC2UaH5mawx3HmKHrJUP72Gsuk=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "admin1",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-12-19T07:08:09Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$k5neGhqIeLUiEeXiTeREeL$+mH1ACx9TDQv6upbAIJgo9MftTOzgr2bbby8QMzX6c4=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "student1",
+            "first_name": "",
+            "last_name": "",
+            "email": "student@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-12-19T07:08:29Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 14,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$PUArBkjiTKXMHz4C3oBnju$yfmi232A55hWqJVmsoaRUVnaHKrrNc2Njtx6ImFb804=",
+            "last_login": "2026-01-09T14:09:10.460Z",
+            "is_superuser": true,
+            "username": "admin123",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2026-01-09T14:08:42.694Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 18,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$ZCe4x4X0610AXmj8d3npms$wMCOjdBw3olh7zEdCO4hrMhtSY/j0zfyiAR2QYtyktk=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "anu",
+            "first_name": "",
+            "last_name": "",
+            "email": "chilanka2004@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-01-16T11:22:07.111Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 20,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$8FAvZEMOlWhIdFezFY98gu$Oav1npaLs7NcBbcbfOYOFsmVVTqM6qX/NxJw/5PCeNg=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "aaa",
+            "first_name": "",
+            "last_name": "",
+            "email": "aaa@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-01-22T09:38:56.879Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "bmho8y0tchbkebjuhlm3e8hh742eu5re",
+        "fields": {
+            "session_data": ".eJxVjDsOwjAQRO_iGln-xdmlpM8ZIq-9JgFkS3FSIe5OIqWAZoqZ9-YtxrCt07g1XsY5iavQTlx-SwrxyeVY0iOUe5WxlnWZSR6IPNcmh5r4dTvZv4MptGm3HRgPnhAsguldBPJIeY9O-5xdFwkTcwbdKe4VRlJWRcNgHSq9e-LzBe1YN24:1veDAs:cmWRyvD03BIwiQxDvav1bWr-6fO7Vih5bg8rs06Kt6g",
+            "expire_date": "2026-01-23T14:09:10.475Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "efmb552kr88vsj7nj4z8gyamrev30y1s",
+        "fields": {
+            "session_data": ".eJxVjEEOwiAQRe_C2hCoQMGle89AhplBqgaS0q6Md7dNutDte-__t4iwLiWunec4kbiIQZx-WQJ8ct0FPaDem8RWl3lKck_kYbu8NeLX9Wj_Dgr0sq2d8WdkO2oLNiUILlEIgOSV09mrTJQdch6MJ8sjaps3pNgwKKsNkPh8AQNxOSo:1vWTLV:K07AuC8mugaf5AgUpqIt4ydC1kxfYdwPO1OUWKMa2As",
+            "expire_date": "2026-01-02T05:48:09.294Z"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 1,
+        "fields": {
+            "user": 4,
+            "role": "ADMIN"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 2,
+        "fields": {
+            "user": 5,
+            "role": "STUDENT"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 12,
+        "fields": {
+            "user": 18,
+            "role": "STUDENT"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 13,
+        "fields": {
+            "user": 2,
+            "role": "ADMIN"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 14,
+        "fields": {
+            "user": 14,
+            "role": "ADMIN"
+        }
+    },
+    {
+        "model": "app.profile",
+        "pk": 16,
+        "fields": {
+            "user": 20,
+            "role": "STUDENT"
+        }
+    },
+    {
+        "model": "app.course",
+        "pk": 7,
+        "fields": {
+            "title": "Python for Beginners",
+            "description": "Learn Python from scratch",
+            "category": "Programming",
+            "is_premium": false,
+            "created_by": 4,
+            "created_at": "2025-12-22T09:31:05.135Z",
+            "thumbnail": null
+        }
+    },
+    {
+        "model": "app.course",
+        "pk": 8,
+        "fields": {
+            "title": "Django Basics",
+            "description": "Learn Django step by step",
+            "category": "Programming",
+            "is_premium": false,
+            "created_by": 4,
+            "created_at": "2025-12-22T09:56:26.683Z",
+            "thumbnail": null
+        }
+    },
+    {
+        "model": "app.course",
+        "pk": 9,
+        "fields": {
+            "title": "Java",
+            "description": "Zero to Hero",
+            "category": "Programming",
+            "is_premium": false,
+            "created_by": 14,
+            "created_at": "2026-01-21T06:11:45.481Z",
+            "thumbnail": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&auto=format&fit=crop&q=60"
+        }
+    },
+    {
+        "model": "app.course",
+        "pk": 11,
+        "fields": {
+            "title": "Flutter",
+            "description": "flutter is dart framework",
+            "category": "Programming",
+            "is_premium": false,
+            "created_by": 14,
+            "created_at": "2026-01-21T08:43:36.561Z",
+            "thumbnail": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=1200&auto=format&fit=crop&q=60"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 1,
+        "fields": {
+            "course": 7,
+            "title": "Module 1",
+            "description": "Introduction",
+            "order": 1,
+            "created_at": "2025-12-23T08:09:28.557Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 3,
+        "fields": {
+            "course": 8,
+            "title": "Module 1",
+            "description": "Introduction to Django course and basic setup",
+            "order": 1,
+            "created_at": "2025-12-26T06:20:15.040Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 4,
+        "fields": {
+            "course": 8,
+            "title": "Module 2",
+            "description": "Models and Admin Panel",
+            "order": 2,
+            "created_at": "2026-01-13T07:24:54.817Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 5,
+        "fields": {
+            "course": 8,
+            "title": "Module 3",
+            "description": "Templates and Authentication",
+            "order": 3,
+            "created_at": "2026-01-13T07:27:28.003Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 6,
+        "fields": {
+            "course": 7,
+            "title": "Module 2",
+            "description": "Functions and Data Structures",
+            "order": 2,
+            "created_at": "2026-01-13T09:23:44.120Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 7,
+        "fields": {
+            "course": 7,
+            "title": "Module 3",
+            "description": "OOP and Mini Projects",
+            "order": 3,
+            "created_at": "2026-01-13T09:24:16.445Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 9,
+        "fields": {
+            "course": 11,
+            "title": "introduction to flutter",
+            "description": "introduction",
+            "order": 1,
+            "created_at": "2026-01-21T08:44:15.394Z"
+        }
+    },
+    {
+        "model": "app.module",
+        "pk": 10,
+        "fields": {
+            "course": 11,
+            "title": "structures",
+            "description": "flutter",
+            "order": 2,
+            "created_at": "2026-01-21T08:44:44.863Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 1,
+        "fields": {
+            "module": 1,
+            "title": "What is Python? | Applications of Python",
+            "video_url": "https://www.youtube.com/embed/rfscVS0vtbw",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2025-12-23T08:24:50.541Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 2,
+        "fields": {
+            "module": 3,
+            "title": "Django Introduction",
+            "video_url": "https://www.youtube.com/embed/F5mRW0jo-U4",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2025-12-30T03:54:43.816Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 3,
+        "fields": {
+            "module": 1,
+            "title": "Installing Python & Setting Up VS Code",
+            "video_url": "https://www.youtube.com/embed/_uQrJ0TkZlc",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2025-12-30T08:47:23.552Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 4,
+        "fields": {
+            "module": 3,
+            "title": "Django Project Setup",
+            "video_url": "https://www.youtube.com/embed/rHux0gMZ3Eg",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.544Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 5,
+        "fields": {
+            "module": 3,
+            "title": "URLs and Views Basics",
+            "video_url": "https://www.youtube.com/embed/mndLkCEiflg",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T12:53:23.567Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 6,
+        "fields": {
+            "module": 4,
+            "title": "Models and Migrations",
+            "video_url": "https://www.youtube.com/embed/1WmNXEVia8I",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2026-01-19T12:53:23.588Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 7,
+        "fields": {
+            "module": 4,
+            "title": "Django Admin Panel",
+            "video_url": "https://www.youtube.com/embed/2yXfUPwlZTw",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.608Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 8,
+        "fields": {
+            "module": 4,
+            "title": "CRUD Operations",
+            "video_url": "https://www.youtube.com/embed/2yXfUPwlZTw",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T12:53:23.628Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 9,
+        "fields": {
+            "module": 5,
+            "title": "Templates and Static Files",
+            "video_url": "https://www.youtube.com/embed/UmljXZIypDc",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2026-01-19T12:53:23.644Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 10,
+        "fields": {
+            "module": 5,
+            "title": "Forms and Validation",
+            "video_url": "https://www.youtube.com/embed/UmljXZIypDc",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.661Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 11,
+        "fields": {
+            "module": 5,
+            "title": "Authentication (Login & Register)",
+            "video_url": "https://www.youtube.com/embed/tUqUdu0Sjyc",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T12:53:23.678Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 12,
+        "fields": {
+            "module": 1,
+            "title": "Python Introduction",
+            "video_url": "https://www.youtube.com/embed/rfscVS0vtbw",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2026-01-19T12:53:23.694Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 13,
+        "fields": {
+            "module": 1,
+            "title": "Variables and Data Types",
+            "video_url": "https://www.youtube.com/embed/kqtD5dpn9C8",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.711Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 14,
+        "fields": {
+            "module": 1,
+            "title": "If Else and Loops",
+            "video_url": "https://www.youtube.com/embed/6iF8Xb7Z3wQ",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T12:53:23.727Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 15,
+        "fields": {
+            "module": 6,
+            "title": "Python Functions",
+            "video_url": "https://www.youtube.com/embed/9Os0o3wzS_I",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2026-01-19T12:53:23.743Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 16,
+        "fields": {
+            "module": 6,
+            "title": "Lists and Tuples",
+            "video_url": "https://www.youtube.com/embed/W8KRzm-HUcc",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.758Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 17,
+        "fields": {
+            "module": 6,
+            "title": "Dictionaries and Sets",
+            "video_url": "https://www.youtube.com/embed/daefaLgNkw0",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T12:53:23.774Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 18,
+        "fields": {
+            "module": 7,
+            "title": "Object Oriented Programming (OOP)",
+            "video_url": "https://www.youtube.com/embed/JeznW_7DlB0",
+            "duration": 300,
+            "order": 1,
+            "created_at": "2026-01-19T12:53:23.790Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 19,
+        "fields": {
+            "module": 7,
+            "title": "Inheritance and Polymorphism",
+            "video_url": "https://www.youtube.com/embed/RSl87lqOXDE",
+            "duration": 300,
+            "order": 2,
+            "created_at": "2026-01-19T12:53:23.808Z"
+        }
+    },
+    {
+        "model": "app.video",
+        "pk": 20,
+        "fields": {
+            "module": 7,
+            "title": "Mini Project: Simple Calculator",
+            "video_url": "https://www.youtube.com/embed/QZPv1y2znZo",
+            "duration": 300,
+            "order": 3,
+            "created_at": "2026-01-19T13:01:48.244Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 1,
+        "fields": {
+            "user": 5,
+            "video": 1,
+            "watched_seconds": 600,
+            "is_completed": true,
+            "updated_at": "2025-12-23T09:25:58.103Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 2,
+        "fields": {
+            "user": 5,
+            "video": 14,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:25:00.197Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 3,
+        "fields": {
+            "user": 5,
+            "video": 17,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T05:41:09.407Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 4,
+        "fields": {
+            "user": 5,
+            "video": 20,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:26:55.944Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "video": 18,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:14:08.609Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 6,
+        "fields": {
+            "user": 5,
+            "video": 15,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:18:07.691Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 7,
+        "fields": {
+            "user": 5,
+            "video": 16,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:15:25.326Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 8,
+        "fields": {
+            "user": 5,
+            "video": 13,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:17:06.971Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 9,
+        "fields": {
+            "user": 5,
+            "video": 19,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T07:26:49.161Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 10,
+        "fields": {
+            "user": 5,
+            "video": 5,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:28:31.855Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 11,
+        "fields": {
+            "user": 5,
+            "video": 2,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:27:32.268Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 12,
+        "fields": {
+            "user": 5,
+            "video": 4,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:28:07.643Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 13,
+        "fields": {
+            "user": 5,
+            "video": 6,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:29:21.010Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 14,
+        "fields": {
+            "user": 5,
+            "video": 7,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:29:54.492Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 15,
+        "fields": {
+            "user": 5,
+            "video": 8,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:30:25.382Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 16,
+        "fields": {
+            "user": 5,
+            "video": 9,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T12:30:58.533Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 17,
+        "fields": {
+            "user": 5,
+            "video": 10,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T13:17:07.384Z"
+        }
+    },
+    {
+        "model": "app.videoprogress",
+        "pk": 18,
+        "fields": {
+            "user": 5,
+            "video": 11,
+            "watched_seconds": 9999,
+            "is_completed": true,
+            "updated_at": "2026-01-20T13:17:38.978Z"
+        }
+    },
+    {
+        "model": "app.enrollment",
+        "pk": 1,
+        "fields": {
+            "user": 5,
+            "course": 7,
+            "enrolled_at": "2025-12-23T09:34:31.216Z",
+            "is_active": true
+        }
+    },
+    {
+        "model": "app.enrollment",
+        "pk": 2,
+        "fields": {
+            "user": 5,
+            "course": 8,
+            "enrolled_at": "2025-12-24T07:03:33.843Z",
+            "is_active": true
+        }
+    },
+    {
+        "model": "app.enrollment",
+        "pk": 11,
+        "fields": {
+            "user": 18,
+            "course": 8,
+            "enrolled_at": "2026-01-16T11:22:35.976Z",
+            "is_active": true
+        }
+    },
+    {
+        "model": "app.enrollment",
+        "pk": 13,
+        "fields": {
+            "user": 5,
+            "course": 11,
+            "enrolled_at": "2026-01-22T05:18:28.839Z",
+            "is_active": true
+        }
+    },
+    {
+        "model": "app.enrollment",
+        "pk": 14,
+        "fields": {
+            "user": 20,
+            "course": 11,
+            "enrolled_at": "2026-01-22T09:42:12.347Z",
+            "is_active": true
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 2,
+        "fields": {
+            "module": 1,
+            "title": "Python Module 1 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 3,
+        "fields": {
+            "module": 3,
+            "title": "Django Module 3 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 4,
+        "fields": {
+            "module": 4,
+            "title": "Module 4 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 5,
+        "fields": {
+            "module": 5,
+            "title": "Module 5 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 6,
+        "fields": {
+            "module": 6,
+            "title": "Module 6 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 7,
+        "fields": {
+            "module": 7,
+            "title": "Module 7 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.quiz",
+        "pk": 8,
+        "fields": {
+            "module": 9,
+            "title": "Module 9 Quiz",
+            "total_marks": 5,
+            "pass_marks": 5
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 2,
+        "fields": {
+            "quiz": 2,
+            "question_text": "What is Python?",
+            "option_a": "server",
+            "option_b": "Programming Language",
+            "option_c": "Database",
+            "option_d": "OS",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 3,
+        "fields": {
+            "quiz": 3,
+            "question_text": "What is Django?",
+            "option_a": "Game",
+            "option_b": "Web Framework",
+            "option_c": "Database",
+            "option_d": "OS",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 4,
+        "fields": {
+            "quiz": 2,
+            "question_text": "Which keyword is used to define a function in Python?",
+            "option_a": "func",
+            "option_b": "define",
+            "option_c": "def",
+            "option_d": "function",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 5,
+        "fields": {
+            "quiz": 2,
+            "question_text": "Which data type is used to store multiple values in Python?",
+            "option_a": "int",
+            "option_b": "float",
+            "option_c": "list",
+            "option_d": "char",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 6,
+        "fields": {
+            "quiz": 2,
+            "question_text": "What is the output of print(type(10))?",
+            "option_a": "<class 'float'>",
+            "option_b": "<class 'string'>",
+            "option_c": "<class 'int'>",
+            "option_d": "<class 'number'>",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 7,
+        "fields": {
+            "quiz": 2,
+            "question_text": "Which symbol is used for comments in Python?",
+            "option_a": "//",
+            "option_b": "<!-- -->",
+            "option_c": "#",
+            "option_d": "/* */",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 8,
+        "fields": {
+            "quiz": 3,
+            "question_text": "Django is written in which language?",
+            "option_a": "Java",
+            "option_b": "C++",
+            "option_c": "Python",
+            "option_d": "PHP",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 9,
+        "fields": {
+            "quiz": 3,
+            "question_text": "Which command is used to create a Django project?",
+            "option_a": "django start",
+            "option_b": "django-admin startproject",
+            "option_c": "python startproject",
+            "option_d": "start django",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 10,
+        "fields": {
+            "quiz": 3,
+            "question_text": "Which file contains database configuration in Django?",
+            "option_a": "views.py",
+            "option_b": "models.py",
+            "option_c": "settings.py",
+            "option_d": "urls.py",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 11,
+        "fields": {
+            "quiz": 3,
+            "question_text": "What is the default database used by Django?",
+            "option_a": "MySQL",
+            "option_b": "PostgreSQL",
+            "option_c": "SQLite",
+            "option_d": "MongoDB",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 12,
+        "fields": {
+            "quiz": 4,
+            "question_text": "What is the use of Django models?",
+            "option_a": "To connect database and represent tables",
+            "option_b": "To design HTML pages",
+            "option_c": "To create CSS files",
+            "option_d": "To run the server",
+            "correct_option": "A"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 13,
+        "fields": {
+            "quiz": 4,
+            "question_text": "Which command is used to create migration files?",
+            "option_a": "python manage.py runserver",
+            "option_b": "python manage.py makemigrations",
+            "option_c": "python manage.py migrate",
+            "option_d": "python manage.py startapp",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 14,
+        "fields": {
+            "quiz": 4,
+            "question_text": "Which command applies migrations to the database?",
+            "option_a": "python manage.py migrate",
+            "option_b": "python manage.py makemigrations",
+            "option_c": "python manage.py createsuperuser",
+            "option_d": "python manage.py startproject",
+            "correct_option": "A"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 15,
+        "fields": {
+            "quiz": 4,
+            "question_text": "What is Django Admin mainly used for?",
+            "option_a": "Writing frontend JavaScript",
+            "option_b": "Managing data using an admin dashboard",
+            "option_c": "Creating migrations automatically",
+            "option_d": "Running production server",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 16,
+        "fields": {
+            "quiz": 4,
+            "question_text": "CRUD stands for?",
+            "option_a": "Create Read Update Delete",
+            "option_b": "Connect Run Update Deploy",
+            "option_c": "Copy Read Upload Download",
+            "option_d": "Create Render Update Design",
+            "correct_option": "A"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 18,
+        "fields": {
+            "quiz": 5,
+            "question_text": "Templates in Django are used for?",
+            "option_a": "Creating database tables",
+            "option_b": "Rendering dynamic HTML pages",
+            "option_c": "Running migrations",
+            "option_d": "Creating APIs",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 19,
+        "fields": {
+            "quiz": 5,
+            "question_text": "Static files include which of the following?",
+            "option_a": "Models and Views",
+            "option_b": "Forms and Migrations",
+            "option_c": "CSS, JavaScript, Images",
+            "option_d": "Admin and ORM",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 20,
+        "fields": {
+            "quiz": 5,
+            "question_text": "Which method checks whether a Django form is valid?",
+            "option_a": "form.correct()",
+            "option_b": "form.check_valid()",
+            "option_c": "form.is_valid()",
+            "option_d": "form.validate()",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 21,
+        "fields": {
+            "quiz": 5,
+            "question_text": "Which functions are commonly used for Django login?",
+            "option_a": "signin() only",
+            "option_b": "authenticate() only",
+            "option_c": "login() only",
+            "option_d": "authenticate() and login()",
+            "correct_option": "D"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 22,
+        "fields": {
+            "quiz": 5,
+            "question_text": "Which decorator is used to protect pages after login?",
+            "option_a": "@csrf_exempt",
+            "option_b": "@login_required",
+            "option_c": "@api_view",
+            "option_d": "@permission_classes",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 23,
+        "fields": {
+            "quiz": 6,
+            "question_text": "Which keyword is used to define a function in Python?",
+            "option_a": "function",
+            "option_b": "fun",
+            "option_c": "def",
+            "option_d": "define",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 24,
+        "fields": {
+            "quiz": 6,
+            "question_text": "Which data structure is ordered and mutable?",
+            "option_a": "Tuple",
+            "option_b": "List",
+            "option_c": "Set",
+            "option_d": "Dictionary",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 25,
+        "fields": {
+            "quiz": 6,
+            "question_text": "Which data structure stores values as key-value pairs?",
+            "option_a": "List",
+            "option_b": "Tuple",
+            "option_c": "Dictionary",
+            "option_d": "Set",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 26,
+        "fields": {
+            "quiz": 6,
+            "question_text": "What is the use of return in a function?",
+            "option_a": "To stop a loop",
+            "option_b": "To exit Python",
+            "option_c": "To send output back from the function",
+            "option_d": "To print output",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 27,
+        "fields": {
+            "quiz": 6,
+            "question_text": "Which data structure does not allow duplicate values?",
+            "option_a": "List",
+            "option_b": "Tuple",
+            "option_c": "Set",
+            "option_d": "Dictionary",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 28,
+        "fields": {
+            "quiz": 7,
+            "question_text": "What is a class in Python?",
+            "option_a": "A variable",
+            "option_b": "A blueprint for creating objects",
+            "option_c": "A loop",
+            "option_d": "A module",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 29,
+        "fields": {
+            "quiz": 7,
+            "question_text": "An object is?",
+            "option_a": "A function",
+            "option_b": "An instance of a class",
+            "option_c": "A keyword",
+            "option_d": "A file",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 30,
+        "fields": {
+            "quiz": 7,
+            "question_text": "Inheritance is used for?",
+            "option_a": "Deleting variables",
+            "option_b": "Reusing code from an existing class",
+            "option_c": "Stopping execution",
+            "option_d": "Creating database tables",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 31,
+        "fields": {
+            "quiz": 7,
+            "question_text": "Which keyword is used to create a class in Python?",
+            "option_a": "def",
+            "option_b": "new",
+            "option_c": "class",
+            "option_d": "object",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 32,
+        "fields": {
+            "quiz": 7,
+            "question_text": "Which is a simple mini project example for Python beginners?",
+            "option_a": "Calculator program",
+            "option_b": "Building a browser",
+            "option_c": "Creating an operating system",
+            "option_d": "Building a database engine",
+            "correct_option": "A"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 34,
+        "fields": {
+            "quiz": 8,
+            "question_text": "What is flutter?",
+            "option_a": "A database",
+            "option_b": "A programming language",
+            "option_c": "A UI toolkit for building apps",
+            "option_d": "A web server",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 35,
+        "fields": {
+            "quiz": 8,
+            "question_text": "Which language is used to develop Flutter apps?",
+            "option_a": "Java",
+            "option_b": "Dart",
+            "option_c": "Python",
+            "option_d": "C#",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 36,
+        "fields": {
+            "quiz": 8,
+            "question_text": "Which Widget is used for immutable UI in Flutter?",
+            "option_a": "Stateful Widget",
+            "option_b": "Stateless Widget",
+            "option_c": "Stream Builder",
+            "option_d": "Material App",
+            "correct_option": "B"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 37,
+        "fields": {
+            "quiz": 8,
+            "question_text": "What command is used to create a new Flutter project?",
+            "option_a": "flutter init",
+            "option_b": "flutter new project",
+            "option_c": "flutter create project",
+            "option_d": "flutter create",
+            "correct_option": "D"
+        }
+    },
+    {
+        "model": "app.question",
+        "pk": 38,
+        "fields": {
+            "quiz": 8,
+            "question_text": "Which widget is used to arrange widgets vertically?",
+            "option_a": "Row",
+            "option_b": "Stack",
+            "option_c": "Column",
+            "option_d": "Container",
+            "correct_option": "C"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 1,
+        "fields": {
+            "user": 5,
+            "quiz": 2,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2025-12-26T07:38:28.620Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 2,
+        "fields": {
+            "user": 5,
+            "quiz": 3,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2025-12-26T07:39:55.691Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "quiz": 4,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2026-01-16T09:57:16.379Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 6,
+        "fields": {
+            "user": 5,
+            "quiz": 5,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2026-01-16T09:58:44.843Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 7,
+        "fields": {
+            "user": 18,
+            "quiz": 3,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2026-01-16T11:28:22.990Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 8,
+        "fields": {
+            "user": 18,
+            "quiz": 4,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2026-01-16T11:29:30.743Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 9,
+        "fields": {
+            "user": 18,
+            "quiz": 5,
+            "score": 5,
+            "passed": true,
+            "attempted_at": "2026-01-16T11:30:17.282Z"
+        }
+    },
+    {
+        "model": "app.quizattempt",
+        "pk": 10,
+        "fields": {
+            "user": 20,
+            "quiz": 8,
+            "score": 2,
+            "passed": false,
+            "attempted_at": "2026-01-22T09:43:56.316Z"
+        }
+    },
+    {
+        "model": "app.certificate",
+        "pk": 1,
+        "fields": {
+            "user": 5,
+            "course": 7,
+            "issued_at": "2025-12-26T08:13:25.127Z",
+            "certificate_id": "21ab8eea-1604-49d0-9b0b-30506b0d0243"
+        }
+    },
+    {
+        "model": "app.certificate",
+        "pk": 2,
+        "fields": {
+            "user": 5,
+            "course": 8,
+            "issued_at": "2025-12-26T08:15:54.515Z",
+            "certificate_id": "8833fe89-f60f-4c0d-8d52-03a4b789d38c"
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 1,
+        "fields": {
+            "module": 3,
+            "title": "Introduction to Django",
+            "content": "In this lesson, we will learn what Django is and why it is used for building powerful web applications.\r\nWe will understand DjangoÆs MVT architecture and how it handles requests and responses.\r\nYou will also learn the features of Django like ORM, admin panel, authentication, and security.\r\nBy the end of this lesson, you will have a clear idea of how Django works and what you can build using it.",
+            "video_url": "https://www.youtube.com/embed/F5mRW0jo-U4",
+            "order": 1,
+            "video": 2
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 2,
+        "fields": {
+            "module": 3,
+            "title": "Django Project Setup",
+            "content": "In this lesson, we will set up Django properly on our system.\r\nWe will create a virtual environment, install Django, and start a new Django project.\r\nThen we will create a Django app and run the server to test the project in the browser.\r\nYou will also understand the purpose of important files like settings.py, urls.py, and manage.py.\r\nBy the end of this lesson, your Django project will be ready for building real modules and lessons.",
+            "video_url": "https://www.youtube.com/embed/rHux0gMZ3Eg",
+            "order": 2,
+            "video": 4
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 3,
+        "fields": {
+            "module": 3,
+            "title": "URLs and Views Basics",
+            "content": "In this lesson, we will learn how Django connects pages using URLs and Views. We will create a simple view function and link it in urls.py so it works in browser. By the end, you will understand URL routing and view mapping clearly.",
+            "video_url": "https://www.youtube.com/embed/mndLkCEiflg",
+            "order": 3,
+            "video": 5
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 4,
+        "fields": {
+            "module": 4,
+            "title": "Models and Migrations",
+            "content": "In this lesson, we will learn about Django Models and how they connect to the database.\r\nWe will create model classes, understand fields like CharField, IntegerField, DateTimeField, and relationships.\r\nThen we will run makemigrations and migrate to create database tables.\r\nBy the end of this lesson, you will understand how Django stores data using models and migrations.",
+            "video_url": "https://www.youtube.com/embed/1WmNXEVia8I",
+            "order": 1,
+            "video": 6
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 5,
+        "fields": {
+            "module": 4,
+            "title": "Django Admin Panel",
+            "content": "In this lesson, we will explore Django Admin Panel and how it makes managing data very easy.\nWe will create a superuser, login to /admin, and register models.\nYou will learn how to customize the admin view using list_display, search_fields, and ordering.\nBy the end of this lesson, you will be able to manage your project data through Django admin efficiently.",
+            "video_url": "https://www.youtube.com/embed/2yXfUPwlZTw",
+            "order": 2,
+            "video": 7
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 6,
+        "fields": {
+            "module": 4,
+            "title": "CRUD Operations",
+            "content": "In this lesson, we will learn CRUD operations (Create, Read, Update, Delete) in Django.\nWe will understand how to insert new data, show records from database, update existing records, and delete them.\nYou will also learn how Django ORM simplifies database queries.\nBy the end of this lesson, you will be able to build basic database functionality using Django.",
+            "video_url": "https://www.youtube.com/embed/2yXfUPwlZTw",
+            "order": 3,
+            "video": 8
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 7,
+        "fields": {
+            "module": 5,
+            "title": "Templates and Static Files",
+            "content": "In this lesson, we will learn how Django Templates work and how to display HTML pages dynamically.\nWe will understand template rendering using render() and how to pass data from views to templates.\nThen we will learn how to configure and use static files like CSS, JavaScript, and images.\nBy the end of this lesson, you will be able to build professional-looking pages using templates and static files.",
+            "video_url": "https://www.youtube.com/embed/UmljXZIypDc",
+            "order": 1,
+            "video": 9
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 8,
+        "fields": {
+            "module": 5,
+            "title": "Forms and Validation",
+            "content": "In this lesson, we will learn how to create forms in Django and handle user input.\nWe will use Django forms to validate data and display form errors properly.\nYou will understand GET vs POST requests and how Django processes form submissions.\nBy the end of this lesson, you will be able to create forms for login, registration, and basic data collection with validation.",
+            "video_url": "https://www.youtube.com/embed/UmljXZIypDc",
+            "order": 2,
+            "video": 10
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 9,
+        "fields": {
+            "module": 5,
+            "title": "Authentication (Login & Register)",
+            "content": "In this lesson, we will learn how authentication works in Django.\nWe will create Register and Login functionality using Django authentication system.\nYou will understand how to protect pages using login_required and how sessions work.\nBy the end of this lesson, you will be able to build a secure login/register system for real applications.",
+            "video_url": "https://www.youtube.com/embed/tUqUdu0Sjyc",
+            "order": 3,
+            "video": 11
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 10,
+        "fields": {
+            "module": 1,
+            "title": "Python Introduction",
+            "content": "In this lesson, we will understand what Python is and why it is one of the most popular programming languages.\nWe will learn where Python is used (web development, AI, automation, data science) and what makes it beginner-friendly.\nYou will also learn how Python code is executed and the importance of writing clean code.\nBy the end of this lesson, you will be ready to start writing basic Python programs.",
+            "video_url": "https://www.youtube.com/embed/rfscVS0vtbw",
+            "order": 1,
+            "video": 12
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 11,
+        "fields": {
+            "module": 1,
+            "title": "Variables and Data Types",
+            "content": "In this lesson, we will learn what variables are and how to store data in Python.\nWe will explore data types like int, float, string, and boolean with simple examples.\nYou will also learn type conversion and how to check the type of a variable using type().\nBy the end of this lesson, you will be able to create variables and work with different kinds of data.",
+            "video_url": "https://www.youtube.com/embed/kqtD5dpn9C8",
+            "order": 2,
+            "video": 13
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 12,
+        "fields": {
+            "module": 1,
+            "title": "If Else and Loops",
+            "content": "In this lesson, we will learn decision making using if, elif, and else statements.\nThen we will learn loops using for and while to repeat tasks and write efficient code.\nYou will understand break and continue statements and how to control loop execution.\nBy the end of this lesson, you will be able to write small programs using conditions and loops confidently.",
+            "video_url": "https://www.youtube.com/embed/6iF8Xb7Z3wQ",
+            "order": 3,
+            "video": 14
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 13,
+        "fields": {
+            "module": 6,
+            "title": "Python Functions",
+            "content": "In this lesson, we will learn what functions are and why they are used.\nWe will create functions using def, pass arguments, and return values.\nYou will also understand the difference between parameters and arguments.\nBy the end, you will be able to write reusable Python functions confidently.",
+            "video_url": "https://www.youtube.com/embed/9Os0o3wzS_I",
+            "order": 1,
+            "video": 15
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 14,
+        "fields": {
+            "module": 6,
+            "title": "Lists and Tuples",
+            "content": "In this lesson, we will learn Python lists and tuples.\nWe will perform operations like indexing, slicing, adding, removing, and looping.\nYou will understand the difference between mutable (list) and immutable (tuple).\nBy the end, you can manage multiple values easily using lists and tuples.",
+            "video_url": "https://www.youtube.com/embed/W8KRzm-HUcc",
+            "order": 2,
+            "video": 16
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 15,
+        "fields": {
+            "module": 6,
+            "title": "Dictionaries and Sets",
+            "content": "In this lesson, we will learn dictionaries and sets in Python.\nWe will store key-value pairs using dict and access values easily.\nYou will learn common dictionary methods and set operations.\nBy the end, you can manage structured data using dictionaries and remove duplicates using sets.",
+            "video_url": "https://www.youtube.com/embed/daefaLgNkw0",
+            "order": 3,
+            "video": 17
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 16,
+        "fields": {
+            "module": 7,
+            "title": "Object Oriented Programming (OOP)",
+            "content": "In this lesson, we will learn the basics of Object Oriented Programming in Python.\nWe will understand class and object, and create a class with attributes and methods.\nYou will learn how OOP helps in organizing real-world applications.\nBy the end, you can build simple class-based programs in Python.",
+            "video_url": "https://www.youtube.com/embed/JeznW_7DlB0",
+            "order": 1,
+            "video": 18
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 17,
+        "fields": {
+            "module": 7,
+            "title": "Inheritance and Polymorphism",
+            "content": "In this lesson, we will learn inheritance to reuse code between classes.\nWe will create parent and child classes and override methods.\nYou will also understand polymorphism and how Python supports it.\nBy the end, you can build advanced OOP structures using inheritance.",
+            "video_url": "https://www.youtube.com/embed/RSl87lqOXDE",
+            "order": 2,
+            "video": 19
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 18,
+        "fields": {
+            "module": 7,
+            "title": "Mini Project: Simple Calculator",
+            "content": "In this lesson, we will build a mini project using Python basics.\r\nWe will create a calculator that performs addition, subtraction, multiplication, and division.\r\nYou will practice using functions, conditionals, loops, and user input.\r\nBy the end, you will have a working mini project and confidence to build more.",
+            "video_url": "https://www.youtube.com/embed/QZPv1y2znZo",
+            "order": 3,
+            "video": 20
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 20,
+        "fields": {
+            "module": 10,
+            "title": "introduction",
+            "content": "",
+            "video_url": "",
+            "order": 1,
+            "video": null
+        }
+    },
+    {
+        "model": "app.lesson",
+        "pk": 21,
+        "fields": {
+            "module": 9,
+            "title": "sdfghj",
+            "content": "",
+            "video_url": "",
+            "order": 1,
+            "video": null
+        }
+    }
+]
